@@ -1,1 +1,1 @@
-# SWD-DineSmart
+# DineSmart
