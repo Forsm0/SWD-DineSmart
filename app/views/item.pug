@@ -1,0 +1,29 @@
+extends index
+
+block content1
+    // Page Heading with Logo Design
+    h1(class="page-title")
+        span(class="logo") DineSmart
+    p(class="intro-text") Here are the delicious menu items:
+
+    // Menu Table with better styling
+    table(class="menu-table", border="0")
+        thead
+            tr
+                th Name
+                th Image
+                th Price
+                th Description
+        tbody
+            for items in data
+                tr
+                    td
+                        // Display image with fallback
+                        if items.imageSrc
+                            img(src=items.imageSrc, alt=items.Name, width="100", height="100")
+                        else
+                            p No image available
+                    td #{items.Name}
+                    td #{items.Price}
+                    td #{items.Description}
+
