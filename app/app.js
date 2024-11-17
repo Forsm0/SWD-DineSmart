@@ -9,14 +9,18 @@ var app = express();
 app.set('view engine', 'pug');
 app.set('views', './app/views');
 // Add static files location
-//app.use(express.static("static"));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static("static"));
+//app.use(express.static(path.join(__dirname, 'public')));
 
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
-// Create a route for root - Home page /
 app.get("/", function(req, res) {
+    res.render("index");
+});
+
+// Create a route for root - Home page /
+app.get("/Menu", function(req, res) {
 
     sql = 'SELECT * FROM Menu'; // Assuming 'image' column is BLOB
     
