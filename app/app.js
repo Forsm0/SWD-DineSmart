@@ -4,16 +4,22 @@ const express = require("express");
 // Create express app
 var app = express();
 
+// Use the Pug templating engine
+app.set('view engine', 'pug');
+app.set('views', './app/views');
+
 // Add static files location
 app.use(express.static("static"));
 
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
-// Create a route for root - /
+// Create a route for root - Home page /
 app.get("/", function(req, res) {
-    res.send("Hello world3!");
+    res.render("index");
 });
+
+
 
 // Create a route for testing the db
 app.get("/db_test", function(req, res) {
