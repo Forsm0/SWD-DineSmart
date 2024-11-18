@@ -1,12 +1,13 @@
-
 /* beige = f8f7f2, green = 697665, gray = 393a34, black = 11150c*/
-
-
 
 body {
     background-color: #f8f7f2;
     font-family: 'Poppins', sans-serif;
     color: #393a34;
+}
+/* Ensure buttons and other form elements inherit the body font */
+button, input, textarea, select {
+  font-family: inherit;
 }
 
 
@@ -28,7 +29,7 @@ body {
   
   .nav-bar button {
     background-color: #697665;
-    color: #f8f7f2;
+    color: white;
     border: none;
     width: 150px;
     height: 50px;
@@ -37,11 +38,11 @@ body {
     border-radius: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-align: center;
   }
   
   .nav-bar button:hover {
     background-color: #393a34;
+    transform: scale(1.05); /* Subtle growth effect */
   }
   
   footer {
@@ -57,7 +58,7 @@ body {
     display: flex;                 /* Enables flexbox */
     flex-direction: column;        /* Stacks items vertically */
     align-items: center;           /* Centers items horizontally */
-    justify-content: top;       /* Centers items vertically */
+    justify-content: start;       /* Centers items vertically */
     height: calc(100vh - 60px);    /* Subtracts 60px for the navigation bar height */    
     width: 100%;                   /* Ensures the hero takes the full width */
     text-align: center;            /* Centers the text within the container */
@@ -80,7 +81,6 @@ body {
   /* Hero Text */
   .hero p {
     font-style: italic;            /* Makes the text italic */
-    color: #393a34;              /* Text color */
 
   }
   .hero h2 {
@@ -88,25 +88,25 @@ body {
     margin-bottom: 0;
     font-size: 1,8em;
   }
-  /* carousel section*/
-  .carousel {
-    position: relative;
-    width: 100%;                  /* Set the carousel width */
-    max-width: 500px;             /* Optional: limit max width */
-    overflow: hidden;             /* Hide the overflow to show only one image */
 
-}
-
-.text-container {
+  .text-container {
     max-width: 800px;               /* Limit the maximum width */
     margin: 0 auto;                 /* Center horizontally */
     text-align: center;             /* Center the text inside */
     padding: 20px;                  /* Add some padding for spacing */
     color: #393a34;                 /* Adjust text color (optional) */
-    font-size: 16px;                /* Set font size (optional) */
+    font-size: 18px;                /* Set font size (optional) */
     line-height: 1.6;               /* Improve readability */
 }
 
+  /* carousel section*/
+  .carousel {
+    position: relative;
+    width: 100%;                  /* Set the carousel width */
+    max-width: 750px;             /* Optional: limit max width */
+    overflow: hidden;             /* Hide the overflow to show only one image */
+
+}
 
 .carousel-container {
     display: flex;
@@ -126,31 +126,35 @@ body {
 
 }
 
-.page-title {
-  text-align: center;
-  font-size: 36px;
-  margin: 20px 0;
-}
-
-.page-title .logo {
-  font-style: italic;
-  font-weight: bold;
-  color: green;
-}
-
 .intro-text {
   text-align: center;
   font-size: 18px;
   color: #666;
+  margin: 110px 0 40px;
 }
 
 /* Table Styling */
 .menu-table {
   width: 100%;
+  max-width: 75%; /* Set a maximum width relative to the screen */
   border-collapse: collapse;
   margin: 0 auto;
-  background-color: #eadede;
+  background-color: #f8f7f2;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Column Styling */
+.menu-table th:nth-child(1), 
+.menu-table td:nth-child(1) {
+  width: 120px; /* Fixed width for the image column */
+  text-align: center; /* Center-align the content */
+}
+
+/* Price Column Styling */
+.menu-table th:nth-child(3), 
+.menu-table td:nth-child(3) {
+    width: 100px; /* Fixed width for price column */
+    text-align: center; /* Center the price values */
 }
 
 .menu-table th, .menu-table td {
@@ -159,14 +163,16 @@ body {
   border: 1px solid #ddd;
 }
 
+
 .menu-table th {
-  background-color: #4CAF50;  /* Green background for table headers */
+  background-color: #697665;  /* Green background for table headers */
   color: white;
   font-size: 18px;
 }
 
 .menu-table td {
-  font-size: 16px;
+  font-size: 18px;
+  vertical-align: middle;  /* Align the contents vertically */
 }
 
 /* Styling for Image and Text */
@@ -182,12 +188,9 @@ body {
 
 /* Hover Effect for Table Rows */
 .menu-table tr:hover {
-  background-color: #f1f1f1;
+  background-color: #e8f3e5;
 }
 
-.menu-table td {
-  vertical-align: middle;  /* Align the contents vertically */
-}
 
 
 
@@ -198,12 +201,18 @@ body {
         height: 45px; /* Reduce button height */
         font-size: 16px; /* Adjust font size */
     }
+    .menu-table, .menu-table td, .menu-table th, .intro-text{
+      font-size: 16px; /* Reduce font size for smaller screens */
+    }
 }
 
 /* Adjust for small screens */
 @media (max-width: 768px) {
     .nav-bar button {
-        height: 40px; /* Further reduce button height */
         font-size: 14px; /* Smaller font size */
     }
-}
+
+    .menu-table, .menu-table td, .menu-table th, .intro-text{
+      font-size: 14px; /* Reduce font size for smaller screens */
+    }
+  }

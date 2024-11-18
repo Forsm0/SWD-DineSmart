@@ -1,17 +1,15 @@
 extends layout
 
 block content
-    // Page Heading with Logo Design
-    h1(class="page-title")
-        span(class="logo") DineSmart
+
     p(class="intro-text") Here are the delicious menu items:
 
     // Menu Table with better styling
     table(class="menu-table", border="0")
         thead
             tr
+                th 
                 th Name
-                th Image
                 th Price
                 th Description
         tbody
@@ -24,6 +22,6 @@ block content
                         else
                             p No image available
                     td #{items.Name}
-                    td #{items.Price}
+                    td £#{items.Price}
                     td #{items.Description}
 
