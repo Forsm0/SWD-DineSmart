@@ -70,5 +70,3 @@ UPDATE Menu
 SET Description = 'Fresh tuna in creamy white sauce, topped with mashed potatoes and baked golden.'
 WHERE Name = 'Fish Pie';
 
-
-
