@@ -64,6 +64,10 @@ app.get("/goodbye", function(req, res) {
     res.send("Goodbye world!");
 });
 
+app.get("/restaurants", function(req, res) {
+    res.render("restaurant_profile");
+});
+
 // Create a dynamic route for /hello/<name>, where name is any value provided by user
 // At the end of the URL
 // Responds to a 'GET' request
