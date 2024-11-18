@@ -71,3 +71,21 @@ body {
     vertical-align: middle;  /* Align the contents vertically */
 }
 
+.button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #849972; /* Default button color */
+    color: white;
+    border-radius: 20px; /* Rounded button */
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+  
+  /* Hover Effect */
+.button:hover{
+    background-color: #6c815d; /* Darker shade for hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow */
+}
+  
