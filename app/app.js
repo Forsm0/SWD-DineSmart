@@ -25,19 +25,6 @@ app.get("/Menu", function(req, res) {
     sql = 'SELECT * FROM Menu'; // Assuming 'image' column is BLOB
     
     db.query(sql).then(results => {
-        // Iterate through results and convert each image to Base64
-        results.forEach(item => {
-            if (item.imagePath) {
-                // Convert the binary BLOB data to Base64 string
-                item.imageBase64 = Buffer.from(item.imagePath).toString('base64');
-                // Construct the src string for the image, including the correct MIME type
-                item.imageSrc = `data:image/jpeg;base64,${item.imageBase64}`;
-            } else {
-                // In case there's no image, set the src as a placeholder
-              //  item.imageSrc = '/path/to/default/image.jpg'; // Replace with an actual default image URL
-            }
-        });
-
         res.render("item", { 'data': results });
     }).catch(error => {
         console.error("Error fetching data from database:", error);
