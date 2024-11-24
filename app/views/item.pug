@@ -2,17 +2,23 @@ extends navBar
 
 block content
 
+    // Introductory text for the menu section
     p(class="intro-text") Here are the delicious menu items:
 
-    // Menu Table with better styling
+    // Menu table display
     table(class="menu-table", border="0")
+
+        // Table header
         thead
             tr
                 th 
                 th Name
                 th Price
                 th Description
+
+        // Table body
         tbody
+            // Loop through the data
             for items in data
                 tr
                     td

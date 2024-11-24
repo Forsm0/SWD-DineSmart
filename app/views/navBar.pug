@@ -1,18 +1,26 @@
+//- Extending the base layout
 extends layout
 
+//- Main content block
 block content1
+    //- Navigation Bar Section
     nav
-        // Navigation bar with links to home and booking page
         .nav-bar
-            // The following buttons include aria-label attributes for accessibility.
-            // These labels describe the purpose of the buttons to screen readers.
+            //- Navigation buttons with onclick handlers for routing
             button(onclick="window.location.href='/'" aria-label="Navigate to Home") Home
             button(onclick="window.location.href='/restaurants'" aria-label="Navigate to Restaurant Profile") Restaurant
             button(onclick="window.location.href='/menu'" aria-label="Navigate to Menu Page") Menu
 
-    // Placeholder for specific page content
+    //- Placeholder for specific page content; will be overridden in extended templates
     block content  
     
+    //- Footer Section
     footer
-      p © 2024 DineSmart
-
+        .footer-container
+            //- Left side of the footer: Copyright
+            .footer-left
+                p © 2024 DineSmart
+            //- Right side of the footer: Privacy and Terms links
+            .footer-right
+                p(onclick="window.location.href='/privacy-policy'" aria-label="Navigate to Privacy Policy") Privacy Policy
+                p(onclick="window.location.href='/terms-of-service'" aria-label="Navigate to Terms of Service") Terms of Service
