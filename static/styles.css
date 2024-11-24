@@ -1,331 +1,423 @@
-/* beige = f8f7f2, green = 697665, gray = 393a34, black = 11150c*/
+/* Color Palette:
+   - Beige: #f8f7f2
+   - Green: #697665
+   - Gray: #393a34
+   - Black: #11150c
+*/
 
+
+/* Base Styles */
 body {
-  background-color: #f8f7f2;
-  font-family: 'Poppins', sans-serif;
-  color: #393a34;
+  background-color: #f8f7f2; /* Light beige for the page background */
+  font-family: 'Poppins', sans-serif; /* Clean and modern font */
+  color: #393a34; /* Dark gray text color for readability */
 }
-/* Ensure buttons and other form elements inherit the body font */
+
+/* Ensure form elements inherit the font styling from the body */
 button, input, textarea, select {
-font-family: inherit;
+  font-family: inherit;
 }
 
-
+/* Navigation Bar Styling */
 .nav-bar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  padding: 10px 20px;
-  position: fixed;               /* Fix the nav bar at the top */
-  top: 0;                        /* Stick it to the top of the screen */
-  left: 0;                       /* Align it to the left edge */
-  width: 100%;                   /* Nav bar spans the entire width */
-  z-index: 10;                   /* Keep it above all other elements */
-  background-color: #f8f7f2;     /* Background color */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow */
+  display: flex; /* Flexbox layout for horizontal alignment */
+  justify-content: center; /* Center the navigation buttons */
+  align-items: center; /* Vertically align items */
+  gap: 15px; /* Space between nav bar buttons */
+  padding: 10px 20px; /* Add padding around the nav bar */
+  position: fixed; /* Fix the nav bar at the top of the page */
+  top: 0; /* Position at the top of the viewport */
+  left: 0; /* Align the nav bar to the left edge */
+  width: 100%; /* Make the nav bar span the full width of the page */
+  z-index: 10; /* Keep the nav bar on top of other elements */
+  background-color: #f8f7f2; /* Beige background to match the theme */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Buttons inside the navigation bar */
 .nav-bar button {
-  width: 170px;
-  height: 50px;
-  padding: 10px 20px;
-  font-size: 18px;
+  width: 170px; /* Button width */
+  height: 50px; /* Button height */
+  padding: 10px 20px; /* Inner spacing for button text */
+  font-size: 18px; /* Button text size */
 }
+
+/* Styling for navigation bar buttons and action buttons */
 .nav-bar button, .action-buttons button {
-  background-color: #697665;
-  color: white;
-  border: none;
-  font-size: 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  background-color: #697665; /* Green button background */
+  color: white; /* White text for contrast */
+  border: none; /* Remove default border */
+  font-size: 18px; /* Font size */
+  border-radius: 10px; /* Rounded button corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth color transition */
 }
 
+/* Hover effect for nav and action buttons */
 .nav-bar button:hover, .action-buttons button:hover {
-  background-color: #393a34;
-  transform: scale(1.05); /* Subtle growth effect */
+  background-color: #393a34; /* Darker gray color for hover state */
+  transform: scale(1.05); /* Slight zoom effect for hover */
 }
 
+/* Footer Styling */
 footer {
-  text-align: left;
-  padding: 20px;
-  font-size: 14px;
-  color: #393a34;
+  position: static; /* Default static positioning */
+  text-align: left; /* Left-align footer text */
+  padding: 20px; /* Inner padding for footer */
+  font-size: 14px; /* Footer text size */
+  color: #393a34; /* Gray footer text */
 }
 
+/* Footer container for layout */
+.footer-container {
+  display: flex; /* Flexbox layout */
+  justify-content: space-between; /* Separate left and right sections */
+  align-items: center; /* Vertically align items */
+  max-width: 750px; /* Limit the width of the footer */
+  margin: 0 auto; /* Center the footer horizontally */
+  width: 100%; /* Ensure footer spans the viewport width */
+}
 
-/* Hero Section */
+/* Right section of the footer */
+.footer-right {
+  display: flex; /* Enable flexbox */
+  flex-direction: column; /* Stack items vertically */
+  align-items: flex-end; /* Align items to the right */
+  gap: 10px; /* Add spacing between links */
+}
+
+/* Styling for footer links or clickable items */
+.footer-right p {
+  cursor: pointer; /* Indicate clickable items */
+  color: #697665; /* Green text color */
+  font-weight: 500; /* Slightly bold for emphasis */
+  transition: color 0.3s ease; /* Smooth transition effect */
+  margin: 0; /* Remove default margins */
+  padding: 0; /* Remove default padding */
+}
+
+/* Hover effect for footer links */
+.footer-right a:hover {
+  color: #393a34; /* Darker hover color */
+}
+
+/* Hero Section Styling */
 .hero {
-  display: flex;                 /* Enables flexbox */
-  flex-direction: column;        /* Stacks items vertically */
-  align-items: center;           /* Centers items horizontally */
-  justify-content: start;       /* Centers items vertically */
-  height: calc(100vh - 60px);    /* Subtracts 60px for the navigation bar height */    
-  width: 100%;                   /* Ensures the hero takes the full width */
-  text-align: center;            /* Centers the text within the container */
-  margin-top: 60px;              /* Removes default margins */
-  padding: 10px;                 /* Sets padding */
-  padding-top: 30px;
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: start; /* Align items to the top */
+  height: calc(100vh - 60px); /* Full height minus nav bar height */
+  width: 100%; /* Full width of the viewport */
+  text-align: center; /* Center-align text */
+  margin-top: 60px; /* Space below the navigation bar */
+  padding: 10px; /* Inner padding */
+  padding-top: 30px; /* Additional padding at the top */
+  box-sizing: border-box; /* Include padding in height/width calculations */
 }
 
-
-/* Hero Image */
+/* Hero section image */
 #hero-logo {
-  width: 400px;                  /* Adjust the logo size */
-  height: auto;                  /* Maintain aspect ratio */
-  margin: 0 20px 10px;           /* Top: 0, Right: 20px, Bottom: 10px, Left: 20px */
-  display: block;                /* Ensures it behaves as a block-level element */
+  width: 400px; /* Logo width */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 20px 10px; /* Margin around the logo */
+  display: block; /* Treat the logo as a block-level element */
 }
 
-
-
-/* Hero Text */
+/* Hero section text */
 .hero p {
-  font-style: italic;            /* Makes the text italic */
-
+  font-style: italic; /* Italicize paragraph text */
 }
+
 .hero h2 {
-  color: #393a34;              /* Text color */
-  margin-bottom: 0;
-  font-size: 1,8em;
+  color: #393a34; /* Dark gray heading text */
+  margin-bottom: 0; /* Remove bottom margin */
+  font-size: 1.8em; /* Increase heading size */
 }
 
+/* Text container inside hero section */
 .text-container {
-  max-width: 800px;               /* Limit the maximum width */
-  margin: 0 auto;                 /* Center horizontally */
-  text-align: center;             /* Center the text inside */
-  padding: 20px;                  /* Add some padding for spacing */
-  color: #393a34;                 /* Adjust text color (optional) */
-  font-size: 18px;                /* Set font size (optional) */
-  line-height: 1.6;               /* Improve readability */
+  max-width: 800px; /* Limit text container width */
+  margin: 0 auto; /* Center the text container */
+  text-align: center; /* Center-align the text */
+  padding: 20px; /* Add padding inside the container */
+  color: #393a34; /* Text color */
+  font-size: 18px; /* Font size */
+  line-height: 1.6; /* Increase line height for readability */
 }
 
-/* carousel section*/
+/* Carousel Section */
 .carousel {
-  position: relative;
-  width: 100%;                  /* Set the carousel width */
-  max-width: 750px;             /* Optional: limit max width */
-  overflow: hidden;             /* Hide the overflow to show only one image */
-
+  position: relative; /* Relative positioning for internal elements */
+  width: 100%; /* Full width of the container */
+  max-width: 750px; /* Limit carousel width */
+  overflow: hidden; /* Hide content outside the container */
 }
 
+/* Carousel container holding items */
 .carousel-container {
-  display: flex;
-  transition: transform 0.5s ease-in-out; /* Smooth slide animation */
-  width: 100%;                  /* Adjust to fit one image fully */
+  display: flex; /* Horizontal layout for carousel items */
+  transition: transform 0.5s ease-in-out; /* Smooth slide effect */
+  width: 100%; /* Full width of the carousel */
 }
 
+/* Individual carousel items */
 .carousel-item {
-  flex: 0 0 100%;               /* Each item takes 100% of the container width */
-  text-align: center;
+  flex: 0 0 100%; /* Each item takes full width */
+  text-align: center; /* Center-align content */
 }
 
+/* Images inside carousel items */
 .carousel-item img {
-  width: 100%;                 /* Image fills the width of the container */
-  max-height: 300px;           /* Set the maximum height for the image */
-  object-fit: cover;           /* Ensures the image scales properly and covers the container */
-
+  width: 100%; /* Image spans full width */
+  max-height: 300px; /* Limit image height */
+  object-fit: cover; /* Scale image to fit without distortion */
 }
 
+/* Introductory text below the hero section */
 .intro-text {
-text-align: center;
-font-size: 18px;
-color: #666;
-margin: 110px 0 40px;
+  text-align: center; /* Center align text */
+  font-size: 18px; /* Font size */
+  color: #666; /* Light gray text color */
+  margin: 110px 0 40px; /* Space above and below the text */
 }
 
 /* Table Styling */
 .menu-table {
-width: 100%;
-max-width: 75%; /* Set a maximum width relative to the screen */
-border-collapse: collapse;
-margin: 0 auto;
-background-color: #f8f7f2;
-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-border-radius: 10px; /* Add rounded corners */
-overflow: hidden; /* Ensures rounded edges are visible */
+  width: 100%; /* Full width table */
+  max-width: 70%; /* Limit table width */
+  border-collapse: collapse; /* Collapse table borders */
+  margin: 0 auto; /* Center the table */
+  background-color: #f8f7f2; /* Beige background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Clip overflowing content */
 }
 
-/* Image Column Styling */
+/* Styling for the first column (images) */
 .menu-table th:nth-child(1), 
 .menu-table td:nth-child(1) {
-width: 120px; /* Fixed width for the image column */
-text-align: center; /* Center-align the content */
+  width: 120px; /* Set column width */
+  text-align: center; /* Center-align text */
 }
 
-/* Price Column Styling */
+/* Styling for the price column */
 .menu-table th:nth-child(3), 
 .menu-table td:nth-child(3) {
-  width: 100px; /* Fixed width for price column */
-  text-align: center; /* Center the price values */
+  width: 100px; /* Set column width */
+  text-align: center; /* Center-align text */
 }
 
+/* General styling for table headers and cells */
 .menu-table th, .menu-table td {
-padding: 12px;
-text-align: left;
-border: 1px solid #ddd;
+  padding: 12px; /* Add padding inside cells */
+  text-align: left; /* Left-align text */
+  border: 1px solid #ddd; /* Add border around cells */
 }
 
-
+/* Styling for table headers */
 .menu-table th {
-background-color: #697665;  /* Green background for table headers */
-color: white;
-font-size: 18px;
+  background-color: #697665; /* Green header background */
+  color: white; /* White header text */
+  font-size: 18px; /* Header font size */
 }
 
+/* Styling for table data cells */
 .menu-table td {
-font-size: 18px;
-vertical-align: middle;  /* Align the contents vertically */
+  font-size: 18px; /* Cell font size */
+  vertical-align: middle; /* Vertically align text */
 }
 
-/* Styling for Image and Text */
+/* Images in the table */
 .menu-table img {
-border-radius: 8px;
-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Rounded image corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
+/* Fallback text for missing images */
 .menu-table td p {
-color: red;  /* Fallback text in case no image is available */
-font-style: italic;
+  color: red; /* Red fallback text */
+  font-style: italic; /* Italicize fallback text */
 }
 
-/* Hover Effect for Table Rows */
+/* Hover effect for table rows */
 .menu-table tr:hover {
-background-color: #e8f3e5;
+  background-color: #e8f3e5; /* Light green background on hover */
 }
 
 
+/* Button Styling */
+.button {
+  padding: 5px 15px; /* Inner padding for buttons */
+  border: none; /* Remove border */
+  background-color: #849972; /* Default button background */
+  color: white; /* White text */
+  border-radius: 20px; /* Rounded button corners */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  margin-right: 5px; /* Add spacing to the right */
+}
+
+/* Hover effect for buttons */
+.button:hover {
+  background-color: #6c815d; /* Darker green on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Increase shadow depth */
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex; /* Horizontal layout for buttons */
+  justify-content: center; /* Center align buttons */
+  gap: 5px; /* Space between buttons */
+  margin-top: 10px; /* Add spacing above */
+}
+
+/* Adjust action button sizes */
+.action-buttons button {
+  min-width: 80px; /* Minimum button width */
+  width: auto; /* Flexible width */
+  height: 50px; /* Button height */
+  font-size: 16px; /* Font size */
+}
+
+/* Layout for list items */
+.listitems ul {
+  display: grid; /* Grid layout for items */
+  justify-content: center; /* Center align items */
+  list-style: none; /* Remove bullet points */
+  margin-top: 30px; /* Add spacing above */
+  margin-bottom: 30px; /* Add spacing below */
+  padding: 0px; /* Remove padding */
+}
+
+/* Page Container */
+.container {
+  display: flex; /* Flexbox layout */
+  justify-content: center; /* Center content */
+  min-height: 80vh; /* Minimum height for the container */
+  margin-top: 80px; /* Space above */
+}
+
+/* Content Box */
+.content-box {
+  width: 80%; /* Set a responsive width for the content box */
+  max-width: 800px; /* Prevent the content box from growing too wide */
+  margin: 0 auto; /* Center the content box */
+  padding: 20px; /* Add inner spacing */
+  background-color: white; /* White background for contrast */
+  border-radius: 10px; /* Rounded corners for a polished look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+  text-align: center; /* Center-align text inside the box */
+  overflow: hidden; /* Prevent content overflow */
+
+/* Image Gallery */
+.image-gallery {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow images to wrap to the next line on small screens */
+  justify-content: center; /* Center images horizontally */
+  gap: 15px; /* Space between images */
+  margin: 20px 0; /* Add vertical spacing around the gallery */
+}
+
+/* Individual Images in Gallery */
+.image-gallery img {
+  width: 120px; /* Image width */
+  height: 100px; /* Image height */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ccc; /* Add border */
+}
+
+/* Details Section */
+.details {
+  margin: 20px 45px; /* Margin around the details section */
+  text-align: left; /* Left-align text */
+}
+
+/* Container Heading */
+.container h1 {
+  margin-top: 0px; /* No margin above the heading */
+}
 
 
-/* Adjust for tablet screens */
+/* Media Queries for Responsive Design */
+/* Tablet screens (max width: 1024px) */
 @media (max-width: 1024px) {
   .nav-bar button {
-      width: 130px; /* Reduce button width */
-      height: 45px; /* Reduce button height */
-      font-size: 16px; /* Adjust font size */
+    width: 130px; /* Adjust button width */
+    height: 45px; /* Adjust button height */
+    font-size: 16px; /* Reduce font size */
   }
-  .menu-table, .menu-table td, .menu-table th, .intro-text{
-    font-size: 16px; /* Reduce font size for smaller screens */
+  .menu-table, .menu-table td, .menu-table th, .intro-text {
+    font-size: 16px; /* Adjust table and text font size */
+  }
+  footer {
+    padding: 15px; /* Reduce padding for smaller screens */
+    font-size: 13px; /* Slightly smaller font size */
+  }
+
+  .footer-container {
+    flex-direction: column; /* Stack footer sections vertically */
+    text-align: center; /* Center-align text */
+    gap: 15px; /* Add spacing between stacked sections */
+  }
+
+  .footer-right {
+    align-items: center; /* Center align items */
   }
 }
 
-/* Adjust for small screens */
+/* Small screens (max width: 768px) */
 @media (max-width: 768px) {
   .nav-bar button {
-      font-size: 14px; /* Smaller font size */
+    font-size: 14px; /* Further reduce font size */
   }
 
-  .menu-table, .menu-table td, .menu-table th, .intro-text{
-    font-size: 14px; /* Reduce font size for smaller screens */
+  .menu-table, .menu-table td, .menu-table th, .intro-text {
+    font-size: 14px; /* Further adjust font size */
   }
 
   .content-box {
-    width: 95%; /* Further adjust width for small screens */
+    width: 95%; /* Reduce content box width */
     padding: 10px; /* Reduce padding */
-}
-
+  }
 
   .image-gallery img {
-      width: 80px; /* Further reduce image size */
-      height: 60px;
+    width: 80px; /* Reduce image size */
+    height: auto; /* Maintain aspect ratio */
   }
 
   .details {
-      margin: 10px 10px; /* Reduce margin */
-      font-size: 14px; /* Adjust text size */
+    margin: 10px 10px; /* Adjust margin */
+    font-size: 14px; /* Adjust font size */
   }
 
   .listitems ul {
-      display: block; /* Stack list items */
-      text-align: left; /* Align text to the left */
+    display: block; /* Stack list items */
+    text-align: left; /* Left-align text */
   }
 
   .listitems ul li {
-      margin-bottom: 10px; /* Add spacing between list items */
+    margin-bottom: 10px; /* Add spacing between list items */
+  }
+  footer {
+    padding: 10px; /* Further reduce padding for smaller screens */
+    font-size: 12px; /* Smaller font size */
+  }
+
+  .footer-container {
+    flex-direction: column; /* Stack footer sections vertically */
+    text-align: center; /* Center-align text */
+    gap: 10px; /* Adjust spacing */
+  }
+
+  .footer-right {
+    align-items: center; /* Center items */
+  }
+
+  .footer-right p {
+    font-size: 12px; /* Adjust text size for smaller screens */
   }
 }
-
-.button {
-  padding: 5px 15px;
-  border: none;
-  background-color: #849972; /* Default button color */
-  color: white;
-  border-radius: 20px; /* Rounded button */
-  font-size: 16px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-  margin-right: 5px; /* Add space to the right of each button */
-}
-
-/* Hover Effect */
-.button:hover{
-  background-color: #6c815d; /* Darker shade for hover */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow */
-}
-
-
-/* restaurant page*/
-.action-buttons {
-display: flex;
-justify-content: center;
-gap: 5px; 
-margin-top: 10px;
-}
-
-.action-buttons button {
-min-width: 80px !important;
-width: auto;
-height: 50px;
-font-size: 16px;
-}
-
-.listitems ul {
-display: grid;
-justify-content: center;
-list-style: none;
-margin-top: 30px;
-margin-bottom: 30px;
-padding: 0px;
-}
-
-.container {
-display: flex; 
-justify-content: center; 
-min-height: 80vh;
-margin-top: 80px;
-}
-
-.content-box {
-width: 80%; 
-max-width: 800px; 
-max-height: 650px;
-border: 1px solid #ccc; 
-border-radius: 10px; 
-padding: 20px; 
-background-color: white; 
-text-align: center;
-margin-top: 0px;
-}
-.image-gallery {
-display: flex; 
-justify-content: center; 
-gap: 15px; 
-margin: 20px 0;
-}
-
-.image-gallery img {
-width: 120px; 
-height: 100px; 
-border-radius: 5px; 
-border: 1px solid #ccc;
-}
-.details {
-margin: 20px 45px; 
-text-align: left;
-}
-
-.container h1 {
-margin-top: 0px;
 }

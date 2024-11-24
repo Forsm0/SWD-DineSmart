@@ -2,11 +2,15 @@ extends navBar
 
 block content
   .hero
+    // Logo image at the top of the hero section
     img#hero-logo(src="/img/Dinesmartbeige.png", alt="Dine Smart Logo")
     h2 Skip the Wait, Savor the Moment! 
+
+    // Container for descriptive text below the hero
     .text-container
       p DineSmart is your ultimate dining companion, designed to make restaurant reservations and meal pre-ordering effortless. Whether you're planning a romantic dinner, a group gathering, or a quick meal on the go, DineSmart connects you with restaurants, allowing you to book tables, browse menus, and pre-order your favorite dishes—all in one seamless experience. Say goodbye to long waits and last-minute stress, and let DineSmart transform the way you dine.
- 
+
+    // Carousel section for rotating images
     .carousel
         .carousel-container
             .carousel-item
@@ -16,5 +20,5 @@ block content
             .carousel-item
                 img(src="/img/car3.png", alt="Carousel Item 3")
 
-  // Include the JavaScript file for the carousel
+  // Script to enable carousel functionality
   script(src="/js/carousel.js")
