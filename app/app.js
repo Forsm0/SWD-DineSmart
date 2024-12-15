@@ -15,14 +15,15 @@ app.use(express.static("static"));
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
+// render homepage
 app.get("/", function(req, res) {
     res.render("index");
 });
 
-// Create a route for root - Home page /
+// Create a route for viewing menu /
 app.get("/Menu", function(req, res) {
 
-    sql = 'SELECT * FROM Menu'; // Assuming 'image' column is BLOB
+    sql = 'SELECT * FROM Menu'; 
     
     db.query(sql).then(results => {
         res.render("item", { 'data': results });
@@ -31,6 +32,40 @@ app.get("/Menu", function(req, res) {
         res.status(500).send("Error fetching data");
     });
 });
+
+// Menu ordering page (table selection logic can be added later)
+app.get("/menuorder", function(req, res) {
+    const sql = 'SELECT * FROM Menu'; // Fetch menu items from the database
+
+    db.query(sql).then(results => {
+        res.render("menuorder", { data: results }); // Render the correct Pug template
+    }).catch(error => {
+        console.error("Error fetching data from database:", error);
+        res.status(500).send("Error fetching data");
+    });
+});
+
+
+//  app.get("/menuorder", async (req, res) => {
+//     if (!req.session.selectedTable) {
+//         return res.redirect("/select-table"); // Ensure a table is selected
+//     }
+//     const sql = "SELECT * FROM Menu"; // Fetch all menu items
+//     try {
+//         const menuItems = await db.query(sql);
+//         const loggedIn = req.session?.loggedIn || false; // Check login status
+//         res.render("menuorder", {
+//             data: menuItems,
+//             loggedIn,
+//             selectedTable: req.session.selectedTable,
+//         });
+//     } catch (error) {
+//         console.error("Error fetching menu items:", error);
+//         res.status(500).send("Error loading menu");
+//     }
+// });
+
+
 
 
 // Create a route for testing the db
@@ -54,6 +89,7 @@ app.get("/goodbye", function(req, res) {
 app.get("/restaurants", function(req, res) {
     res.render("restaurant_profile");
 });
+
 
 
 // Start server on port 3000
