@@ -163,6 +163,38 @@ button, input, textarea, select {
 }
 
 
+/* Styling for Add to Cart buttons */
+.add-to-cart-button {
+  padding: 8px 16px; /* Comfortable padding */
+  font-size: 16px; /* Match table font size */
+  color: #fff; /* White text for contrast */
+  background-color: #697665; /* Match the green theme */
+  border: none; /* Remove default border */
+  border-radius: 5px; /* Rounded corners for a modern look */
+  cursor: pointer; /* Pointer cursor for interaction feedback */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+/* Hover effect for Add to Cart buttons */
+.add-to-cart-button:hover {
+  background-color: #393a34; /* Darker shade for hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Disable button styling */
+.add-to-cart-button:disabled {
+  background-color: #ddd; /* Gray background for disabled state */
+  cursor: not-allowed; /* Show the user it’s unclickable */
+}
+
+/* Adjust button placement in the table */
+.menu-table td:last-child {
+  text-align: center; /* Center align buttons in the Action column */
+  vertical-align: middle; /* Align buttons vertically in the middle */
+}
+
+
 /* Button Styling */
 .button {
   padding: 5px 15px; /* Inner padding for buttons */
