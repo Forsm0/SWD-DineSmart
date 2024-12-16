@@ -42,16 +42,30 @@ app.get("/Menu", function(req, res) {
 });
 
 // Menu ordering page (table selection logic can be added later)
-app.get("/menuorder", function(req, res) {
-    const sql = 'SELECT * FROM Menu'; // Fetch menu items from the database
+app.get("/menuorder", function (req, res) {
+    const sortBy = req.query.sort || 'Name'; // Default sorting by Name
+    let sql;
 
+    // Construct SQL query based on sort option
+    if (sortBy === "PriceAsc") {
+        sql = "SELECT * FROM Menu ORDER BY Price ASC";
+    } else if (sortBy === "PriceDesc") {
+        sql = "SELECT * FROM Menu ORDER BY Price DESC";
+    } else if (sortBy === "Category") {
+        sql = "SELECT * FROM Menu ORDER BY category ASC"; // Assuming a 'category' column exists
+    } else {
+        sql = "SELECT * FROM Menu ORDER BY Name ASC"; // Default sorting by Name
+    }
+
+    // Fetch data from database
     db.query(sql).then(results => {
-        res.render("menuorder", { data: results }); // Render the correct Pug template
+        res.render("menuorder", { data: results, sortBy }); // Render menuorder with data
     }).catch(error => {
-        console.error("Error fetching data from database:", error);
+        console.error("Error fetching data:", error);
         res.status(500).send("Error fetching data");
     });
 });
+
 
 
 //  app.get("/menuorder", async (req, res) => {
