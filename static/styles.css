@@ -96,7 +96,18 @@ button, input, textarea, select {
   text-align: center; /* Center align text */
   font-size: 18px; /* Font size */
   color: #666; /* Light gray text color */
-  margin: 110px 0 40px; /* Space above and below the text */
+  margin: 20px 0 40px; /* Space above and below the text */
+}
+
+.formwrapper {
+  display: flex;
+  justify-content: center; /* Center the form horizontally */
+  margin-top: 20px; /* Add some spacing from the navbar */
+}
+
+
+#category {
+  margin: 100px 0 0;
 }
 
 /* Table Styling */
@@ -288,6 +299,45 @@ button, input, textarea, select {
 .container h1 {
   margin-top: 0px; /* No margin above the heading */
 }
+
+
+
+/* Dropdown Styling */
+form {
+  margin: 20px auto; /* Center the form on the page */
+  text-align: center; /* Center-align content */
+}
+
+label {
+  font-size: 18px; /* Match font size with the rest of the design */
+  margin-right: 10px; /* Space between the label and the dropdown */
+  color: #393a34; /* Dark gray to match the theme */
+}
+
+select {
+  font-size: 16px; /* Set a readable font size */
+  padding: 8px 12px; /* Add padding for a better click area */
+  border: 1px solid #ddd; /* Light gray border */
+  border-radius: 5px; /* Smooth corners */
+  background-color: #f8f7f2; /* Beige background to match the theme */
+  color: #393a34; /* Text color for readability */
+  cursor: pointer; /* Indicate that it’s clickable */
+  transition: all 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* Dropdown Hover and Focus Effects */
+select:hover,
+select:focus {
+  border-color: #697665; /* Highlight the border on hover and focus */
+  background-color: #e8f3e5; /* Slightly lighter green background */
+  outline: none; /* Remove the default focus outline */
+}
+
+/* Ensure the dropdown doesn't grow too wide */
+select option {
+  padding: 5px 10px; /* Add padding inside dropdown options */
+}
+
 
 
 /* Media Queries for Responsive Design */
