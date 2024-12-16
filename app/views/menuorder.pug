@@ -2,6 +2,23 @@ extends navBar
 
 block content
 
+    .formwrapper
+        // Sorting Options Section
+        form#category(action="/menuorder" method="GET")
+            // Label for the sort dropdown
+            label(for="sort") Sort By: 
+            
+            // Dropdown menu for sorting options
+            select(name="sort" onchange="this.form.submit()")
+                // Default sorting: Name
+                option(value="Name" selected=sortBy === 'Name') Name
+                // Sort by Category
+                option(value="Category" selected=sortBy === 'Category') Category
+                // Sort by Price (Low to High)
+                option(value="PriceAsc" selected=sortBy === 'PriceAsc') Price: Low to High
+                // Sort by Price (High to Low)
+                option(value="PriceDesc" selected=sortBy === 'PriceDesc') Price: High to Low
+
     // Introductory text for the menu section
     p(class="intro-text") Here are the delicious menu items:
 
@@ -21,18 +38,26 @@ block content
             // Loop through the data
             each item in data
                 tr
+                    // Display item image
                     td
                         if item.imagePath
-                            img(src=item.imagePath, alt=item.Name, width="100", height="100")
+                            img(src=item.imagePath, alt=item.Name, width="100", height="100") 
                         else
-                            p No image available
+                            p No image available 
+                    
+                    // Display item name
                     td #{item.Name}
+                    
+                    // Display item price
                     td £#{item.Price}
+                    
+                    // Display item description
                     td #{item.Description}
+                    
                     // Add button in the last column
                     td
                         button(type="button" class="add-to-cart-button" 
                             data-id=item.id 
                             data-name=item.Name 
                             data-price=item.Price)
-                            | Select
+                            | Add to Cart
