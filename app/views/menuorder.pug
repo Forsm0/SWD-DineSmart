@@ -1,0 +1,38 @@
+extends navBar
+
+block content
+
+    // Introductory text for the menu section
+    p(class="intro-text") Here are the delicious menu items:
+
+    // Menu table display
+    table(class="menu-table", border="0")
+        // Table header
+        thead
+            tr
+                th 
+                th Name
+                th Price
+                th Description
+                th 
+
+        // Table body
+        tbody
+            // Loop through the data
+            each item in data
+                tr
+                    td
+                        if item.imagePath
+                            img(src=item.imagePath, alt=item.Name, width="100", height="100")
+                        else
+                            p No image available
+                    td #{item.Name}
+                    td £#{item.Price}
+                    td #{item.Description}
+                    // Add button in the last column
+                    td
+                        button(type="button" class="add-to-cart-button" 
+                            data-id=item.id 
+                            data-name=item.Name 
+                            data-price=item.Price)
+                            | Select
