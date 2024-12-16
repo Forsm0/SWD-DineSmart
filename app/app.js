@@ -19,6 +19,35 @@ app.get("/", function(req, res) {
     res.render("index");
 });
 
+app.get("/reservation-form", function(req, res) {
+    res.render("reservation_form");
+});
+app.get('/book-time', (req, res) => {
+    // Simulated database query result
+    const timeSlots = [
+      {
+        date: '28.10.2024',
+        times: ['12:00', '13:00', '14:00', '19:00', '20:00', '21:00']
+      },
+      {
+        date: '29.10.2024',
+        times: ['12:00', '14:00', '19:00', '20:00', '21:00']
+      },
+      {
+        date: '30.10.2024',
+        times: ['12:00', '13:00', '19:00', '20:00']
+      },
+      {
+        date: '31.10.2024',
+        times: ['12:00', '13:00', '14:00']
+      }
+    ];
+  
+    // Render the Pug template and pass the time slots
+    res.render('table_reservations', { timeSlots });
+  });
+  
+
 // Create a route for root - Home page /
 app.get("/Menu", function(req, res) {
 

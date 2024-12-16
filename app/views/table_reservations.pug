@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  // Main container
+  .container
+    h1.booktime Book a time!
+    .filters
+      button Guests
+      button Date
+      button Time
+
+    // Time slots display
+    each dateSlot in timeSlots
+      hr
+      h4= dateSlot.date
+      .time-slots
+        each time in dateSlot.times
+          button= time
+
+    // Select button
+    .select-container
+      button.confirmtime Confirm Time
+
+  // Footer
+  footer
+    p Privacy
