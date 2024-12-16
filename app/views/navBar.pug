@@ -4,12 +4,22 @@ extends layout
 //- Main content block
 block content1
     //- Navigation Bar Section
-    nav
-        .nav-bar
-            //- Navigation buttons with onclick handlers for routing
+    nav.nav-bar
+        .nav-center
             button(onclick="window.location.href='/'" aria-label="Navigate to Home") Home
             button(onclick="window.location.href='/restaurants'" aria-label="Navigate to Restaurant Profile") Restaurant
             button(onclick="window.location.href='/menu'" aria-label="Navigate to Menu Page") Menu
+
+        .nav-right
+            if loggedIn
+                // Cart Icon Button
+                button#cart-button(onclick="window.location.href='/cart'", aria-label="View Cart")
+                    img(src="/img/cart_icon.png", alt="Cart", width="24", height="24")
+                // Logout Button
+                button(onclick="window.location.href='/logout'", aria-label="Logout") Logout
+            else
+                // Sign In Button
+                button#signin-button(onclick="window.location.href='/login'" aria-label="Sign In") Sign In
 
     //- Placeholder for specific page content; will be overridden in extended templates
     block content  
