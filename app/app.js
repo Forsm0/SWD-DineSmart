@@ -12,6 +12,14 @@ app.set('views', './app/views');
 app.use(express.static("static"));
 //app.use(express.static(path.join(__dirname, 'public')));
 
+// Test to see navbar as logged in
+// Temporary middleware to simulate logged-in state
+// app.use((req, res, next) => {
+//     res.locals.loggedIn = true; // Change to `false` to simulate logged-out state
+//     next();
+// });
+
+
 // Get the functions in the db.js file to use
 const db = require('./services/db');
 
