@@ -129,7 +129,8 @@ button, input, textarea, select {
 
 /* Styling for the dropdowns */
 .dropdown-wrapper select {
-  width: 200px; /* Set dropdown width */
+  width: 190px; /* Set dropdown width */
+  text-align: center;
   padding: 8px; /* Add padding for spacing */
   font-size: 16px; /* Font size for dropdown text */
   border: 1px solid #ccc; /* Light gray border */

@@ -3,7 +3,28 @@ extends navBar
 block content
 
     // Introductory text for the menu section
-    p(class="intro-text") Here are the delicious menu items:
+    p(class="intro-text") Here are the delicious menu items
+
+    .formwrapper
+        // Form for sorting options
+        form(action="/menuorder" method="GET")
+            // Dropdown for Category
+            div.dropdown-wrapper
+                label(for="category") 
+                select(name="category" onchange="this.form.submit()")
+                    option(value="All" selected=categoryFilter === 'All') All Categories
+                    option(value="starter" selected=categoryFilter === 'starter') Starters
+                    option(value="main" selected=categoryFilter === 'main') Main
+                    option(value="dessert" selected=categoryFilter === 'dessert') Desserts
+
+
+            // Dropdown for Price
+            div.dropdown-wrapper
+                label(for="sort") 
+                select(name="sort" onchange="this.form.submit()")
+                    option(value="PriceAsc" selected=sortBy === 'PriceAsc') Price: Low to High
+                    option(value="PriceDesc" selected=sortBy === 'PriceDesc') Price: High to Low
+
 
     // Menu table display
     table(class="menu-table", border="0")
