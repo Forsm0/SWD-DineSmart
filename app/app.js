@@ -5,6 +5,17 @@ const path = require('path');
 // Create express app
 var app = express();
 
+const { User } = require("./models/user");
+
+// Set the sessions
+var session = require('express-session');
+app.use(session({
+  secret: 'secretkeysdfjsflyoifasd',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
 // Use the Pug templating engine
 app.set('view engine', 'pug');
 app.set('views', './app/views');
@@ -26,6 +37,16 @@ const db = require('./services/db');
 // render homepage
 app.get("/", function(req, res) {
     res.render("index");
+});
+
+// Register
+app.get('/register', function (req, res) {
+    res.render('register');
+});
+
+// Login
+app.get('/login', function (req, res) {
+    res.render('login');
 });
 
 // Create a route for viewing menu /
@@ -66,6 +87,68 @@ app.get("/menuorder", function (req, res) {
     });
 });
 
+app.get("/", function(req, res) {
+    console.log(req.session);
+    if (req.session.uid) {
+		res.send('Welcome back, ' + req.session.uid + '!');
+	} else {
+		res.send('Please login to view this page!');
+	}
+	res.end();
+});
+
+// Logout
+app.get('/logout', function (req, res) {
+    req.session.destroy();
+    res.redirect('/login');
+  });
+
+app.post('/set-password', async function (req, res) {
+    params = req.body;
+    var user = new User(params.email);
+    try {
+        uId = await user.getIdFromEmail();
+        if (uId) {
+            // If a valid, existing user is found, set the password and redirect to the users single-student page
+            await user.setUserPassword(params.password);
+            console.log(req.session.id);
+            res.send('Password set successfully');
+        }
+        else {
+            // If no existing user is found, add a new one
+            newId = await user.addUser(params.email);
+            res.send('Perhaps a page where a new user sets a programme would be good here');
+        }
+    } catch (err) {
+        console.error(`Error while adding password `, err.message);
+    }
+})
+
+app.post('/authenticate', async function (req, res) {
+    params = req.body;
+    var user = new User(params.email);
+    try {
+        uId = await user.getIdFromEmail();
+        if (uId) {
+            match = await user.authenticate(params.password);
+            if (match) {
+                req.session.uid = uId;
+                req.session.loggedIn = true;
+                console.log(req.session.id);
+                res.redirect('/student-single/' + uId);
+            }
+            else {
+                // TODO improve the user journey here
+                res.send('invalid password');
+            }
+        }
+        else {
+            res.send('invalid email');
+        }
+    } catch (err) {
+        console.error(`Error while comparing `, err.message);
+    }
+});
 
 
 //  app.get("/menuorder", async (req, res) => {

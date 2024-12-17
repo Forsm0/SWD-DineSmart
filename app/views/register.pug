@@ -1,0 +1,36 @@
+extends layout
+
+block content1 
+    .container
+        //- Logo Placeholder
+        .logo-placeholder
+
+        //- Heading
+        h1 Hey, We are glad you chose Dine Smart!
+        p.sub-heading Let's get started
+
+        //- Sign-Up Form
+        form(action="#" method="post")
+            label(for="name") Name
+            input#name(type="text" placeholder="Enter your full name" required)
+
+            label(for="phone") Mobile number
+            input#phone(type="tel" placeholder="Enter your phone number" required)
+
+            label(for="email") Email
+            input#email(type="email" placeholder="Please enter your email address" required)
+
+            label(for="password") Password
+            input#password(type="password" placeholder="Please enter your password" required)
+
+            //- Buttons
+            button.btn-signup(type="submit") Sign up
+            button.btn-back(type="button") Back
+
+    //- Footer Links
+    .footer
+        | &copy; DineSmart 2024 
+        a(href="#") Privacy
+        a(href="#") Our mission
+        a(href="#") Q&A.
+
