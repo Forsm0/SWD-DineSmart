@@ -43,28 +43,44 @@ app.get("/Menu", function(req, res) {
 
 // Menu ordering page (table selection logic can be added later)
 app.get("/menuorder", function (req, res) {
-    const sortBy = req.query.sort || 'Name'; // Default sorting by Name
-    let sql;
+    const sortBy = req.query.sort || 'Name'; // Default sorting
+    const categoryFilter = req.query.category || 'All'; // Default category filter
 
-    // Construct SQL query based on sort option
-    if (sortBy === "PriceAsc") {
-        sql = "SELECT * FROM Menu ORDER BY Price ASC";
-    } else if (sortBy === "PriceDesc") {
-        sql = "SELECT * FROM Menu ORDER BY Price DESC";
-    } else if (sortBy === "Category") {
-        sql = "SELECT * FROM Menu ORDER BY category ASC"; // Assuming a 'category' column exists
-    } else {
-        sql = "SELECT * FROM Menu ORDER BY Name ASC"; // Default sorting by Name
+    let sql = "SELECT * FROM Menu";
+    const queryParams = [];
+
+    // Add WHERE clause if a category filter is applied
+    if (categoryFilter !== 'All') {
+        sql += " WHERE Category = ?";
+        queryParams.push(categoryFilter);
     }
 
-    // Fetch data from database
-    db.query(sql).then(results => {
-        res.render("menuorder", { data: results, sortBy }); // Render menuorder with data
-    }).catch(error => {
-        console.error("Error fetching data:", error);
-        res.status(500).send("Error fetching data");
-    });
+    // Add ORDER BY clause for sorting
+    if (sortBy === "PriceAsc") {
+        sql += " ORDER BY Price ASC";
+    } else if (sortBy === "PriceDesc") {
+        sql += " ORDER BY Price DESC";
+    } else {
+        sql += " ORDER BY Name ASC";
+    }
+
+    // Execute query with parameterized input
+    db.query(sql, queryParams)
+        .then(results => {
+            res.render("menuorder", { 
+                data: results, 
+                sortBy, 
+                categoryFilter 
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching data:", error);
+            res.status(500).send("Error fetching data");
+        });
 });
+
+
+
 
 
 
