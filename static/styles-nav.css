@@ -8,6 +8,7 @@
   position: fixed; /* Fix the nav bar at the top of the page */
   top: 0; /* Position at the top of the viewport */
   width: 100%; /* Full width */
+  margin-left: 35px;
   background-color: #f8f7f2;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -21,13 +22,13 @@
 
 .nav-right {
   display: flex; /* Right-aligned section */
-  flex-direction: column;
+  /* flex-direction: column; */
   flex-wrap: nowrap;
   justify-content: flex-end; /* Ensure items are aligned to the right */
   align-items: center;
   gap: 15px; /* Space between Cart and Sign In/Logout */
   width: 50px;
-  margin-right: 50px;
+  margin-right: 45px;
 }
 
 /* Style for the cart button */
@@ -43,8 +44,8 @@
   
 }
 
-#signin-button {
-  width: 120px;
+.nav-right #signin-button {
+  min-width: 100px;
 }
 
 #cart-button img {
