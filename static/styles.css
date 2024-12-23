@@ -320,3 +320,48 @@ footer p {
 .submit-button:hover {
   background-color: #393a34;
 }
+
+
+/* Filter Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+.filter-group label {
+  font-weight: bold;
+  color: #393a34;
+}
+
+.filter-group input {
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.filter-button {
+  padding: 8px 15px;
+  font-size: 16px;
+  color: white;
+  background-color: #697665;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: #393a34;
+}

@@ -22,32 +22,112 @@ app.get("/", function(req, res) {
 app.get("/reservation-form", function(req, res) {
     res.render("reservation_form");
 });
+
 app.get('/book-time', (req, res) => {
-    // Simulated database query result
-    const timeSlots = [
-      {
-        date: '28.10.2024',
-        times: ['12:00', '13:00', '14:00', '19:00', '20:00', '21:00']
-      },
-      {
-        date: '29.10.2024',
-        times: ['12:00', '14:00', '19:00', '20:00', '21:00']
-      },
-      {
-        date: '30.10.2024',
-        times: ['12:00', '13:00', '19:00', '20:00']
-      },
-      {
-        date: '31.10.2024',
-        times: ['12:00', '13:00', '14:00']
-      }
-    ];
-  
-    // Render the Pug template and pass the time slots
-    res.render('table_reservations', { timeSlots });
+    const sql = `
+    SELECT * FROM restaurant_table
+    WHERE table_status = 'open'
+`;
+    db.query(sql).then(results => {
+        console.log(results);
+        const resultsArray = Array.isArray(results) ? results : [results];
+        console.log("All Rows from DB:", resultsArray)
+        const timeSlots = [];
+        resultsArray.forEach(row => {
+            const date = row.available_date.toISOString().split('T')[0].split('-').reverse().join('.'); // Format date as DD.MM.YYYY
+            const existingSlot = timeSlots.find(slot => slot.date === date);
+
+            if (existingSlot) {
+                // Add the time if the date already exists
+                existingSlot.times.push(row.available_time);
+            } else {
+                // Add a new date with its first time
+                timeSlots.push({
+                    date,
+                    times: [row.available_time]
+                });
+            }
+        });
+        console.log("Formatted TimeSlots:", timeSlots);
+        res.render('table_reservations', { timeSlots });
+    });
+
   });
   
 
+  app.get('/timeslots', async (req, res) => {
+    const { guests, date, time } = req.query;
+
+    // Basic Validation
+    if (!guests || !date || !time) {
+        return res.status(400).send('All filter fields are required.');
+    }
+
+    // Format the date as YYYY-MM-DD
+    const formattedDate = date.split('/').reverse().join('-'); // Converts to YYYY-MM-DD
+    // Format time as HH:MM:SS (adding :00 if necessary)
+    const formattedTime = time.includes(':') && time.split(':').length === 2 ? `${time}:00` : time;
+
+    console.log("Formatted Time:", formattedTime);  // Debugging
+    console.log("Formatted Date:", formattedDate);  // Debugging
+
+    // SQL Query with placeholders
+    const query = `
+        SELECT * FROM restaurant_table
+        WHERE capacity >= ? 
+        AND available_time = ?
+    `;
+
+    try {
+        // Execute Query using await
+        const values = [guests, formattedTime];
+        const results = await db.query(query, values);
+
+        console.log("Query Results:", results); // Debugging query results
+
+        if (results.length === 0) {
+            console.log("No available tables found.");
+            return res.status(404).send('No available tables found.');
+        }
+
+        // Ensure results is always an array
+        const formattedResults = Array.isArray(results) ? results : [results];
+
+        // Convert BinaryRow to a plain JavaScript object and group by available_date
+        const formattedData = [];
+
+        formattedResults.forEach(row => {
+            const availableDate = row.available_date.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
+            const availableTime = row.available_time;
+
+            // Find the existing entry for the date
+            const existingDateSlot = formattedData.find(slot => slot.date === availableDate);
+
+            if (existingDateSlot) {
+                // If the date exists, push the available_time into the `times` array
+                existingDateSlot.times.push(availableTime);
+            } else {
+                // If the date doesn't exist, create a new entry
+                formattedData.push({
+                    date: availableDate,
+                    times: [availableTime]
+                });
+            }
+        });
+
+        console.log("Formatted Data for Pug:", formattedData); // Debugging
+
+        // Pass the formattedData to your Pug template for rendering
+        res.render('table_reservations', { timeSlots: formattedData });
+
+    } catch (err) {
+        console.error("Error retrieving time slots:", err);
+        res.status(500).send('Error retrieving time slots.');
+    }
+});
+
+
+  
 // Create a route for root - Home page /
 app.get("/Menu", function(req, res) {
 
