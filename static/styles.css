@@ -5,16 +5,18 @@
    - Black: #11150c
 */
 
-
 /* Base Styles */
 body {
   background-color: #f8f7f2; /* Light beige for the page background */
-  font-family: 'Poppins', sans-serif; /* Clean and modern font */
+  font-family: "Poppins", sans-serif; /* Clean and modern font */
   color: #393a34; /* Dark gray text color for readability */
 }
 
 /* Ensure form elements inherit the font styling from the body */
-button, input, textarea, select {
+button,
+input,
+textarea,
+select {
   font-family: inherit;
 }
 
@@ -96,9 +98,8 @@ button, input, textarea, select {
   text-align: center; /* Center align text */
   font-size: 18px; /* Font size */
   color: #666; /* Light gray text color */
-  margin:90px 0 20px; /* Space above and below the text */
+  margin: 90px 0 20px; /* Space above and below the text */
 }
-
 
 /* Dropdown Styling */
 .formwrapper {
@@ -154,7 +155,6 @@ button, input, textarea, select {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for focus */
 }
 
-
 #category {
   margin: 100px 0 0;
 }
@@ -172,21 +172,22 @@ button, input, textarea, select {
 }
 
 /* Styling for the first column (images) */
-.menu-table th:nth-child(1), 
+.menu-table th:nth-child(1),
 .menu-table td:nth-child(1) {
   width: 120px; /* Set column width */
   text-align: center; /* Center-align text */
 }
 
 /* Styling for the price column */
-.menu-table th:nth-child(3), 
+.menu-table th:nth-child(3),
 .menu-table td:nth-child(3) {
   width: 100px; /* Set column width */
   text-align: center; /* Center-align text */
 }
 
 /* General styling for table headers and cells */
-.menu-table th, .menu-table td {
+.menu-table th,
+.menu-table td {
   padding: 12px; /* Add padding inside cells */
   text-align: left; /* Left-align text */
   border: 1px solid #ddd; /* Add border around cells */
@@ -222,7 +223,6 @@ button, input, textarea, select {
   background-color: #e8f3e5; /* Light green background on hover */
 }
 
-
 /* Styling for Add to Cart buttons */
 .add-to-cart-button {
   padding: 8px 16px; /* Comfortable padding */
@@ -253,7 +253,6 @@ button, input, textarea, select {
   text-align: center; /* Center align buttons in the Action column */
   vertical-align: middle; /* Align buttons vertically in the middle */
 }
-
 
 /* Button Styling */
 .button {
@@ -309,6 +308,52 @@ button, input, textarea, select {
   margin-top: 80px; /* Space above */
 }
 
+/*register page*/
+.hregcontainer {
+  display: flex;
+  justify-content: center;
+}
+
+.logo-placeholder img {
+  width: 150px;
+  height: 150px;
+}
+
+.container11 {
+  height: 100vh;
+}
+
+.formreg {
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  align-self: center;
+  width: 50%;
+  margin-top: 30px;
+}
+
+.formreg input {
+  padding: 10px;
+}
+
+.btn-signup {
+  margin: auto;
+  margin-top: 30px;
+  width: 50%;
+}
+
+.btn-back {
+  margin: auto;
+  margin-top: 20px;
+  width: 50%;
+}
+
+.btn-login {
+  margin: auto;
+  margin-top: 20px;
+  width: 50%;
+}
+
 /* Content Box */
 .content-box {
   width: 80%; /* Set a responsive width for the content box */
@@ -321,130 +366,125 @@ button, input, textarea, select {
   text-align: center; /* Center-align text inside the box */
   overflow: hidden; /* Prevent content overflow */
 
-/* Image Gallery */
-.image-gallery {
-  display: flex; /* Use flexbox for layout */
-  flex-wrap: wrap; /* Allow images to wrap to the next line on small screens */
-  justify-content: center; /* Center images horizontally */
-  gap: 15px; /* Space between images */
-  margin: 20px 0; /* Add vertical spacing around the gallery */
-}
-
-/* Individual Images in Gallery */
-.image-gallery img {
-  width: 120px; /* Image width */
-  height: 100px; /* Image height */
-  border-radius: 5px; /* Rounded corners */
-  border: 1px solid #ccc; /* Add border */
-}
-
-/* Details Section */
-.details {
-  margin: 20px 45px; /* Margin around the details section */
-  text-align: left; /* Left-align text */
-}
-
-/* Container Heading */
-.container h1 {
-  margin-top: 0px; /* No margin above the heading */
-}
-
-
-
-
-
-
-/* Media Queries for smaller screens */
-@media (max-width: 768px) {
-  .formwrapper {
-    flex-direction: column; /* Stack dropdowns vertically */
-    gap: 15px; /* Increase space between dropdowns */
-  }
-}
-
-
-
-
-
-/* Media Queries for Responsive Design */
-/* Tablet screens (max width: 1024px) */
-@media (max-width: 1024px) {
-  .nav-bar button {
-    width: 130px; /* Adjust button width */
-    height: 45px; /* Adjust button height */
-    font-size: 16px; /* Reduce font size */
-  }
-  .menu-table, .menu-table td, .menu-table th, .intro-text {
-    font-size: 16px; /* Adjust table and text font size */
-  }
-  footer {
-    padding: 15px; /* Reduce padding for smaller screens */
-    font-size: 13px; /* Slightly smaller font size */
+  /* Image Gallery */
+  .image-gallery {
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow images to wrap to the next line on small screens */
+    justify-content: center; /* Center images horizontally */
+    gap: 15px; /* Space between images */
+    margin: 20px 0; /* Add vertical spacing around the gallery */
   }
 
-  .footer-container {
-    flex-direction: column; /* Stack footer sections vertically */
-    text-align: center; /* Center-align text */
-    gap: 15px; /* Add spacing between stacked sections */
-  }
-
-  .footer-right {
-    align-items: center; /* Center align items */
-  }
-}
-
-/* Small screens (max width: 768px) */
-@media (max-width: 768px) {
-  .nav-bar button {
-    font-size: 14px; /* Further reduce font size */
-  }
-
-  .menu-table, .menu-table td, .menu-table th, .intro-text {
-    font-size: 14px; /* Further adjust font size */
-  }
-
-  .content-box {
-    width: 95%; /* Reduce content box width */
-    padding: 10px; /* Reduce padding */
-  }
-
+  /* Individual Images in Gallery */
   .image-gallery img {
-    width: 80px; /* Reduce image size */
-    height: auto; /* Maintain aspect ratio */
+    width: 120px; /* Image width */
+    height: 100px; /* Image height */
+    border-radius: 5px; /* Rounded corners */
+    border: 1px solid #ccc; /* Add border */
   }
 
+  /* Details Section */
   .details {
-    margin: 10px 10px; /* Adjust margin */
-    font-size: 14px; /* Adjust font size */
-  }
-
-  .listitems ul {
-    display: block; /* Stack list items */
+    margin: 20px 45px; /* Margin around the details section */
     text-align: left; /* Left-align text */
   }
 
-  .listitems ul li {
-    margin-bottom: 10px; /* Add spacing between list items */
-  }
-  footer {
-    padding: 10px; /* Further reduce padding for smaller screens */
-    font-size: 12px; /* Smaller font size */
+  /* Container Heading */
+  .container h1 {
+    margin-top: 0px; /* No margin above the heading */
   }
 
-  .footer-container {
-    flex-direction: column; /* Stack footer sections vertically */
-    text-align: center; /* Center-align text */
-    gap: 10px; /* Adjust spacing */
+  /* Media Queries for smaller screens */
+  @media (max-width: 768px) {
+    .formwrapper {
+      flex-direction: column; /* Stack dropdowns vertically */
+      gap: 15px; /* Increase space between dropdowns */
+    }
   }
 
-  .footer-right {
-    align-items: center; /* Center items */
+  /* Media Queries for Responsive Design */
+  /* Tablet screens (max width: 1024px) */
+  @media (max-width: 1024px) {
+    .nav-bar button {
+      width: 130px; /* Adjust button width */
+      height: 45px; /* Adjust button height */
+      font-size: 16px; /* Reduce font size */
+    }
+    .menu-table,
+    .menu-table td,
+    .menu-table th,
+    .intro-text {
+      font-size: 16px; /* Adjust table and text font size */
+    }
+    footer {
+      padding: 15px; /* Reduce padding for smaller screens */
+      font-size: 13px; /* Slightly smaller font size */
+    }
+
+    .footer-container {
+      flex-direction: column; /* Stack footer sections vertically */
+      text-align: center; /* Center-align text */
+      gap: 15px; /* Add spacing between stacked sections */
+    }
+
+    .footer-right {
+      align-items: center; /* Center align items */
+    }
   }
 
-  .footer-right p {
-    font-size: 12px; /* Adjust text size for smaller screens */
-  }
+  /* Small screens (max width: 768px) */
+  @media (max-width: 768px) {
+    .nav-bar button {
+      font-size: 14px; /* Further reduce font size */
+    }
 
+    .menu-table,
+    .menu-table td,
+    .menu-table th,
+    .intro-text {
+      font-size: 14px; /* Further adjust font size */
+    }
+
+    .content-box {
+      width: 95%; /* Reduce content box width */
+      padding: 10px; /* Reduce padding */
+    }
+
+    .image-gallery img {
+      width: 80px; /* Reduce image size */
+      height: auto; /* Maintain aspect ratio */
+    }
+
+    .details {
+      margin: 10px 10px; /* Adjust margin */
+      font-size: 14px; /* Adjust font size */
+    }
+
+    .listitems ul {
+      display: block; /* Stack list items */
+      text-align: left; /* Left-align text */
+    }
+
+    .listitems ul li {
+      margin-bottom: 10px; /* Add spacing between list items */
+    }
+    footer {
+      padding: 10px; /* Further reduce padding for smaller screens */
+      font-size: 12px; /* Smaller font size */
+    }
+
+    .footer-container {
+      flex-direction: column; /* Stack footer sections vertically */
+      text-align: center; /* Center-align text */
+      gap: 10px; /* Adjust spacing */
+    }
+
+    .footer-right {
+      align-items: center; /* Center items */
+    }
+
+    .footer-right p {
+      font-size: 12px; /* Adjust text size for smaller screens */
+    }
+  }
 }
-}
-
