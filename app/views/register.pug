@@ -13,20 +13,20 @@ block content1
 
         //- Sign-Up Form
         
-        form.formreg(action="#" method="post")
+        form.formreg(action="/register" method="post")
         
 
             label(for="name") Name:
-            input#name(type="text" placeholder="Enter your full name" required) 
+            input#name(type="text" name="name" placeholder="Enter your full name" required) 
         
             label(for="phone") Mobile number:
-            input#phone(type="tel" placeholder="Enter your phone number" required) 
+            input#phone(type="tel" name="phone" placeholder="Enter your phone number" required) 
 
             label(for="email") Email: 
-            input#email(type="email" placeholder="Please enter your email address" required) 
+            input#email(type="email" name="email" placeholder="Please enter your email address" required) 
 
             label(for="password") Password:
-            input#password(type="password" placeholder="Please enter your password" required)
+            input#password(type="password" name="password" placeholder="Please enter your password" required)
 
             //- Buttons
 
