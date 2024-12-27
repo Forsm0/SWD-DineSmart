@@ -1,4 +1,5 @@
 // Get the functions in the db.js file to use
+const { match } = require("assert");
 const db = require("../services/db");
 
 const bcrypt = require("bcryptjs");
@@ -16,7 +17,7 @@ class User {
 
   // Get an existing user id from an email address, or return false if not found
   async getIdFromEmail() {
-    var sql = "SELECT id FROM User WHERE Users.email = ?";
+    var sql = "SELECT id FROM Users WHERE Users.email = ?";
     const result = await db.query(sql, [this.email]);
     // TODO LOTS OF ERROR CHECKS HERE..
     if (JSON.stringify(result) != "[]") {
@@ -47,12 +48,20 @@ class User {
   }
 
   // Test a submitted password against a stored password
-  async authenticate(submitted) {
+  async authenticate(password, uId) {
     // Get the stored, hashed password for the user
     var sql = "SELECT password FROM Users WHERE id = ?";
-    const result = await db.query(sql, [this.id]);
-    const match = await bcrypt.compare(submitted, result[0].password);
-    if (match == true) {
+    const result = await db.query(sql, [uId]);
+    let passmatch = false;
+
+    // const match = await bcrypt.compare(password, result[0].password);
+    if (password === result[0].password) {
+      passmatch = true;
+    } else {
+      passmatch = false;
+    }
+
+    if (passmatch == true) {
       return true;
     } else {
       return false;

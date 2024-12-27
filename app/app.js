@@ -184,18 +184,48 @@ app.post("/register", function (req, res) {
   // }
 });
 
+// app.post("/authenticate", async function (req, res) {
+//   params = req.body;
+//   var user = new User(params.email);
+//   try {
+//     uId = await user.getIdFromEmail();
+//     if (uId) {
+//       match = await user.authenticate(params.password);
+//       if (match) {
+//         req.session.uid = uId;
+//         req.session.loggedIn = true;
+//         console.log(req.session.id);
+//         res.redirect("/restaurants/" + uId);
+//       } else {
+//         // TODO improve the user journey here
+//         res.send("invalid password");
+//       }
+//     } else {
+//       res.send("invalid email");
+//     }
+//   } catch (err) {
+//     console.error(`Error while comparing `, err.message);
+//   }
+// });
+
 app.post("/authenticate", async function (req, res) {
-  params = req.body;
-  var user = new User(params.email);
+  console.log("Email:", req.body.email);
+  console.log("Password:", req.body.password);
+  const email = req.body.email;
+  const password = req.body.password;
+  let passmatch = false;
+  var user = new User(email);
   try {
     uId = await user.getIdFromEmail();
+    console.log(uId, "from db");
+
     if (uId) {
-      match = await user.authenticate(params.password);
-      if (match) {
-        req.session.uid = uId;
-        req.session.loggedIn = true;
-        console.log(req.session.id);
-        res.redirect("/restaurants/" + uId);
+      passmatch = await user.authenticate(password, uId);
+      if (passmatch) {
+        // req.session.uid = uId;
+        // req.session.loggedIn = true;
+        // console.log(req.session.id);
+        res.redirect("/restaurants");
       } else {
         // TODO improve the user journey here
         res.send("invalid password");
