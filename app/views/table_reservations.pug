@@ -30,16 +30,16 @@ block content
     if timeSlots && timeSlots.length > 0
         each dateSlot in timeSlots
             hr
-            h4= dateSlot.date
+            h4.displayed-date= dateSlot.date
             .time-slots
             each time in dateSlot.times
-                button= time
+                button.time-slot(data-time=time data-date=dateSlot.date)= time
     else
         p No available time slots found.
 
     // Select button
     .select-container
-      button Select
+      button#confirm-btn Select
 
   footer
     p Privacy | Terms & Conditions

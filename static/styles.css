@@ -260,9 +260,48 @@ button.booktime {
   background-color: #f5f5f5;
 }
 
-.time-slots button:hover {
-  background-color: #e0e0e0;
+/* Time Slot Buttons */
+.time-slot {
+  background-color: #849972;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
+.time-slot:hover {
+  background-color: #6c815d;
+  transform: scale(1.05);
+}
+
+.time-slot.selected {
+  background-color: #393a34;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+/* Select Button */
+#confirm-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #697665;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#confirm-btn:hover {
+  background-color: #393a34;
+}
+/* time slots */
 
 footer p {
   text-align: center;

@@ -4,7 +4,7 @@ block content
   .formcontainer
     h1.booktime Table Reservation Form
 
-    form(method='POST', action='/reserve') 
+    form(method='POST', action=`/reserve?tableId=${tableId}&tableNumber=${tableNumber}`)
       .form-group
         label(for='name') Name
         input#name(type='text', name='name', placeholder='Your Full Name', required)
@@ -16,6 +16,10 @@ block content
       .form-group
         label(for='phone') Phone Number
         input#phone(type='tel', name='phone', placeholder='Your Phone Number', required)
+      
+      .form-group
+        label(for='Allergies') Allergies
+        input#phone(type='text', name='Allergies', placeholder='Allergies', required)
 
       .form-group
         label(for='guests') Number of Guests

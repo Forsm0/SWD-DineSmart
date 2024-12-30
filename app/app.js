@@ -1,6 +1,8 @@
 // Import express.js
 const express = require("express");
 const path = require('path');
+const bodyParser = require('body-parser');
+
 
 // Create express app
 var app = express();
@@ -10,7 +12,9 @@ app.set('view engine', 'pug');
 app.set('views', './app/views');
 // Add static files location
 app.use(express.static("static"));
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
+
 
 // Get the functions in the db.js file to use
 const db = require('./services/db');
@@ -19,22 +23,20 @@ app.get("/", function(req, res) {
     res.render("index");
 });
 
-app.get("/reservation-form", function(req, res) {
-    res.render("reservation_form");
-});
 
+// Table reservation routes 
 app.get('/book-time', (req, res) => {
     const sql = `
     SELECT * FROM restaurant_table
     WHERE table_status = 'open'
 `;
     db.query(sql).then(results => {
-        console.log(results);
         const resultsArray = Array.isArray(results) ? results : [results];
         console.log("All Rows from DB:", resultsArray)
-        const timeSlots = [];
+        const timeSlots = [];           
         resultsArray.forEach(row => {
-            const date = row.available_date.toISOString().split('T')[0].split('-').reverse().join('.'); // Format date as DD.MM.YYYY
+            const date = row.available_date.toISOString().split('T')[0].split('-').reverse().join('/'); // Format date as DD.MM.YYYY
+            console.log(date)
             const existingSlot = timeSlots.find(slot => slot.date === date);
 
             if (existingSlot) {
@@ -125,6 +127,94 @@ app.get('/book-time', (req, res) => {
         res.status(500).send('Error retrieving time slots.');
     }
 });
+
+
+app.get('/getTableId', async (req, res) => {
+    const { date, time } = req.query;
+    // Format the date as YYYY-MM-DD
+    const formattedDate = date.split('/').reverse().join('-'); // Converts to YYYY-MM-DD
+    console.log("Formatted Date:", formattedDate);  // Debugging
+
+
+    if (!date || !time) {
+        return res.status(400).send({ error: 'Date and time are required.' });
+    }
+
+    try {
+        const query = `
+            SELECT id, table_number
+            FROM restaurant_table
+            WHERE available_date = ? AND available_time = ?
+        `;
+        const values = [formattedDate, time];
+        const results = await db.query(query, values);
+        console.log(values)
+
+        if (results.length === 0) {
+            return res.status(404).send({ error: 'No table found for the selected date and time.' });
+        }
+
+        res.status(200).send({ tableId: results[0].id, tableNumber: results[0].table_number });
+    } catch (err) {
+        console.error('Error fetching table ID:', err);
+        res.status(500).send({ error: 'Internal server error.' });
+    }
+});
+
+app.get("/reservation-form", (req, res) => {
+    const { tableId, tableNumber } = req.query;
+    console.log("Received Table Info:", tableId, tableNumber); // Debugging
+
+    if (!tableId || !tableNumber) {
+        return res.status(400).send('Table information is missing.');
+    }
+
+    // Render the reservation form with table info
+    res.render("reservation_form", { tableId, tableNumber });
+});
+
+  
+
+
+app.post('/reserve', async (req, res) => {
+    const { name, email, phone, Allergies, guests } = req.body; // Form data
+    const { tableId, tableNumber } = req.query; // Query params from URL
+
+    // Debug: Log incoming data
+    console.log('Form Data:', req.body);
+    console.log('Query Params:', req.query);
+
+    if (!name || !email || !phone || !Allergies || !guests || !tableId || !tableNumber) {
+        console.error('Missing data: ', { name, email, phone,Allergies, guests, tableId, tableNumber });
+        return res.status(400).send('All fields are required.');
+    }
+
+    try {
+        // Insert the reservation into the reservations table
+        const insertQuery = `
+            INSERT INTO reservations (name, email, phone_number, number_of_guests, table_number,Allergies)
+            VALUES (?, ?, ?, ?, ?,?)
+        `;
+        const insertValues = [name, email, phone, guests, tableNumber,Allergies];
+        await db.query(insertQuery, insertValues);
+
+        // Update the table status to 'reserved'
+        const updateQuery = `
+            UPDATE restaurant_table
+            SET table_status = 'reserved'
+            WHERE id = ?
+        `;
+        await db.query(updateQuery, [tableId]);
+
+        // Redirect to confirmation page or Cart page 
+        res.redirect(`/Menu?tableId=${tableId}&tableNumber=${tableNumber}`);
+    } catch (error) {
+        console.error('Error processing reservation:', error);
+        res.status(500).send('Error processing reservation.');
+    }
+});
+
+
 
 
   
