@@ -17,7 +17,6 @@ block content
                     option(value="main" selected=categoryFilter === 'main') Main
                     option(value="dessert" selected=categoryFilter === 'dessert') Desserts
 
-
             // Dropdown for Price
             div.dropdown-wrapper
                 label(for="sort") 
@@ -25,8 +24,6 @@ block content
                     option(value="PriceAsc" selected=sortBy === 'PriceAsc') Price: Low to High
                     option(value="PriceDesc" selected=sortBy === 'PriceDesc') Price: High to Low
 
-    button(type="button" class="go-to-cart")
-                        | Go to Cart
     // Menu table display
     table(class="menu-table", border="0")
         // Table header
@@ -35,8 +32,9 @@ block content
                 th 
                 th Name
                 th Price
-                th Description
-                th 
+                th Add
+                th Quantity
+                th Total Price
 
         // Table body
         tbody
@@ -48,23 +46,37 @@ block content
                         if item.imagePath
                             img(src=item.imagePath, alt=item.Name, width="100", height="100") 
                         else
-                            p No image available 
+                            p No image available
                     
                     // Display item name
-                    td #{item.Name}
+                    td #{item.name}
                     
                     // Display item price
-                    td £#{item.Price}
+                    td £#{item.price}
                     
-                    // Display item description
-                    td #{item.Description}
+                
                     
-                    // Add button in the last column
+                    // Add/Remove buttons column
                     td
-                        button(type="button" class="add-to-cart-button" 
+                        button(type="button" class="increment-button" 
                             data-id=item.id 
-                            data-name=item.Name 
-                            data-price=item.Price
-                            data-image=item.imagePath
-                            )
-                            | Add
+                            data-name=item.name 
+                            data-price=item.price) +
+                        button(type="button" class="decrement-button" 
+                            data-id=item.id 
+                            data-name=item.name 
+                            data-price=item.price) -
+
+                    // Quantity column
+                    td(id=`quantity-${item.id}`) 0
+
+                    // Total price column
+                    td(id=`total-${item.id}`) £0.00
+
+        // Table footer for total sum
+        tfoot
+            tr
+                td(colspan="5") Total Sum
+                td(id="total-sum", colspan="2") £0.00
+
+

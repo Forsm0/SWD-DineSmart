@@ -1,6 +1,7 @@
 // Import express.js
 const express = require("express");
 const path = require('path');
+const cookieParser = require('cookie-parser');
 
 // Create express app
 var app = express();
@@ -35,6 +36,21 @@ app.use(express.static("static"));
 const db = require('./services/db');
 
 // render homepage
+
+app.use(cookieParser());
+
+// Route for the cart page
+app.get("/cart", (req, res) => {
+    // Retrieve cartItems from cookies
+    const storedCartItems = req.cookies.cartItems ? JSON.parse(req.cookies.cartItems) : []; 
+
+    res.render("cart", { 
+        data: storedCartItems // Pass cartItems as 'data' to the Pug template
+    });
+});
+
+
+
 app.get("/", function(req, res) {
     res.render("index");
 });
@@ -99,6 +115,7 @@ app.get("/menuorder", function (req, res) {
             res.status(500).send("Error fetching data");
         });
 });
+
 
 app.get("/", function(req, res) {
     console.log(req.session);
@@ -201,11 +218,7 @@ app.get("/db_test", function(req, res) {
     });
 });
 
-// Create a route for /goodbye
-// Responds to a 'GET' request
-app.get("/goodbye", function(req, res) {
-    res.send("Goodbye world!");
-});
+
 
 app.get("/restaurants", function(req, res) {
     res.render("restaurant_profile");
