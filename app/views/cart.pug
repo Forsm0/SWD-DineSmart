@@ -5,7 +5,6 @@ block content
     // Introductory text for the menu section
     p(class="intro-text") Here are the Cart Items
 
-
     // Menu table display
     table(class="menu-table", border="0")
         // Table header
@@ -36,8 +35,6 @@ block content
                     // Display item price
                     td £#{item.price}
                     
-                
-                    
                     // Add/Remove buttons column
                     td
                         button(type="button" class="increment-button" 
@@ -61,4 +58,6 @@ block content
                 td(colspan="5") Total Sum
                 td(id="total-sum", colspan="2") £0.00
 
-
+    // "Proceed to Payment" button
+    .payment-wrapper.center
+        button(type="button" id="proceed-to-payment" class="payment-button") Proceed to Payment
