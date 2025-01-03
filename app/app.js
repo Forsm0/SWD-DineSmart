@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
 const bodyParser = require('body-parser');
 
+
+
 // Create express app
 var app = express();
 app.use(bodyParser.json());
@@ -25,7 +27,8 @@ app.set('view engine', 'pug');
 app.set('views', './app/views');
 // Add static files location
 app.use(express.static("static"));
-//app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
 
 // Test to see navbar as logged in
 // Temporary middleware to simulate logged-in state
@@ -132,6 +135,16 @@ app.get('/register', function (req, res) {
 // Login
 app.get('/login', function (req, res) {
     res.render('login');
+});
+
+// Render privacy policy
+app.get('/privacy-policy', function (req, res) {
+    res.render('privacy-policy');
+});
+
+// Render terms of service
+app.get('/terms-of-service', function (req, res) {
+    res.render('terms-of-service');
 });
 
 // Create a route for viewing menu /
@@ -246,6 +259,200 @@ app.post('/authenticate', async function (req, res) {
         }
     } catch (err) {
         console.error(`Error while comparing `, err.message);
+    }
+});
+
+
+// Table reservation routes 
+app.get('/book-time', (req, res) => {
+    const sql = `
+    SELECT * FROM RestaurantTable
+    WHERE table_status = 'Available'
+`;
+    db.query(sql).then(results => {
+        const resultsArray = Array.isArray(results) ? results : [results];
+        console.log("All Rows from DB:", resultsArray)
+        const timeSlots = [];           
+        resultsArray.forEach(row => {
+            const date = row.available_date.toISOString().split('T')[0].split('-').reverse().join('/'); // Format date as DD.MM.YYYY
+            console.log(date)
+            const existingSlot = timeSlots.find(slot => slot.date === date);
+
+            if (existingSlot) {
+                // Add the time if the date already exists
+                existingSlot.times.push(row.available_time);
+            } else {
+                // Add a new date with its first time
+                timeSlots.push({
+                    date,
+                    times: [row.available_time]
+                });
+            }
+        });
+        console.log("Formatted TimeSlots:", timeSlots);
+        res.render('table_reservations', { timeSlots });
+    });
+
+  });
+  
+
+  app.get('/timeslots', async (req, res) => {
+    const { guests, date, time } = req.query;
+
+    // Basic Validation
+    if (!guests || !date || !time) {
+        return res.status(400).send('All filter fields are required.');
+    }
+
+    // Format the date as YYYY-MM-DD
+    const formattedDate = date.split('/').reverse().join('-'); // Converts to YYYY-MM-DD
+    // Format time as HH:MM:SS (adding :00 if necessary)
+    const formattedTime = time.includes(':') && time.split(':').length === 2 ? `${time}:00` : time;
+
+    console.log("Formatted Time:", formattedTime);  // Debugging
+    console.log("Formatted Date:", formattedDate);  // Debugging
+
+    // SQL Query with placeholders
+    const query = `
+        SELECT * FROM RestaurantTable
+        WHERE capacity >= ? 
+        AND available_time = ?
+    `;
+
+    try {
+        // Execute Query using await
+        const values = [guests, formattedTime];
+        const results = await db.query(query, values);
+
+        console.log("Query Results:", results); // Debugging query results
+
+        if (results.length === 0) {
+            console.log("No available tables found.");
+            return res.status(404).send('No available tables found.');
+        }
+
+        // Ensure results is always an array
+        const formattedResults = Array.isArray(results) ? results : [results];
+
+        // Convert BinaryRow to a plain JavaScript object and group by available_date
+        const formattedData = [];
+
+        formattedResults.forEach(row => {
+            const availableDate = row.available_date.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
+            const availableTime = row.available_time;
+
+            // Find the existing entry for the date
+            const existingDateSlot = formattedData.find(slot => slot.date === availableDate);
+
+            if (existingDateSlot) {
+                // If the date exists, push the available_time into the `times` array
+                existingDateSlot.times.push(availableTime);
+            } else {
+                // If the date doesn't exist, create a new entry
+                formattedData.push({
+                    date: availableDate,
+                    times: [availableTime]
+                });
+            }
+        });
+
+        console.log("Formatted Data for Pug:", formattedData); // Debugging
+
+        // Pass the formattedData to your Pug template for rendering
+        res.render('table_reservations', { timeSlots: formattedData });
+
+    } catch (err) {
+        console.error("Error retrieving time slots:", err);
+        res.status(500).send('Error retrieving time slots.');
+    }
+});
+
+
+app.get('/getTableId', async (req, res) => {
+    const { date, time } = req.query;
+    // Format the date as YYYY-MM-DD
+    const formattedDate = date.split('/').reverse().join('-'); // Converts to YYYY-MM-DD
+    console.log("Formatted Date:", formattedDate);  // Debugging
+
+
+    if (!date || !time) {
+        return res.status(400).send({ error: 'Date and time are required.' });
+    }
+
+    try {
+        const query = `
+            SELECT TableID AS id, table_number
+            FROM RestaurantTable
+            WHERE available_date = ? AND available_time = ?
+        `;
+        const values = [formattedDate, time];
+        const results = await db.query(query, values);
+        console.log(values)
+
+        if (results.length === 0) {
+            return res.status(404).send({ error: 'No table found for the selected date and time.' });
+        }
+
+        res.status(200).send({ tableId: results[0].id, tableNumber: results[0].table_number });
+    } catch (err) {
+        console.error('Error fetching table ID:', err);
+        res.status(500).send({ error: 'Internal server error.' });
+    }
+});
+
+app.get("/reservation-form", (req, res) => {
+    const { tableId, tableNumber,date,time } = req.query;
+    console.log("Received Table Info:", tableId, tableNumber,date,time); // Debugging
+
+    if (!tableId || !tableNumber) {
+        return res.status(400).send('Table information is missing.');
+    }
+
+    // Render the reservation form with table info
+    res.render("reservation_form", { tableId, tableNumber,date,time });
+});
+
+  
+
+
+app.post('/reserve', async (req, res) => {
+    const { name, email, phone, Allergies, guests } = req.body; // Form data
+    const { tableId, tableNumber,date,time } = req.query; // Query params from URL
+
+    // Debug: Log incoming data
+    console.log('Form Data:', req.body);
+    console.log('Query Params:', req.query);
+
+
+    if (!name || !email || !phone || !Allergies || !guests || !tableId || !tableNumber|| !date || !time) {
+        console.error('Missing data: ', { name, email, phone,Allergies, guests, tableId, tableNumber,date,time });
+        return res.status(400).send('All fields are required.');
+    }
+    
+    try {
+        // Insert the reservation into the reservations table
+        
+        const isoDate = date.split('/').reverse().join('-');
+        const insertQuery = `
+            INSERT INTO Reservation (name, email, phone_number, number_of_guests, TableID,Allergies,UserID,Date,StartTime)
+            VALUES (?, ?, ?, ?, ?,?,?,?,?)
+        `;
+        const insertValues = [name, email, phone, guests, tableId,Allergies,2,isoDate,time];
+        await db.query(insertQuery, insertValues);
+
+        // Update the table status to 'reserved'
+        const updateQuery = `
+            UPDATE RestaurantTable
+            SET table_status = 'reserved'
+            WHERE TableID = ?
+        `;
+        await db.query(updateQuery, [tableId]);
+
+        // Redirect to confirmation page or Cart page 
+        res.redirect(`/Menuorder?tableId=${tableId}&tableNumber=${tableNumber}`);
+    } catch (error) {
+        console.error('Error processing reservation:', error);
+        res.status(500).send('Error processing reservation.');
     }
 });
 
