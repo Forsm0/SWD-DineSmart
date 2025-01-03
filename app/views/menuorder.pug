@@ -17,7 +17,6 @@ block content
                     option(value="main" selected=categoryFilter === 'main') Main
                     option(value="dessert" selected=categoryFilter === 'dessert') Desserts
 
-
             // Dropdown for Price
             div.dropdown-wrapper
                 label(for="sort") 
@@ -25,8 +24,6 @@ block content
                     option(value="PriceAsc" selected=sortBy === 'PriceAsc') Price: Low to High
                     option(value="PriceDesc" selected=sortBy === 'PriceDesc') Price: High to Low
 
-    button(type="button" class="go-to-cart")
-                        | Go to Cart
     // Menu table display
     table(class="menu-table", border="0")
         // Table header
@@ -68,3 +65,8 @@ block content
                             data-image=item.imagePath
                             )
                             | Add
+
+    // Centered "Go to Cart" button below table
+    .button-wrapper.center
+        button(type="button" class="go-to-cart")
+            | Go to Cart
