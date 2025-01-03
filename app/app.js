@@ -2,9 +2,12 @@
 const express = require("express");
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
 
 // Create express app
 var app = express();
+app.use(bodyParser.json());
 
 const { User } = require("./models/user");
 
@@ -38,6 +41,72 @@ const db = require('./services/db');
 // render homepage
 
 app.use(cookieParser());
+
+
+app.post('/send-cart-details', async (req, res) => {
+    const { cartDetails, totalSum, customerEmail } = req.body;
+
+    if (!customerEmail) {
+        return res.status(400).send('Customer email is required.');
+    }
+
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'ammadmanandubizzle@gmail.com',  // Replace with your Gmail address
+                pass: 'wvkt qvnc gxnp qczy',     // Use your Gmail App Password (NOT regular Gmail password)
+            },
+        });
+
+        const cartDetailsHtml = cartDetails
+            .map(
+                item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>£${item.price.toFixed(2)}</td>
+                    <td>${item.quantity}</td>
+                    <td>£${item.total.toFixed(2)}</td>
+                </tr>
+            `
+            )
+            .join('');
+
+        const emailBody = `
+            <h2>Your Cart Details</h2>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Item Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${cartDetailsHtml}
+                </tbody>
+            </table>
+            <p><strong>Total Sum:</strong> £${totalSum}</p>
+        `;
+
+        // Send the email
+        await transporter.sendMail({
+            from: 'ammadmanandubizzle@gmail.com',  // Replace with your Gmail address
+            to: customerEmail,
+            subject: 'Your Cart Details',
+            html: emailBody,
+        });
+
+        res.send('Email sent successfully');
+    } catch (error) {
+        // Log the full error for debugging
+        console.error('Error sending email:', error);  // Log full error object
+        res.status(500).send(`Error sending email: ${error.message}`);  // Send the detailed error message to the frontend
+    }
+});
+
+
 
 // Route for the cart page
 app.get("/cart", (req, res) => {

@@ -64,6 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Selected buttons:', incrementButtons, decrementButtons);
 
     // Add click event listener to each increment button
+    
     incrementButtons.forEach(button => {
         console.log("Increment event added");
         button.addEventListener('click', () => {
@@ -134,5 +135,44 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Updated cart:', currentCartItems);
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('proceed-to-payment').addEventListener('click', async () => {
+        try {
+            const cartDetails = currentCartItems.map(item => ({
+                name: item.name,
+                price: item.price,
+                quantity: item.quantity,
+                total: item.quantity * item.price,
+            }));
+            const totalSum = document.getElementById('total-sum').textContent.replace('£', '');
+
+            const emailPayload = {
+                cartDetails,
+                totalSum,
+                customerEmail: prompt('Enter your email address to receive the details:'), // Ask for customer's email
+            };
+
+            const response = await fetch('/send-cart-details', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(emailPayload),
+            });
+
+            if (response.ok) {
+                alert('Cart details sent successfully!');
+            } else {
+                alert('Failed to send cart details. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('An error occurred while sending the email.');
+        }
+    });
+});
+
 
 
