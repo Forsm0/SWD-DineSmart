@@ -52,6 +52,16 @@ app.get('/login', function (req, res) {
     res.render('login');
 });
 
+// Render privacy policy
+app.get('/privacy-policy', function (req, res) {
+    res.render('privacy-policy');
+});
+
+// Render terms of service
+app.get('/terms-of-service', function (req, res) {
+    res.render('terms-of-service');
+});
+
 // Create a route for viewing menu /
 app.get("/Menu", function(req, res) {
 
