@@ -1,81 +1,29 @@
-//- extends navBar
-
-//- block content1 
-//-   .container12
-//-     //- Logo Placeholder
-//-     .logo-placeholder
-
-//-     //- Heading
-//-     h1 Welcome to Dine Smart Login 
-//-     p.sub-heading Please enter your details to log in. 
-
-//-     //- Login Form
-//-     form(action="/login" method="post")
-//-       label(for="email") Email
-//-       input#email(type="email" placeholder="Enter your email" required) 
-
-//-       label(for="password") Password
-//-       input#password(type="password" placeholder="Enter your password" required) 
-
-//-       //- Buttons
-//-       button.btn-login(type="submit") Log In 
-//-       button.btn-back(type="button") Back
-
-//-   //- Footer Links
-//-   .footer
-//-     | &copy; DineSmart 2024 
-//-     a(href="#") Privacy
-//-     a(href="#") Our mission
-//-     a(href="#") Q&A.
-extends navBar
+extends layout
 
 block content1 
-    .container11
-        .hregcontainer
-            //- Logo Placeholder
-            .logo-placeholder
-                img(src="/img/Dinesmart_small_b.png") 
-            //- Heading
-            .heading-register
-                h1 Welcome to Dine Smart Login
-                p.sub-heading Please enter your details to log in. 
+  .container
+    //- Logo Placeholder
+    .logo-placeholder
 
-        //- Sign-Up Form
-        
-        form.formreg(action="/authenticate" method="post")
-        
+    //- Heading
+    h1 Welcome to Dine Smart Login
+    p.sub-heading Please enter your details to log in.
 
-          
-        
-            
+    //- Login Form
+    form(action="/login" method="post")
+      label(for="email") Email
+      input#email(type="email" placeholder="Enter your email" required)
 
-            label(for="email") Email: 
-            input#email(type="email" name="email" placeholder="Please enter your email address" required) 
+      label(for="password") Password
+      input#password(type="password" placeholder="Enter your password" required)
 
-            label(for="password") Password:
-            input#password(type="password" name="password" placeholder="Please enter your password" required)
+      //- Buttons
+      button.btn-login(type="submit") Log In
+      button.btn-back(type="button") Back
 
-            //- Buttons
-
-            button.button.btn-login(type="submit") Log In
-            button.button.btn-signup(type="button") Back
-            button.button.btn-back(type="button") Sign Up
-
-        //- Footer Links
-    //- .footerreg
-    //-     | &copy; DineSmart 2024 
-    //-     a(href="#") Privacy 
-    //-     a(href="#") Our mission
-    //-     a(href="#") Q&A.
-    footer
-        .footer-container
-            //- Left side of the footer: Copyright
-            .footer-left
-                p © 2024 DineSmart
-            //- Right side of the footer: Privacy and Terms links
-            .footer-right
-                p(onclick="window.location.href='/privacy-policy'" aria-label="Navigate to Privacy Policy") Privacy Policy
-                p(onclick="window.location.href='/terms-of-service'" aria-label="Navigate to Terms of Service") Terms of Service
-
-
-
+  //- Footer Links
+  .footer
+    | &copy; DineSmart 2024 
+    a(href="#") Privacy
+    a(href="#") Our mission
+    a(href="#") Q&A.
