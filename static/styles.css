@@ -225,27 +225,76 @@ select {
 
 /* Styling for Add to Cart buttons */
 .add-to-cart-button {
-  padding: 8px 16px; /* Comfortable padding */
-  font-size: 16px; /* Match table font size */
-  color: #fff; /* White text for contrast */
-  background-color: #697665; /* Match the green theme */
-  border: none; /* Remove default border */
-  border-radius: 5px; /* Rounded corners for a modern look */
-  cursor: pointer; /* Pointer cursor for interaction feedback */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+  padding: 10px 20px; /* Slightly larger padding for comfort */
+  font-size: 16px; /* Maintain consistent font size */
+  color: #ffffff; /* Ensure high contrast with the background */
+  background-color: #5d725e; /* Slightly refined green for a balanced look */
+  border: none; /* Clean, borderless style */
+  border-radius: 6px; /* Slightly more rounded corners for a softer design */
+  cursor: pointer; /* Interactive pointer cursor */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* More pronounced shadow for better depth */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transitions for hover and interaction */
 }
 
 /* Hover effect for Add to Cart buttons */
 .add-to-cart-button:hover {
-  background-color: #393a34; /* Darker shade for hover */
+  background-color: #3f4f40; /* Darker green for hover */
+  transform: scale(1.08); /* Slightly larger zoom for hover feedback */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+/* Disabled button styling */
+.add-to-cart-button:disabled {
+  background-color: #b0b0b0; /* Neutral gray for disabled state */
+  color: #666666; /* Muted text color for clarity */
+  cursor: not-allowed; /* Feedback for disabled state */
+  opacity: 0.6; /* Reduced opacity for a grayed-out look */
+}
+
+.button-wrapper.center {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically if needed */
+  margin: 20px 0; /* Add space above and below the button */
+}
+
+.go-to-cart {
+  font-size: 1.5em; /* Increase font size */
+  padding: 12px 24px; /* Larger padding */
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+.go-to-cart:hover {
+  background-color: #0056b3; /* Darker blue on hover */
   transform: scale(1.05); /* Slight zoom effect */
 }
 
-/* Disable button styling */
-.add-to-cart-button:disabled {
-  background-color: #ddd; /* Gray background for disabled state */
-  cursor: not-allowed; /* Show the user it’s unclickable */
+.payment-wrapper.center {
+  display: flex;
+  justify-content: center; /* Center the button */
+  margin: 20px 0; /* Space above and below the button */
+}
+
+.payment-button {
+  font-size: 1.5em; /* Large button text */
+  padding: 12px 24px;
+  background-color: #28a745; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.payment-button:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05);
 }
 
 /* Adjust button placement in the table */
@@ -312,6 +361,25 @@ select {
 .hregcontainer {
   display: flex;
   justify-content: center;
+/* Content Box */
+.content-box {
+  width: 80%; /* Set a responsive width for the content box */
+  max-width: 800px; /* Prevent the content box from growing too wide */
+  margin: 0 auto; /* Center the content box */
+  padding: 20px; /* Add inner spacing */
+  background-color: white; /* White background for contrast */
+  border-radius: 10px; /* Rounded corners for a polished look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+  text-align: center; /* Center-align text inside the box */
+  overflow: hidden; /* Prevent content overflow */
+}
+/* Image Gallery */
+.image-gallery {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow images to wrap to the next line on small screens */
+  justify-content: center; /* Center images horizontally */
+  gap: 15px; /* Space between images */
+  margin: 20px 0; /* Add vertical spacing around the gallery */
 }
 
 .logo-placeholder img {
@@ -488,3 +556,173 @@ select {
     }
   }
 }
+
+}
+
+
+h1.booktime {
+  position: center;
+  text-align: center;
+  margin-top: 100px;
+  top: 20px !important; margin-top: 100px !important;
+}
+
+button.booktime {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filters button, .select-container button {
+  margin: 10px;
+  background-color: #f5f5f5;
+}
+
+/* Time Slot Buttons */
+.time-slot {
+  background-color: #849972;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.time-slot:hover {
+  background-color: #6c815d;
+  transform: scale(1.05);
+}
+
+.time-slot.selected {
+  background-color: #393a34;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+/* Select Button */
+#confirm-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #697665;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#confirm-btn:hover {
+  background-color: #393a34;
+}
+/* time slots */
+
+footer p {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 0.9em;
+}
+
+
+/* Form Container */
+.formcontainer {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f7f2;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  color: #393a34;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+/* Submit Button */
+.submit-button {
+  display: block;
+  width: 30%;
+  padding: 10px;
+  font-size: 18px;
+  color: white;
+  background-color: #697665;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 180px;
+}
+
+.submit-button:hover {
+  background-color: #393a34;
+}
+
+
+/* Filter Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+.filter-group label {
+  font-weight: bold;
+  color: #393a34;
+}
+
+.filter-group input {
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.filter-button {
+  padding: 8px 15px;
+  font-size: 16px;
+  color: white;
+  background-color: #697665;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: #393a34;
+}
+
+

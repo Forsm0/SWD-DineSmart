@@ -1,0 +1,63 @@
+extends navBar
+
+block content
+
+    // Introductory text for the menu section
+    p(class="intro-text") Here are the Cart Items
+
+    // Menu table display
+    table(class="menu-table", border="0")
+        // Table header
+        thead
+            tr
+                th 
+                th Name
+                th Price
+                th Add
+                th Quantity
+                th Total Price
+
+        // Table body
+        tbody
+            // Loop through the data
+            each item in data
+                tr
+                    // Display item image
+                    td
+                        if item.imagePath
+                            img(src=item.imagePath, alt=item.Name, width="100", height="100") 
+                        else
+                            p No image available
+                    
+                    // Display item name
+                    td #{item.name}
+                    
+                    // Display item price
+                    td £#{item.price}
+                    
+                    // Add/Remove buttons column
+                    td
+                        button(type="button" class="increment-button" 
+                            data-id=item.id 
+                            data-name=item.name 
+                            data-price=item.price) +
+                        button(type="button" class="decrement-button" 
+                            data-id=item.id 
+                            data-name=item.name 
+                            data-price=item.price) -
+
+                    // Quantity column
+                    td(id=`quantity-${item.id}`) 0
+
+                    // Total price column
+                    td(id=`total-${item.id}`) £0.00
+
+        // Table footer for total sum
+        tfoot
+            tr
+                td(colspan="5") Total Sum
+                td(id="total-sum", colspan="2") £0.00
+
+    // "Proceed to Payment" button
+    .payment-wrapper.center
+        button(type="button" id="proceed-to-payment" class="payment-button") Mail Cart Details

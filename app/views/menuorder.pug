@@ -17,14 +17,12 @@ block content
                     option(value="main" selected=categoryFilter === 'main') Main
                     option(value="dessert" selected=categoryFilter === 'dessert') Desserts
 
-
             // Dropdown for Price
             div.dropdown-wrapper
                 label(for="sort") 
                 select(name="sort" onchange="this.form.submit()")
                     option(value="PriceAsc" selected=sortBy === 'PriceAsc') Price: Low to High
                     option(value="PriceDesc" selected=sortBy === 'PriceDesc') Price: High to Low
-
 
     // Menu table display
     table(class="menu-table", border="0")
@@ -63,5 +61,12 @@ block content
                         button(type="button" class="add-to-cart-button" 
                             data-id=item.id 
                             data-name=item.Name 
-                            data-price=item.Price)
+                            data-price=item.Price
+                            data-image=item.imagePath
+                            )
                             | Add
+
+    // Centered "Go to Cart" button below table
+    .button-wrapper.center
+        button(type="button" class="go-to-cart")
+            | Go to Cart
