@@ -11,7 +11,7 @@ block content1
             button(onclick="window.location.href='/menu'" aria-label="Navigate to Menu Page") Menu
 
         .nav-right
-            if loggedIn
+            if isAuthenticated
                 // Cart Icon Button
                 button#cart-button(onclick="window.location.href='/cart'", aria-label="View Cart")
                     img(src="/img/cart_icon.png", alt="Cart", width="24", height="24")

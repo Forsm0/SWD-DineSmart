@@ -13,6 +13,8 @@ block content1
                 p.sub-heading Please enter your details to log in. 
 
         //- Sign-Up Form
+        if error
+          .alert.alert-danger= error
         
         form.formreg(action="/authenticate" method="post")
         

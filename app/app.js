@@ -44,6 +44,12 @@ app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
 //     next();
 // });
 
+app.use((req, res, next) => {
+    res.locals.isAuthenticated = req.session.loggedIn || false;
+    next();
+});
+
+
 // Get the functions in the db.js file to use
 const db = require("./services/db");
 
@@ -142,9 +148,11 @@ app.get("/", function(req, res) {
 // });
 
 // Login
-app.get("/login", function (req, res) {
-  res.render("login");
-});
+app.get("/login", (req, res) => {
+    const error = req.query.error;
+    res.render("login", { error });
+  });
+  
 
 // Render privacy policy
 app.get('/privacy-policy', function (req, res) {
@@ -319,35 +327,48 @@ app.get("/", function(req, res) {
 //   }
 // });
 
-app.post("/authenticate", async function (req, res) {
-  console.log("Email:", req.body.email);
-  console.log("Password:", req.body.password);
-  const email = req.body.email;
-  const password = req.body.password;
-  let passmatch = false;
-  var user = new User(email);
-  try {
-    uId = await user.getIdFromEmail();
-    console.log(uId, "from db");
 
-    if (uId) {
-      passmatch = await user.authenticate(password, uId);
-      if (passmatch) {
-        // req.session.uid = uId;
-        // req.session.loggedIn = true;
-        // console.log(req.session.id);
-        res.redirect("/restaurants");
+// Route to handle login submission
+app.post("/authenticate", async function (req, res) {
+    console.log("Email:", req.body.email);
+    console.log("Password:", req.body.password);
+  
+    const email = req.body.email;
+    const password = req.body.password;
+    let passmatch = false;
+    
+    const user = new User(email);
+  
+    try {
+      // Get user ID from email
+      uId = await user.getIdFromEmail();
+      console.log(uId, "from db");
+  
+      if (uId) {
+        // Authenticate user with password
+        passmatch = await user.authenticate(password, uId);
+        
+        if (passmatch) {
+          // Create session for logged-in user
+          req.session.userId = uId;
+          req.session.loggedIn = true;
+          console.log("Session ID:", req.session.id);
+          
+          // Redirect to restaurants or dashboard
+          res.redirect("/restaurants");
+        } else {
+          // Redirect to login with error
+          res.redirect("/login?error=Invalid credentials");
+        }
       } else {
-        // TODO improve the user journey here
-        res.send("invalid password");
+        res.redirect("/login?error=Invalid credentials");
       }
-    } else {
-      res.send("invalid email");
+    } catch (err) {
+      console.error(`Error while comparing: `, err.message);
+      res.redirect("/login?error=Something went wrong");
     }
-  } catch (err) {
-    console.error(`Error while comparing `, err.message);
-  }
-});
+  });
+  
 
 
 // Table reservation routes 
