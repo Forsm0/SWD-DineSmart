@@ -1,32 +1,4 @@
-//- extends navBar
 
-//- block content1 
-//-   .container12
-//-     //- Logo Placeholder
-//-     .logo-placeholder
-
-//-     //- Heading
-//-     h1 Welcome to Dine Smart Login 
-//-     p.sub-heading Please enter your details to log in. 
-
-//-     //- Login Form
-//-     form(action="/login" method="post")
-//-       label(for="email") Email
-//-       input#email(type="email" placeholder="Enter your email" required) 
-
-//-       label(for="password") Password
-//-       input#password(type="password" placeholder="Enter your password" required) 
-
-//-       //- Buttons
-//-       button.btn-login(type="submit") Log In 
-//-       button.btn-back(type="button") Back
-
-//-   //- Footer Links
-//-   .footer
-//-     | &copy; DineSmart 2024 
-//-     a(href="#") Privacy
-//-     a(href="#") Our mission
-//-     a(href="#") Q&A.
 extends navBar
 
 block content1 
@@ -44,11 +16,6 @@ block content1
         
         form.formreg(action="/authenticate" method="post")
         
-
-          
-        
-            
-
             label(for="email") Email: 
             input#email(type="email" name="email" placeholder="Please enter your email address" required) 
 
