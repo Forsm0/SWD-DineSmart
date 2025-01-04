@@ -1,36 +1,47 @@
-extends layout
+extends navBar
 
 block content1 
-    .container
-        //- Logo Placeholder
-        .logo-placeholder
-
-        //- Heading
-        h1 Hey, We are glad you chose Dine Smart!
-        p.sub-heading Let's get started
+    .container11
+        .hregcontainer
+            //- Logo Placeholder
+            .logo-placeholder
+                img(src="/img/Dinesmart_small_b.png") 
+            //- Heading
+            .heading-register
+                h1 Hey, We are glad you chose Dine Smart! 
+                p.sub-heading Let's get started
 
         //- Sign-Up Form
-        form(action="#" method="post")
-            label(for="name") Name
-            input#name(type="text" placeholder="Enter your full name" required)
+        
+        form.formreg(action="/register" method="post")
+        
 
-            label(for="phone") Mobile number
-            input#phone(type="tel" placeholder="Enter your phone number" required)
+            label(for="name") Name:
+            input#name(type="text" name="name" placeholder="Enter your full name" required) 
+        
+            label(for="phone") Mobile number:
+            input#phone(type="tel" name="phone" placeholder="Enter your phone number" required) 
 
-            label(for="email") Email
-            input#email(type="email" placeholder="Please enter your email address" required)
+            label(for="email") Email: 
+            input#email(type="email" name="email" placeholder="Please enter your email address" required) 
 
-            label(for="password") Password
-            input#password(type="password" placeholder="Please enter your password" required)
+            label(for="password") Password:
+            input#password(type="password" name="password" placeholder="Please enter your password" required)
 
             //- Buttons
-            button.btn-signup(type="submit") Sign up
-            button.btn-back(type="button") Back
 
-    //- Footer Links
-    .footer
-        | &copy; DineSmart 2024 
-        a(href="#") Privacy
-        a(href="#") Our mission
-        a(href="#") Q&A.
 
+            button.button.btn-signup(type="submit") Sign up 
+            button.button.btn-back(type="button") Back 
+
+        //- Footer Links
+
+    footer
+        .footer-container
+            //- Left side of the footer: Copyright
+            .footer-left
+                p © 2024 DineSmart
+            //- Right side of the footer: Privacy and Terms links
+            .footer-right
+                p(onclick="window.location.href='/privacy-policy'" aria-label="Navigate to Privacy Policy") Privacy Policy
+                p(onclick="window.location.href='/terms-of-service'" aria-label="Navigate to Terms of Service") Terms of Service
