@@ -29,13 +29,12 @@ app.use(
   })
 );
 
-// prevent caching for protected paths to avoid back button access after logout
+// prevent caching for protected paths to avou
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   next();
 });
 
-// to check if the user is authenticated.
 function isAuthenticated(req, res, next) {
   // Check if the session exists and the user is logged in
   if (req.session && req.session.loggedIn) {
@@ -164,10 +163,11 @@ app.get("/", function(req, res) {
 
 // Login
 app.get("/login", (req, res) => {
-    const error = req.query.error;
-    res.render("login", { error });
-  });
-  
+  const error = req.query.error;
+  const success = req.query.success;  // Get success message
+  res.render("login", { error, success });
+});
+
 
 // Render privacy policy
 app.get('/privacy-policy', function (req, res) {
@@ -275,41 +275,32 @@ app.get("/register", async function (req, res) {
   res.render("register");
 });
 
-app.post("/register", function (req, res) {
-  console.log("Name:", req.body.name);
-  console.log("Phone:", req.body.phone);
-  console.log("Email:", req.body.email);
-  console.log("Password:", req.body.password);
-  const name = req.body.name;
-  const phone = req.body.phone;
-  const email = req.body.email;
-  const password = req.body.password;
+app.post("/register", async function (req, res) {
+  const { name, phone, email, password } = req.body;
 
-  const user = new User();
-  user.addUser(name, email, password, phone);
+  const user = new User(email);
+  
+  try {
+    const existingUser = await user.getIdFromEmail();
+    
+    if (existingUser) {
+      // Email already exists, show registration-specific error
+      res.render("register", { registerError: "Email is already registered. Please log in or use a different email." });
+    } else {
+      // Proceed to register if no existing user
+      await user.addUser(name, email, password, phone);
 
-  //   res.send("Form submitted successfully!");
-  res.render("register");
-  //   var user = new User(params.email);
-  // try {
-  //   uId = await user.getIdFromEmail();
-  //   if (uId) {
-  //     // If a valid, existing user is found, set the password and redirect to the users single-student page
-  //     await user.setUserPassword(params.password);
-  //     console.log(req.session.id);
-  //     res.send("Password set successfully");
-  //   } else {
-  //     // If no existing user is found, add a new one
-  //     newId = await user.addUser(params.email);
-  //     res.send(
-  //       "Perhaps a page where a new user sets a programme would be good here"
-  //     );
-  //   }
-  // } catch (err) {
-  //   console.error(`Error while adding password `, err.message);
-  // }
-
+      // Redirect to login with success message
+      res.redirect("/login?success=User created successfully. Please log in.");
+    }
+  } catch (err) {
+    console.error("Error during registration:", err);
+    res.render("register", { registerError: "An error occurred during registration. Please try again." });
+  }
 });
+
+
+
 app.get("/", function(req, res) {
     console.log(req.session);
     if (req.session.uid) {
