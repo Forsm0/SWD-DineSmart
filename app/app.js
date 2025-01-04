@@ -29,6 +29,22 @@ app.use(
   })
 );
 
+// prevent caching for protected paths to avoid back button access after logout
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  next();
+});
+
+// to check if the user is authenticated.
+function isAuthenticated(req, res, next) {
+  // Check if the session exists and the user is logged in
+  if (req.session && req.session.loggedIn) {
+    return next(); // Continue to the route if authenticated
+  } else {
+    res.redirect("/login?error=Please login first"); // Redirect to login if not authenticated
+  }
+}
+
 // Use the Pug templating engine
 app.set("view engine", "pug");
 app.set("views", "./app/views");
@@ -127,7 +143,7 @@ app.post('/send-cart-details', async (req, res) => {
 
 
 // Route for the cart page
-app.get("/cart", (req, res) => {
+app.get("/cart", isAuthenticated, (req, res) => {
     // Retrieve cartItems from cookies
     const storedCartItems = req.cookies.cartItems ? JSON.parse(req.cookies.cartItems) : []; 
 
@@ -135,7 +151,6 @@ app.get("/cart", (req, res) => {
         data: storedCartItems // Pass cartItems as 'data' to the Pug template
     });
 });
-
 
 
 app.get("/", function(req, res) {
@@ -179,7 +194,7 @@ app.get("/Menu", function (req, res) {
 });
 
 // Menu ordering page (table selection logic can be added later)
-app.get("/menuorder", function (req, res) {
+app.get("/menuorder", isAuthenticated, function (req, res) {
   const sortBy = req.query.sort || "Name"; // Default sorting
   const categoryFilter = req.query.category || "All"; // Default category filter
 
@@ -228,9 +243,11 @@ app.get("/", function (req, res) {
 
 // Logout
 app.get("/logout", function (req, res) {
-  req.session.destroy();
-  res.redirect("/login");
+  req.session.destroy(() => {
+    res.redirect("/login");
+  });
 });
+
 
 app.post("/set-password", async function (req, res) {
   params = req.body;
@@ -372,7 +389,7 @@ app.post("/authenticate", async function (req, res) {
 
 
 // Table reservation routes 
-app.get('/book-time', (req, res) => {
+app.get('/book-time', isAuthenticated, (req, res) => {
     const sql = `
     SELECT * FROM RestaurantTable
     WHERE table_status = 'Available'
