@@ -4,12 +4,8 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
-const bodyParser = require('body-parser');
-
-
 
 
 // Create express app
@@ -54,6 +50,7 @@ const db = require("./services/db");
 // render homepage
 app.get("/", function (req, res) {
   res.render("index");
+});
 
 app.use(cookieParser());
 
@@ -287,7 +284,7 @@ app.post("/register", function (req, res) {
   //   console.error(`Error while adding password `, err.message);
   // }
 
-
+});
 app.get("/", function(req, res) {
     console.log(req.session);
     if (req.session.uid) {
