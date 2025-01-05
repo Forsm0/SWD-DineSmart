@@ -584,7 +584,7 @@ app.post('/reserve', async (req, res) => {
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       `;
       // Set a default value for allergies if none is provided
-      const allergiesValue = Allergies || 'None';
+      const allergiesValue = Allergies || null;
       // Values to be inserted into the Reservation table
       const insertValues = [name, email, phone, guests, tableId, allergiesValue, req.session.userId, isoDate, time];
       
@@ -613,29 +613,55 @@ app.post('/reserve', async (req, res) => {
 
 
 // here
+const filterReservations = require("./services/filterReservations");
+
 app.get("/my-orders", isAuthenticated, async (req, res) => {
-  const userId = req.session.userId;
+    const userId = req.session.userId;
+    console.log("UserID from session:", userId);
 
-  if (!userId) {
-      return res.redirect("/login");
-  }
+    if (!userId) {
+        return res.redirect("/login");
+    }
 
-  try {
-      const sql = `
-          SELECT r.name, r.Date, r.StartTime, r.Number_of_guests, r.Allergies
-          FROM Reservation r
-          WHERE r.UserID = ?
-          ORDER BY r.Date DESC
-      `;
+    try {
+        const sql = `
+            SELECT r.ReservationID AS reservation_id, r.Date, r.StartTime, r.Number_of_guests, r.Allergies, r.name
+            FROM Reservation r
+            WHERE r.UserID = ?
+            ORDER BY r.Date ASC, r.StartTime ASC
+        `;
+        
+        // Fetch reservations
+        const reservations = await db.query(sql, [userId]);
+        const reservationList = Array.isArray(reservations) ? reservations : (reservations ? [reservations] : []);
 
-      const reservations = await db.query(sql, [userId]);
+        console.log("Raw Reservations from DB:", reservationList);
 
-      res.render("my-orders", { reservations });
-  } catch (err) {
-      console.error("Error fetching reservations:", err);
-      res.status(500).send("Error fetching reservations.");
-  }
+        // Handle no results
+        if (reservationList.length === 0) {
+            console.log("No reservations found.");
+            return res.render("my-orders", { upcomingReservations: [], pastReservations: [] });
+        }
+
+        // Use helper function to filter reservations
+        const { upcomingReservations, pastReservations } = filterReservations(reservationList);
+
+        console.log("Upcoming:", upcomingReservations);
+        console.log("Past:", pastReservations);
+
+        res.render("my-orders", { upcomingReservations, pastReservations });
+    } catch (err) {
+        console.error("Error fetching reservations:", err);
+        res.status(500).send("Error fetching reservations.");
+    }
 });
+
+
+
+
+
+
+
 
 
 
