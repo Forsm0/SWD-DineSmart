@@ -379,7 +379,7 @@ app.post("/authenticate", async function (req, res) {
   
 
 
-// Table reservation routes 
+// Table reservation routes (add isAuthenticated) HERE
 app.get('/book-time', isAuthenticated, (req, res) => {
     const sql = `
     SELECT * FROM RestaurantTable
