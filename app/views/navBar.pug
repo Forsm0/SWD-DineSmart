@@ -16,7 +16,13 @@ block content1
                 button#cart-button(onclick="window.location.href='/cart'", aria-label="View Cart")
                     img(src="/img/cart_icon.png", alt="Cart", width="24", height="24")
                 // Logout Button
-                button(onclick="window.location.href='/logout'", aria-label="Logout") Logout
+                .user-dropdown
+                    button#profile-button(aria-label="User Profile Options") 
+                        img(src="/img/user_icon.png", alt="User Profile", width="24", height="24")
+                        | Account
+                    .dropdown-content
+                        p(onclick="window.location.href='/my-orders'") My Orders
+                        p(onclick="window.location.href='/logout'") Logout
             else
                 // Sign In Button
                 button#signin-button(onclick="window.location.href='/login'" aria-label="Sign In") Sign In
