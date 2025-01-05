@@ -396,10 +396,16 @@ app.post("/authenticate", async function (req, res) {
 
 // Table reservation routes (add isAuthenticated) HERE
 app.get('/book-time', (req, res) => {
-    const sql = `
-    SELECT * FROM RestaurantTable
+  const sql = `
+    SELECT available_date, available_time, table_number, Capacity
+    FROM RestaurantTable
     WHERE table_status = 'Available'
+    AND available_date >= CURDATE()  -- Only future dates
+    ORDER BY available_date ASC
+    LIMIT 15  -- Show first 5 available days
 `;
+
+  
     db.query(sql).then(results => {
         const resultsArray = Array.isArray(results) ? results : [results];
         console.log("All Rows from DB:", resultsArray)
