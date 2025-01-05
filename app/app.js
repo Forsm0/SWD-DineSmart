@@ -59,10 +59,13 @@ app.use(express.urlencoded({ extended: true })); // To parse URL-encoded bodies
 //     next();
 // });
 
+// here
 app.use((req, res, next) => {
-    res.locals.isAuthenticated = req.session.loggedIn || false;
-    next();
+  res.locals.isAuthenticated = req.session.loggedIn || false;
+  res.locals.userEmail = req.session.userEmail || null;  // Pass user email 
+  next();
 });
+
 
 
 // Get the functions in the db.js file to use
@@ -572,6 +575,31 @@ app.post('/reserve', async (req, res) => {
     }
 });
 
+
+// here
+app.get("/my-orders", isAuthenticated, async (req, res) => {
+  const userId = req.session.userId;
+
+  if (!userId) {
+      return res.redirect("/login");
+  }
+
+  try {
+      const sql = `
+          SELECT r.name, r.Date, r.StartTime, r.Number_of_guests, r.Allergies
+          FROM Reservation r
+          WHERE r.UserID = ?
+          ORDER BY r.Date DESC
+      `;
+
+      const reservations = await db.query(sql, [userId]);
+
+      res.render("my-orders", { reservations });
+  } catch (err) {
+      console.error("Error fetching reservations:", err);
+      res.status(500).send("Error fetching reservations.");
+  }
+});
 
 
 
