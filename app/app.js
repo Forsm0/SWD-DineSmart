@@ -13,6 +13,12 @@ var app = express();
 app.use(bodyParser.json());
 
 const { User } = require("./models/user");
+// app.js
+const globalReservation = {
+  time: null,
+  date: null,
+  tableNumber: null,
+};
 
 // Set the sessions
 var session = require("express-session");
@@ -77,77 +83,83 @@ app.use(cookieParser());
 
 
 app.post('/send-cart-details', async (req, res) => {
-    const { cartDetails, totalSum, customerEmail } = req.body;
+  const { cartDetails, totalSum, customerEmail,reservationDate,reservationTime,reservationTableNumber} = req.body;
+  
+  if (!customerEmail) {
+      return res.status(400).send('Customer email is required.');
+  }
 
-    if (!customerEmail) {
-        return res.status(400).send('Customer email is required.');
-    }
+  try {
+      const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+              user: 'ammadmanandubizzle@gmail.com',
+              pass: 'wvkt qvnc gxnp qczy',
+          },
+      });
 
-    try {
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'ammadmanandubizzle@gmail.com',  // Replace with your Gmail address
-                pass: 'wvkt qvnc gxnp qczy',     // Use your Gmail App Password (NOT regular Gmail password)
-            },
-        });
+      const cartDetailsHtml = cartDetails
+        .map(
+          item => `
+            <tr>
+              <td>${item.name}</td>
+              <td>£${item.price}</td>
+              <td>${item.quantity}</td>
+              <td>£${item.total}</td>
+            </tr>
+          `
+        )
+        .join('');
 
-        const cartDetailsHtml = cartDetails
-            .map(
-                item => `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>£${item.price.toFixed(2)}</td>
-                    <td>${item.quantity}</td>
-                    <td>£${item.total.toFixed(2)}</td>
-                </tr>
-            `
-            )
-            .join('');
+      const emailBody = `
+        <h2>Your Cart Details</h2>
+        <p><strong>Your Reservation Details:</strong></p>
+        <ul>
+          <li>Date: ${reservationDate || 'Not selected'}</li>
+          <li>Time: ${reservationTime || 'Not selected'}</li>
+        </ul>
 
-        const emailBody = `
-            <h2>Your Cart Details</h2>
-            <table border="1" cellpadding="5" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>Item Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${cartDetailsHtml}
-                </tbody>
-            </table>
-            <p><strong>Total Sum:</strong> £${totalSum}</p>
-        `;
+        <table border="1" cellpadding="5" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cartDetailsHtml}
+          </tbody>
+        </table>
 
-        // Send the email
-        await transporter.sendMail({
-            from: 'ammadmanandubizzle@gmail.com',  // Replace with your Gmail address
-            to: customerEmail,
-            subject: 'Your Cart Details',
-            html: emailBody,
-        });
+        <p><strong>Total Sum:</strong> £${totalSum}</p>
+      `;
 
-        res.send('Email sent successfully');
-    } catch (error) {
-        // Log the full error for debugging
-        console.error('Error sending email:', error);  // Log full error object
-        res.status(500).send(`Error sending email: ${error.message}`);  // Send the detailed error message to the frontend
-    }
+      await transporter.sendMail({
+          from: 'ammadmanandubizzle@gmail.com',
+          to: customerEmail,
+          subject: 'Your Cart Details',
+          html: emailBody,
+      });
+
+      res.send('Email sent successfully');
+  } catch (error) {
+      console.error('Error sending email:', error);
+      res.status(500).send(`Error sending email: ${error.message}`);
+  }
 });
 
 
 
 // Route for the cart page
-app.get("/cart", isAuthenticated, (req, res) => {
+app.get("/cart", (req, res) => {
     // Retrieve cartItems from cookies
     const storedCartItems = req.cookies.cartItems ? JSON.parse(req.cookies.cartItems) : []; 
+    console.log("Global Reservation Data:", globalReservation);
 
     res.render("cart", { 
-        data: storedCartItems // Pass cartItems as 'data' to the Pug template
+        data: storedCartItems,globalReservation // Pass cartItems as 'data' to the Pug template
     });
 });
 
@@ -194,7 +206,7 @@ app.get("/Menu", function (req, res) {
 });
 
 // Menu ordering page (table selection logic can be added later)
-app.get("/menuorder", isAuthenticated, function (req, res) {
+app.get("/menuorder", function (req, res) {
   const sortBy = req.query.sort || "Name"; // Default sorting
   const categoryFilter = req.query.category || "All"; // Default category filter
 
@@ -380,7 +392,7 @@ app.post("/authenticate", async function (req, res) {
 
 
 // Table reservation routes (add isAuthenticated) HERE
-app.get('/book-time', isAuthenticated, (req, res) => {
+app.get('/book-time', (req, res) => {
     const sql = `
     SELECT * FROM RestaurantTable
     WHERE table_status = 'Available'
@@ -519,7 +531,9 @@ app.get('/getTableId', async (req, res) => {
 app.get("/reservation-form", (req, res) => {
     const { tableId, tableNumber,date,time } = req.query;
     console.log("Received Table Info:", tableId, tableNumber,date,time); // Debugging
-
+    globalReservation.time = time;
+    globalReservation.date = date;
+    globalReservation.tableNumber = tableNumber;
     if (!tableId || !tableNumber) {
         return res.status(400).send('Table information is missing.');
     }

@@ -118,6 +118,12 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("proceed-to-payment").addEventListener("click", async () => {
         try {
+
+            const button = document.getElementById("proceed-to-payment");
+            const reservationDate = button.dataset.date;
+            const reservationTime = button.dataset.time;
+            const reservationTableNumber = button.dataset.tableNumber;
+            console.log(reservationDate,reservationTime,reservationTableNumber)
             const cartDetails = currentCartItems.map(item => ({
                 name: item.name,
                 price: item.price,
@@ -129,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const emailPayload = {
                 cartDetails,
                 totalSum,
-                customerEmail: prompt("Enter your email address to receive the details:"),
+                customerEmail: prompt("Enter your email address to receive the details:"),reservationDate,reservationTime,reservationTableNumber,
             };
 
             const response = await fetch("/send-cart-details", {
