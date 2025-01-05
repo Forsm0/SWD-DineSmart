@@ -1,402 +1,37 @@
-/* beige = f8f7f2, green = 697665, gray = 393a34, black = 11150c*/
-
-body {
-    background-color: #f8f7f2;
-    font-family: 'Poppins', sans-serif;
-    color: #393a34;
-}
-/* Ensure buttons and other form elements inherit the body font */
-button, input, textarea, select {
-  font-family: inherit;
-}
-
-
-/* Navigation Bar Styling */
-.nav-bar {
-    display: flex; /* Flexbox layout for horizontal alignment */
-    justify-content: space-between; /* Divide navbar into left, center, and right sections */
-    align-items: center; /* Vertically align items */
-    padding: 10px 0px; /* Add padding around the nav bar */
-    gap: 0; /* Remove unnecessary gap here */
-    position: fixed; /* Fix the nav bar at the top of the page */
-    top: 0; /* Position at the top of the viewport */
-    width: 100%; /* Full width */
-    padding-left: 35px;
-    background-color: #f8f7f2;
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
-  }
-  
-    .nav-center {
-      display: flex; /* Center the main buttons */
-      justify-content: center;
-      gap: 15px; /* Space between buttons */
-      flex: 1; /* Take up remaining space to keep buttons centered */
-  }
-  
-  .nav-right {
-    display: flex; /* Right-aligned section */
-    /* flex-direction: column; */
-    flex-wrap: nowrap;
-    justify-content: flex-end; /* Ensure items are aligned to the right */
-    align-items: center;
-    gap: 15px; /* Space between Cart and Sign In/Logout */
-    width: 50px;
-    margin-right: 45px;
-  }
-  
-  /* Style for the cart button */
-  #cart-button {
-    background: none; /* Remove default button styling */
-    border: none; /* Remove border */
-    cursor: pointer; /* Make it clickable */
-    padding: 0; /* Remove padding */
-    display: flex; /* Ensure the image is centered */
-    align-items: center;
-    justify-content: center;
-    
-    
-  }
-  
-  .nav-right #signin-button {
-    min-width: 100px;
-  }
-  
-  #cart-button img {
-    width: 24px; /* Icon size */
-    height: 24px;
-  }
-  
-  /* Optional hover effect */
-  #cart-button:hover img {
-    transform: scale(1.1); /* Slight zoom effect */
-  }
-  
-  
-    /* Buttons inside the navigation bar */
-    .nav-bar button {
-      width: 170px; /* Button width */
-      height: 50px; /* Button height */
-      padding: 10px 20px; /* Inner spacing for button text */
-      font-size: 18px; /* Button text size */
-    }
-    
-    /* Styling for navigation bar buttons and action buttons */
-    .nav-bar button, .action-buttons button {
-      background-color: #697665; /* Green button background */
-      color: white; /* White text for contrast */
-      border: none; /* Remove default border */
-      font-size: 18px; /* Font size */
-      border-radius: 10px; /* Rounded button corners */
-      cursor: pointer; /* Pointer cursor on hover */
-      transition: background-color 0.3s ease; /* Smooth color transition */
-    }
-    
-    /* Hover effect for nav and action buttons */
-    .nav-bar button:hover, .action-buttons button:hover {
-      background-color: #393a34; /* Darker gray color for hover state */
-      transform: scale(1.05); /* Slight zoom effect for hover */
-    }
-  
-    
-    .nav-bar img {
-      vertical-align: middle;
-      margin-right: 5px;
-  }
-  
-  .nav-bar button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px; /* Add spacing between the icon and text */
-  }
-  
-  .nav-bar button img {
-      width: 20px;
-      height: 20px;
-  }
-  
-  .nav-bar button:hover {
-      transform: scale(1.05);
-  }
-  
-  
-  /* Footer Styling */
-  footer {
-      position: static; /* Default static positioning */
-      text-align: left; /* Left-align footer text */
-      padding: 20px; /* Inner padding for footer */
-      font-size: 14px; /* Footer text size */
-      color: #393a34; /* Gray footer text */
-    }
-    
-    /* Footer container for layout */
-    .footer-container {
-      display: flex; /* Flexbox layout */
-      justify-content: space-between; /* Separate left and right sections */
-      align-items: center; /* Vertically align items */
-      max-width: 750px; /* Limit the width of the footer */
-      margin: 0 auto; /* Center the footer horizontally */
-      width: 100%; /* Ensure footer spans the viewport width */
-    }
-    
-    /* Right section of the footer */
-    .footer-right {
-      display: flex; /* Enable flexbox */
-      flex-direction: column; /* Stack items vertically */
-      align-items: flex-end; /* Align items to the right */
-      gap: 10px; /* Add spacing between links */
-    }
-    
-    /* Styling for footer links or clickable items */
-    .footer-right p {
-      cursor: pointer; /* Indicate clickable items */
-      color: #697665; /* Green text color */
-      font-weight: 500; /* Slightly bold for emphasis */
-      transition: color 0.3s ease; /* Smooth transition effect */
-      margin: 0; /* Remove default margins */
-      padding: 0; /* Remove default padding */
-    }
-    
-    /* Hover effect for footer links */
-    .footer-right a:hover {
-      color: #393a34; /* Darker hover color */
-    }
-  
-  /* For screens smaller than 768px */
-  @media (max-width: 768px) {
-    .nav-bar {
-        flex-wrap: wrap; /* Allow items to move to a new row */
-        gap: 10px; /* Add spacing between rows */
-        justify-content: center;
-    }
-  
-    .nav-center, .nav-right {
-        flex: 1 1 100%; /* Each section takes full width */
-        justify-content: center; /* Center-align both sections */
-        
-    }
-  
-    .nav-right button{
-      gap: 5px;
-      justify-content: center; /* Center-align both sections */
-      padding: 0;
-      margin: 0;
-      width: 100px;
-      
-  }
-  .nav-right #cart-button {
-    width: auto;
-  }
-  
-  .hero {
-    margin-top: 100px; /* Space below the navigation bar */
-  }
-  .container {
-    margin-top: 100px; /* Space below the navigation bar */
-  }
-  }
-  
-  
-  footer {
-    text-align: left;
-    padding: 20px;
-    font-size: 14px;
-    color: #393a34;
-  }
-
-
-/* Hero Section */
-.hero {
-    display: flex;                 /* Enables flexbox */
-    flex-direction: column;        /* Stacks items vertically */
-    align-items: center;           /* Centers items horizontally */
-    justify-content: start;       /* Centers items vertically */
-    height: calc(100vh - 60px);    /* Subtracts 60px for the navigation bar height */    
-    width: 100%;                   /* Ensures the hero takes the full width */
-    text-align: center;            /* Centers the text within the container */
-    margin-top: 60px;              /* Removes default margins */
-    padding: 10px;                 /* Sets padding */
-    padding-top: 30px;
-}
-
-  
-  /* Hero Image */
-  #hero-logo {
-    width: 400px;                  /* Adjust the logo size */
-    height: auto;                  /* Maintain aspect ratio */
-    margin: 0 20px 10px;           /* Top: 0, Right: 20px, Bottom: 10px, Left: 20px */
-    display: block;                /* Ensures it behaves as a block-level element */
-}
-
-
-  
-  /* Hero Text */
-  .hero p {
-    font-style: italic;            /* Makes the text italic */
-
-  }
-  .hero h2 {
-    color: #393a34;              /* Text color */
-    margin-bottom: 0;
-    font-size: 1,8em;
-  }
-
-  .text-container {
-    max-width: 800px;               /* Limit the maximum width */
-    margin: 0 auto;                 /* Center horizontally */
-    text-align: center;             /* Center the text inside */
-    padding: 20px;                  /* Add some padding for spacing */
-    color: #393a34;                 /* Adjust text color (optional) */
-    font-size: 18px;                /* Set font size (optional) */
-    line-height: 1.6;               /* Improve readability */
-}
-
-  /* carousel section*/
-  .carousel {
-    position: relative;
-    width: 100%;                  /* Set the carousel width */
-    max-width: 750px;             /* Optional: limit max width */
-    overflow: hidden;             /* Hide the overflow to show only one image */
-
-}
-
-.carousel-container {
-    display: flex;
-    transition: transform 0.5s ease-in-out; /* Smooth slide animation */
-    width: 100%;                  /* Adjust to fit one image fully */
-}
-
-.carousel-item {
-    flex: 0 0 100%;               /* Each item takes 100% of the container width */
-    text-align: center;
-}
-
-.carousel-item img {
-    width: 100%;                 /* Image fills the width of the container */
-    max-height: 300px;           /* Set the maximum height for the image */
-    object-fit: cover;           /* Ensures the image scales properly and covers the container */
-
-}
-
-.intro-text {
+.container-res {
+  margin-top: 120px; /* Space below the navigation bar */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  font-size: 18px;
-  color: #666;
-  margin: 110px 0 40px;
-}
-
-/* Table Styling */
-.menu-table {
-  width: 100%;
-  max-width: 75%; /* Set a maximum width relative to the screen */
-  border-collapse: collapse;
-  margin: 0 auto;
-  background-color: #f8f7f2;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-/* Image Column Styling */
-.menu-table th:nth-child(1), 
-.menu-table td:nth-child(1) {
-  width: 120px; /* Fixed width for the image column */
-  text-align: center; /* Center-align the content */
-}
-
-/* Price Column Styling */
-.menu-table th:nth-child(3), 
-.menu-table td:nth-child(3) {
-    width: 100px; /* Fixed width for price column */
-    text-align: center; /* Center the price values */
-}
-
-.menu-table th, .menu-table td {
-  padding: 12px;
-  text-align: left;
-  border: 1px solid #ddd;
-}
-
-
-.menu-table th {
-  background-color: #697665;  /* Green background for table headers */
-  color: white;
-  font-size: 18px;
-}
-
-.menu-table td {
-  font-size: 18px;
-  vertical-align: middle;  /* Align the contents vertically */
-}
-
-/* Styling for Image and Text */
-.menu-table img {
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.menu-table td p {
-  color: red;  /* Fallback text in case no image is available */
-  font-style: italic;
-}
-
-/* Hover Effect for Table Rows */
-.menu-table tr:hover {
-  background-color: #e8f3e5;
-}
-
-
-
-
-/* Adjust for tablet screens */
-@media (max-width: 1024px) {
-    .nav-bar button {
-        width: 120px; /* Reduce button width */
-        height: 45px; /* Reduce button height */
-        font-size: 16px; /* Adjust font size */
-    }
-    .menu-table, .menu-table td, .menu-table th, .intro-text{
-      font-size: 16px; /* Reduce font size for smaller screens */
-    }
-}
-
-/* Adjust for small screens */
-@media (max-width: 768px) {
-    .nav-bar button {
-        font-size: 14px; /* Smaller font size */
-    }
-
-    .menu-table, .menu-table td, .menu-table th, .intro-text{
-      font-size: 14px; /* Reduce font size for smaller screens */
-    }
-  }
-
-  .button {
-    padding: 5px 15px;
-    border: none;
-    background-color: #849972; /* Default button color */
-    color: white;
-    border-radius: 20px; /* Rounded button */
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
-    margin-right: 10px; /* Add space to the right of each button */
-}
   
-  /* Hover Effect */
-.button:hover{
-    background-color: #6c815d; /* Darker shade for hover */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slightly deeper shadow */
 }
-  
-
-
-
-
-h1.booktime {
-  position: center;
+.container-formres {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   text-align: center;
-  margin-top: 100px;
-  top: 20px !important; margin-top: 100px !important;
+  
+}
+
+
+.filters {
+  align-items: center;
+}
+
+.container-res h1.booktime {
+  margin-top: 5px !important;
+}
+
+.formcontainer h1.booktime {
+  margin-top: 10px !important;
+}
+
+h4.displayed-date {
+  margin: 5px 5px;
 }
 
 button.booktime {
@@ -412,12 +47,23 @@ button.booktime {
   background-color: #f5f5f5;
 }
 
+/* Timeslot container - align buttons in one row */
+.time-slots {
+  display: flex;
+  flex-wrap: wrap;  /* Allow wrapping if too many buttons */
+  justify-content: center; /* Center-align under the date */
+}
+
+
 /* Time Slot Buttons */
-.time-slot {
+.container-formres .time-slot {
+  display: block;
   background-color: #849972;
   color: white;
+  height: 45px;
+  width: 100px;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   margin: 5px;
   padding: 10px 15px;
   cursor: pointer;
@@ -425,7 +71,7 @@ button.booktime {
 }
 
 .time-slot:hover {
-  background-color: #6c815d;
+  background-color: #697665;
   transform: scale(1.05);
 }
 
@@ -445,7 +91,9 @@ button.booktime {
   background-color: #697665;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
+  height: 45px;
+  width: 120px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -455,19 +103,12 @@ button.booktime {
 }
 /* time slots */
 
-footer p {
-  text-align: center;
-  margin-top: 30px;
-  font-size: 0.9em;
-}
-
 
 /* Form Container */
 .formcontainer {
   max-width: 500px;
-  margin: 0 auto;
+  margin: 100px auto;
   padding: 20px;
-  background-color: #f8f7f2;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -502,7 +143,7 @@ footer p {
   color: white;
   background-color: #697665;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-left: 180px;
@@ -529,6 +170,8 @@ footer p {
   gap: 5px;
 }
 
+
+
 .filter-group label {
   font-weight: bold;
   color: #393a34;
@@ -538,17 +181,21 @@ footer p {
   padding: 8px 10px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 200px;
 }
 
-.filter-button {
+.filter-group #placeholder {
+  color: #f8f7f2;
+}
+.filter-group .filter-button {
   padding: 8px 15px;
+  height: 45px;
   font-size: 16px;
   color: white;
   background-color: #697665;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
@@ -556,3 +203,4 @@ footer p {
 .filter-button:hover {
   background-color: #393a34;
 }
+
