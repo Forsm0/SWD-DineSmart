@@ -1,0 +1,72 @@
+extends navBar
+
+block content
+
+    // Introductory text for the menu section
+    p(class="intro-text") Here are the delicious menu items
+
+    .formwrapper
+        // Form for sorting options
+        form(action="/menuorder" method="GET")
+            // Dropdown for Category
+            div.dropdown-wrapper
+                label(for="category") 
+                select(name="category" onchange="this.form.submit()")
+                    option(value="All" selected=categoryFilter === 'All') All Categories
+                    option(value="starter" selected=categoryFilter === 'starter') Starters
+                    option(value="main" selected=categoryFilter === 'main') Main
+                    option(value="dessert" selected=categoryFilter === 'dessert') Desserts
+
+            // Dropdown for Price
+            div.dropdown-wrapper
+                label(for="sort") 
+                select(name="sort" onchange="this.form.submit()")
+                    option(value="PriceAsc" selected=sortBy === 'PriceAsc') Price: Low to High
+                    option(value="PriceDesc" selected=sortBy === 'PriceDesc') Price: High to Low
+
+    // Menu table display
+    table(class="menu-table", border="0")
+        // Table header
+        thead
+            tr
+                th 
+                th Name
+                th Price
+                th Description
+                th 
+
+        // Table body
+        tbody
+            // Loop through the data
+            each item in data
+                tr
+                    // Display item image
+                    td
+                        if item.imagePath
+                            img(src=item.imagePath, alt=item.Name, width="100", height="100") 
+                        else
+                            p No image available 
+                    
+                    // Display item name
+                    td #{item.Name}
+                    
+                    // Display item price
+                    td £#{item.Price}
+                    
+                    // Display item description
+                    td #{item.Description}
+                    
+                    // Add button in the last column
+                    td
+                        button(type="button" class="add-to-cart-button" 
+                            data-id=item.id 
+                            data-name=item.Name 
+                            data-price=item.Price
+                            data-image=item.imagePath
+                            )
+                            | Add
+
+    // Centered "Go to Cart" button below table
+    .button-wrapper.center
+        button(type="button" class="go-to-cart")
+            | Go to Cart

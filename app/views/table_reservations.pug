@@ -1,0 +1,46 @@
+extends navbar 
+
+block content
+  .container-res
+    
+    h1.booktime Book a time!
+
+    // Filters Section
+    form.filter-form(method='GET', action='/timeslots')
+      .filters
+        // Number of Guests Input
+        .filter-group
+          label(for='guests') Guests:
+          input#guests(type='number', name='guests', min='1', placeholder='Enter number of guests')
+
+        // Date Input
+        .filter-group
+          label(for='date') Date:
+          input#date(type='date', name='date')
+
+        // Time Input
+        .filter-group
+          label(for='time') Time:
+          input#time(type='time', name='time')
+
+        // Submit Button
+        .filter-group
+          label(id='placeholder' for='submit') placeholder:
+          button(type='submit', class='filter-button') Apply Filters
+    
+    .container-formres
+      // Display Time Slots (example fetched dynamically)
+      // Display Time Slots (example fetched dynamically)
+      if timeSlots && timeSlots.length > 0
+          each dateSlot in timeSlots
+              hr
+              h4.displayed-date= dateSlot.date
+              .time-slots
+                each time in dateSlot.times
+                    button.time-slot(data-time=time data-date=dateSlot.date)= time
+      else
+          p No available time slots found.
+
+    // Select button
+    .select-container
+      button#confirm-btn Select

@@ -1,0 +1,87 @@
+.container-login {
+    margin-top: 60px; /* Space below the navigation bar */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-placeholder-small img{
+    width: 200px; /* Logo width */
+    height: auto; /* Maintain aspect ratio */
+    margin: 0 20px 0; /* Margin around the logo */
+
+  }
+
+  form.formreg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;  /* Space between form elements */
+    width: 100%;
+    max-width: 500px;  /* Limit form width */
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;  /* Stack label on top of input */
+    margin-bottom: 0px;
+    width: 500px;
+}
+
+.form-group label {
+    text-align: left;
+}
+
+  form.formreg input {
+    width: auto; /* Make inputs full width */
+    padding: 15px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .button-container button {
+    width: 170px;
+    padding: 10px 20px 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    margin: 5px;
+  }
+  
+  button.btn-back,
+  button.btn-signup {
+    background-color: #697665;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button.btn-back:hover,
+  button.btn-signup:hover {
+    background-color: #393a34;
+  }
+  
+  .heading-register h1 {
+    font-size: 36px;
+    margin-bottom: 5px;
+  }
+  
+  .sub-heading {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  /* Error message styling */
+  .alert-danger {
+    color: red;
+    font-size: 16px;
+  }
+  
+  .alert-success {
+    color: green;
+    font-size: 16px;
+  }
+  

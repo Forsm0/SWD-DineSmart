@@ -1,0 +1,34 @@
+extends navBar
+
+block content 
+    .container-login
+        .hregcontainer
+            //- Logo Placeholder
+            .logo-placeholder-small
+                img(src="/img/Dinesmart_small_b.png") 
+            //- Heading
+            .heading-register
+                h1 Hey, Welcome back!
+                p.sub-heading Please enter your details to log in. 
+
+        //- Sign-Up Form
+        if error
+          .alert.alert-danger= error
+
+        if success
+            .alert.alert-success= success
+        
+        form.formreg(action="/authenticate" method="post")
+        
+            .form-group
+                label(for="email") Email: 
+                input#email(type="email" name="email" placeholder="Please enter your email address" required) 
+            .form-group
+                label(for="password") Password:
+                input#password(type="password" name="password" placeholder="Please enter your password" required)
+
+            //- Buttons
+            .button-container
+                button.button.btn-login(type="submit") Log In
+                button.button.btn-signup(type="button" onclick="window.location.href='/register'") Sign Up
+                button.button.btn-back(type="button" onclick="history.back()" aria-label="Go back to the previous page") Back

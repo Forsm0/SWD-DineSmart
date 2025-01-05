@@ -1,0 +1,496 @@
+/* Color Palette:
+   - Beige: #f8f7f2
+   - Green: #697665
+   - Gray: #393a34
+   - Black: #11150c
+*/
+
+/* Base Styles */
+body {
+  background-color: #f8f7f2; /* Light beige for the page background */
+  font-family: 'Poppins', sans-serif; /* Clean and modern font */
+  color: #393a34; /* Dark gray text color for readability */
+}
+
+/* Ensure form elements inherit the font styling from the body */
+button, input, textarea, select {
+  font-family: inherit;
+}
+
+/* Hero Section Styling */
+.hero {
+  display: flex; /* Flexbox layout */
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: start; /* Align items to the top */
+  height: calc(100vh - 60px); /* Full height minus nav bar height */
+  width: 100%; /* Full width of the viewport */
+  text-align: center; /* Center-align text */
+  margin-top: 60px; /* Space below the navigation bar */
+  padding: 10px; /* Inner padding */
+  padding-top: 30px; /* Additional padding at the top */
+  box-sizing: border-box; /* Include padding in height/width calculations */
+}
+
+/* Hero section image */
+#hero-logo {
+  width: 400px; /* Logo width */
+  height: auto; /* Maintain aspect ratio */
+  margin: 0 20px 10px; /* Margin around the logo */
+  display: block; /* Treat the logo as a block-level element */
+}
+
+/* Hero section text */
+.hero p {
+  font-style: italic; /* Italicize paragraph text */
+}
+
+.hero h2 {
+  color: #393a34; /* Dark gray heading text */
+  margin-bottom: 0; /* Remove bottom margin */
+  font-size: 1.8em; /* Increase heading size */
+}
+
+/* Text container inside hero section */
+.text-container {
+  max-width: 800px; /* Limit text container width */
+  margin: 0 auto; /* Center the text container */
+  text-align: center; /* Center-align the text */
+  padding: 20px; /* Add padding inside the container */
+  color: #393a34; /* Text color */
+  font-size: 18px; /* Font size */
+  line-height: 1.6; /* Increase line height for readability */
+}
+
+/* Carousel Section */
+.carousel {
+  position: relative; /* Relative positioning for internal elements */
+  width: 100%; /* Full width of the container */
+  max-width: 750px; /* Limit carousel width */
+  overflow: hidden; /* Hide content outside the container */
+}
+
+/* Carousel container holding items */
+.carousel-container {
+  display: flex; /* Horizontal layout for carousel items */
+  transition: transform 0.5s ease-in-out; /* Smooth slide effect */
+  width: 100%; /* Full width of the carousel */
+}
+
+/* Individual carousel items */
+.carousel-item {
+  flex: 0 0 100%; /* Each item takes full width */
+  text-align: center; /* Center-align content */
+}
+
+/* Images inside carousel items */
+.carousel-item img {
+  width: 100%; /* Image spans full width */
+  max-height: 300px; /* Limit image height */
+  object-fit: cover; /* Scale image to fit without distortion */
+}
+
+/* Introductory text below the hero section */
+.intro-text {
+  text-align: center; /* Center align text */
+  font-size: 18px; /* Font size */
+  color: #666; /* Light gray text color */
+  margin:90px 0 20px; /* Space above and below the text */
+}
+
+
+/* Dropdown Styling */
+.formwrapper {
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Align vertically */
+  gap: 20px; /* Space between dropdown wrappers */
+  margin: 20px auto; /* Center and add spacing */
+  max-width: 600px; /* Limit the form width */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+/* Styling for dropdown wrappers (label and select) */
+.dropdown-wrapper {
+  display: flex; /* Align label and dropdown */
+  flex-direction: column; /* Stack label and select vertically */
+  align-items: center; /* Center align content */
+  gap: 5px; /* Space between label and dropdown */
+}
+
+/* Styling for the labels */
+.dropdown-wrapper label {
+  font-size: 16px; /* Font size for label */
+  font-weight: 600; /* Slight boldness */
+  color: #393a34; /* Dark gray color */
+  text-align: center; /* Center-align label text */
+}
+
+/* Styling for the dropdowns */
+.dropdown-wrapper select {
+  width: 190px; /* Set dropdown width */
+  text-align: center;
+  padding: 8px; /* Add padding for spacing */
+  font-size: 16px; /* Font size for dropdown text */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px; /* Rounded corners */
+  background-color: white; /* White background */
+  color: #393a34; /* Text color */
+  cursor: pointer; /* Pointer cursor */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effect for dropdowns */
+.dropdown-wrapper select:hover {
+  border-color: #697665; /* Darker border on hover */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for effect */
+}
+
+/* Focus styling */
+.dropdown-wrapper select:focus {
+  outline: none; /* Remove default outline */
+  border-color: #697665; /* Green border on focus */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for focus */
+}
+
+
+#category {
+  margin: 100px 0 0;
+}
+
+/* Table Styling */
+.menu-table {
+  width: 100%; /* Full width table */
+  max-width: 70%; /* Limit table width */
+  border-collapse: collapse; /* Collapse table borders */
+  margin: 0 auto; /* Center the table */
+  background-color: #f8f7f2; /* Beige background color */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a shadow */
+  border-radius: 10px; /* Rounded corners */
+  overflow: hidden; /* Clip overflowing content */
+}
+
+/* Styling for the first column (images) */
+.menu-table th:nth-child(1), 
+.menu-table td:nth-child(1) {
+  width: 120px; /* Set column width */
+  text-align: center; /* Center-align text */
+}
+
+/* Styling for the price column */
+.menu-table th:nth-child(3), 
+.menu-table td:nth-child(3) {
+  width: 100px; /* Set column width */
+  text-align: center; /* Center-align text */
+}
+
+/* General styling for table headers and cells */
+.menu-table th, .menu-table td {
+  padding: 12px; /* Add padding inside cells */
+  text-align: left; /* Left-align text */
+  border: 1px solid #ddd; /* Add border around cells */
+}
+
+/* Styling for table headers */
+.menu-table th {
+  background-color: #697665; /* Green header background */
+  color: white; /* White header text */
+  font-size: 18px; /* Header font size */
+}
+
+/* Styling for table data cells */
+.menu-table td {
+  font-size: 18px; /* Cell font size */
+  vertical-align: middle; /* Vertically align text */
+}
+
+/* Images in the table */
+.menu-table img {
+  border-radius: 8px; /* Rounded image corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+/* Fallback text for missing images */
+.menu-table td p {
+  color: red; /* Red fallback text */
+  font-style: italic; /* Italicize fallback text */
+}
+
+/* Hover effect for table rows */
+.menu-table tr:hover {
+  background-color: #e8f3e5; /* Light green background on hover */
+}
+
+
+/* Styling for Add to Cart buttons */
+.add-to-cart-button {
+  padding: 10px 20px; /* Slightly larger padding for comfort */
+  font-size: 16px; /* Maintain consistent font size */
+  color: #ffffff; /* Ensure high contrast with the background */
+  background-color: #5d725e; /* Slightly refined green for a balanced look */
+  border: none; /* Clean, borderless style */
+  border-radius: 6px; /* Slightly more rounded corners for a softer design */
+  cursor: pointer; /* Interactive pointer cursor */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* More pronounced shadow for better depth */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Smooth transitions for hover and interaction */
+}
+
+/* Hover effect for Add to Cart buttons */
+.add-to-cart-button:hover {
+  background-color: #3f4f40; /* Darker green for hover */
+  transform: scale(1.08); /* Slightly larger zoom for hover feedback */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+/* Disabled button styling */
+.add-to-cart-button:disabled {
+  background-color: #b0b0b0; /* Neutral gray for disabled state */
+  color: #666666; /* Muted text color for clarity */
+  cursor: not-allowed; /* Feedback for disabled state */
+  opacity: 0.6; /* Reduced opacity for a grayed-out look */
+}
+
+.button-wrapper.center {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically if needed */
+  margin: 20px 0; /* Add space above and below the button */
+}
+
+.go-to-cart {
+  font-size: 1.5em; /* Increase font size */
+  padding: 12px 24px; /* Larger padding */
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+.go-to-cart:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.payment-wrapper.center {
+  display: flex;
+  justify-content: center; /* Center the button */
+  margin: 20px 0; /* Space above and below the button */
+}
+
+.payment-button {
+  font-size: 1.5em; /* Large button text */
+  padding: 12px 24px;
+  background-color: #28a745; /* Green color */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.payment-button:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05);
+}
+
+/* Adjust button placement in the table */
+.menu-table td:last-child {
+  text-align: center; /* Center align buttons in the Action column */
+  vertical-align: middle; /* Align buttons vertically in the middle */
+}
+
+
+/* Button Styling */
+.button {
+  padding: 5px 15px; /* Inner padding for buttons */
+  border: none; /* Remove border */
+  background-color: #849972; /* Default button background */
+  color: white; /* White text */
+  border-radius: 20px; /* Rounded button corners */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+  margin-right: 5px; /* Add spacing to the right */
+}
+
+/* Hover effect for buttons */
+.button:hover {
+  background-color: #6c815d; /* Darker green on hover */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Increase shadow depth */
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex; /* Horizontal layout for buttons */
+  justify-content: center; /* Center align buttons */
+  gap: 5px; /* Space between buttons */
+  margin-top: 10px; /* Add spacing above */
+}
+
+/* Adjust action button sizes */
+.action-buttons button {
+  min-width: 80px; /* Minimum button width */
+  width: auto; /* Flexible width */
+  height: 50px; /* Button height */
+  font-size: 16px; /* Font size */
+}
+
+/* Layout for list items */
+.listitems ul {
+  display: grid; /* Grid layout for items */
+  justify-content: center; /* Center align items */
+  list-style: none; /* Remove bullet points */
+  margin-top: 30px; /* Add spacing above */
+  margin-bottom: 30px; /* Add spacing below */
+  padding: 0px; /* Remove padding */
+}
+
+/* Page Container */
+.container {
+  display: flex; /* Flexbox layout */
+  justify-content: center; /* Center content */
+  min-height: 80vh; /* Minimum height for the container */
+  margin-top: 80px; /* Space above */
+}
+
+/* Content Box */
+.content-box {
+  width: 80%; /* Set a responsive width for the content box */
+  max-width: 800px; /* Prevent the content box from growing too wide */
+  margin: 0 auto; /* Center the content box */
+  padding: 20px; /* Add inner spacing */
+  background-color: white; /* White background for contrast */
+  border-radius: 10px; /* Rounded corners for a polished look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+  text-align: center; /* Center-align text inside the box */
+  overflow: hidden; /* Prevent content overflow */
+}
+/* Image Gallery */
+.image-gallery {
+  display: flex; /* Use flexbox for layout */
+  flex-wrap: wrap; /* Allow images to wrap to the next line on small screens */
+  justify-content: center; /* Center images horizontally */
+  gap: 15px; /* Space between images */
+  margin: 20px 0; /* Add vertical spacing around the gallery */
+}
+
+/* Individual Images in Gallery */
+.image-gallery img {
+  width: 120px; /* Image width */
+  height: 100px; /* Image height */
+  border-radius: 5px; /* Rounded corners */
+  border: 1px solid #ccc; /* Add border */
+}
+
+/* Details Section */
+.details {
+  margin: 20px 45px; /* Margin around the details section */
+  text-align: left; /* Left-align text */
+}
+
+/* Container Heading */
+.container h1 {
+  margin-top: 0px; /* No margin above the heading */
+}
+
+
+
+
+
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+  .formwrapper {
+    flex-direction: column; /* Stack dropdowns vertically */
+    gap: 15px; /* Increase space between dropdowns */
+  }
+}
+
+
+
+
+
+/* Media Queries for Responsive Design */
+/* Tablet screens (max width: 1024px) */
+@media (max-width: 1024px) {
+  .nav-bar button {
+    width: 130px; /* Adjust button width */
+    height: 45px; /* Adjust button height */
+    font-size: 16px; /* Reduce font size */
+  }
+  .menu-table, .menu-table td, .menu-table th, .intro-text {
+    font-size: 16px; /* Adjust table and text font size */
+  }
+  footer {
+    padding: 15px; /* Reduce padding for smaller screens */
+    font-size: 13px; /* Slightly smaller font size */
+  }
+
+  .footer-container {
+    flex-direction: column; /* Stack footer sections vertically */
+    text-align: center; /* Center-align text */
+    gap: 15px; /* Add spacing between stacked sections */
+  }
+
+  .footer-right {
+    align-items: center; /* Center align items */
+  }
+}
+
+/* Small screens (max width: 768px) */
+@media (max-width: 768px) {
+  .nav-bar button {
+    font-size: 14px; /* Further reduce font size */
+  }
+
+  .menu-table, .menu-table td, .menu-table th, .intro-text {
+    font-size: 14px; /* Further adjust font size */
+  }
+
+  .content-box {
+    width: 95%; /* Reduce content box width */
+    padding: 10px; /* Reduce padding */
+  }
+
+  .image-gallery img {
+    width: 80px; /* Reduce image size */
+    height: auto; /* Maintain aspect ratio */
+  }
+
+  .details {
+    margin: 10px 10px; /* Adjust margin */
+    font-size: 14px; /* Adjust font size */
+  }
+
+  .listitems ul {
+    display: block; /* Stack list items */
+    text-align: left; /* Left-align text */
+  }
+
+  .listitems ul li {
+    margin-bottom: 10px; /* Add spacing between list items */
+  }
+  footer {
+    padding: 10px; /* Further reduce padding for smaller screens */
+    font-size: 12px; /* Smaller font size */
+  }
+
+  .footer-container {
+    flex-direction: column; /* Stack footer sections vertically */
+    text-align: center; /* Center-align text */
+    gap: 10px; /* Adjust spacing */
+  }
+
+  .footer-right {
+    align-items: center; /* Center items */
+  }
+
+  .footer-right p {
+    font-size: 12px; /* Adjust text size for smaller screens */
+  }
+
+}

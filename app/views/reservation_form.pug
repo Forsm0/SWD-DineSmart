@@ -1,0 +1,28 @@
+extends navbar
+
+block content
+  .formcontainer
+    h1.booktime Table Reservation Form
+
+    form(method='POST', action=`/reserve?tableId=${tableId}&tableNumber=${tableNumber}&date=${date}&time=${time}`)
+      .form-group
+        label(for='name') Name
+        input#name(type='text', name='name', placeholder='Your Full Name', required)
+
+      .form-group
+        label(for='email') Email
+        input#email(type='email', name='email', placeholder='Your Email Address', required)
+
+      .form-group
+        label(for='phone') Phone Number
+        input#phone(type='tel', name='phone', placeholder='Your Phone Number', required)
+      
+      .form-group
+        label(for='Allergies') Allergies
+        input#phone(type='text', name='Allergies', placeholder='Allergies', required)
+
+      .form-group
+        label(for='guests') Number of Guests
+        input#guests(type='number', name='guests', min='1', placeholder='Enter number of guests', required)
+
+      button(type='submit', class='submit-button') Reserve Table

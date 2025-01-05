@@ -1,0 +1,44 @@
+extends navBar
+
+block content
+
+  // Main container for the content on the page
+  .container
+    
+    .content-box
+      h1 Digby's Diner
+
+      // Image gallery to showcase restaurant dishes or highlights
+      .image-gallery
+        img(src="/img/Cheese_toastie_with_pickles.png" alt="Image of tosties")
+        img(src="/img/MARG-Blog-Photo-3-14-22.png" alt="Image of spaghetti")
+        img(src="/img/Trattoria-Food.png" alt="Sweet dessert")
+        img(src="/img/Baked-ham-hock-pots.png" alt="Baked ham hock pots")
+      
+      // Section with descriptive text and details about the restaurant
+      .details
+        p Welcome to Digby’s Diner, your go-to spot for homestyle meals with a touch of gourmet flair. Located in the heart of the city, Digby’s Diner offers a cozy ambiance perfect for family dinners, casual meetups, or a quick bite between errands. We pride ourselves on serving fresh, locally sourced ingredients in every dish.
+        p Explore our menu, from hearty breakfasts to signature cheese toasties and delightful desserts. With something for everyone, we promise an experience that’s as comforting as it is memorable.
+        
+         // List of key information about the restaurant
+        .listitems
+          ul
+            li 
+              strong Opening Hours: 
+              | Monday - Saturday: 8:00 AM - 10:00 PM
+            li 
+              strong Address: 
+              | 123 Main Street, Cityville, CV1 2AB
+            li 
+              strong Phone number: 
+              | +44 123 456 7890
+            li 
+              strong Email: 
+              | contact@digbysdiner.com
+
+      // Buttons for user actions
+      .action-buttons
+        button(class="button" onclick="history.back()" aria-label="Go back to the previous page") Back
+        button(class="button" onclick="window.location.href='/book-time'" aria-label="Navigate to reserve table") Book a table
+        button(class="button" onclick="window.location.href='/menu'" aria-label="Navigate to Menu Page") Menu
+        

@@ -1,0 +1,206 @@
+.container-res {
+  margin-top: 120px; /* Space below the navigation bar */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+}
+.container-formres {
+  width: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+  
+}
+
+
+.filters {
+  align-items: center;
+}
+
+.container-res h1.booktime {
+  margin-top: 5px !important;
+}
+
+.formcontainer h1.booktime {
+  margin-top: 10px !important;
+}
+
+h4.displayed-date {
+  margin: 5px 5px;
+}
+
+button.booktime {
+  margin: 5px;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.filters button, .select-container button {
+  margin: 10px;
+  background-color: #f5f5f5;
+}
+
+/* Timeslot container - align buttons in one row */
+.time-slots {
+  display: flex;
+  flex-wrap: wrap;  /* Allow wrapping if too many buttons */
+  justify-content: center; /* Center-align under the date */
+}
+
+
+/* Time Slot Buttons */
+.container-formres .time-slot {
+  display: block;
+  background-color: #849972;
+  color: white;
+  height: 45px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  margin: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.time-slot:hover {
+  background-color: #697665;
+  transform: scale(1.05);
+}
+
+.time-slot.selected {
+  background-color: #393a34;
+  color: white;
+  font-weight: bold;
+}
+
+
+
+/* Select Button */
+#confirm-btn {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #697665;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  height: 45px;
+  width: 120px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#confirm-btn:hover {
+  background-color: #393a34;
+}
+/* time slots */
+
+
+/* Form Container */
+.formcontainer {
+  max-width: 500px;
+  margin: 100px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Group Styles */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  color: #393a34;
+  margin-bottom: 5px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+/* Submit Button */
+.submit-button {
+  display: block;
+  width: 30%;
+  padding: 10px;
+  font-size: 18px;
+  color: white;
+  background-color: #697665;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 180px;
+}
+
+.submit-button:hover {
+  background-color: #393a34;
+}
+
+
+/* Filter Section */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin: 20px auto;
+  justify-content: center;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+}
+
+
+
+.filter-group label {
+  font-weight: bold;
+  color: #393a34;
+}
+
+.filter-group input {
+  padding: 8px 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 200px;
+}
+
+.filter-group #placeholder {
+  color: #f8f7f2;
+}
+.filter-group .filter-button {
+  padding: 8px 15px;
+  height: 45px;
+  font-size: 16px;
+  color: white;
+  background-color: #697665;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filter-button:hover {
+  background-color: #393a34;
+}
+
