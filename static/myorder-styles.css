@@ -1,0 +1,32 @@
+.menu-table {
+    width: 100%;
+    max-width: 70%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #f8f7f2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .menu-table th, .menu-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  .menu-table th {
+    background-color: #697665;
+    color: white;
+    font-size: 18px;
+  }
+  
+  .menu-table td {
+    font-size: 18px;
+    vertical-align: middle;
+  }
+  
+  .menu-table tr:hover {
+    background-color: #e8f3e5;
+  }
+  

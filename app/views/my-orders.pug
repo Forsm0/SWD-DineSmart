@@ -1,0 +1,31 @@
+extends navbar 
+
+block content
+    h1 My Orders
+    p(class="intro-text") Here are your current and past reservations.
+
+    // Orders table display
+    table(class="menu-table", border="0")
+
+        // Table header
+        thead
+            tr
+                th Name
+                th Date
+                th Start Time
+                th Guests
+                th Allergies
+
+        // Table body
+        tbody
+            if reservations.length > 0
+                each reservation in reservations
+                    tr
+                        td #{reservation.name}
+                        td #{new Date(reservation.Date).toLocaleDateString()}
+                        td #{reservation.StartTime}
+                        td #{reservation.Number_of_guests}
+                        td #{reservation.Allergies}
+            else
+                tr
+                    td(colspan="6") No reservations found.
