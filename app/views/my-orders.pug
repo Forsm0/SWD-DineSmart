@@ -1,13 +1,11 @@
-extends navbar 
+extends navbar
 
 block content
-    h1 My Orders
+    
     p(class="intro-text") Here are your current and past reservations.
 
-    // Orders table display
-    table(class="menu-table", border="0")
-
-        // Table header
+    h2(class="upcomingres") Upcoming Reservations
+    table(id="comingres" class="menu-table", border="0")
         thead
             tr
                 th Name
@@ -15,17 +13,37 @@ block content
                 th Start Time
                 th Guests
                 th Allergies
-
-        // Table body
         tbody
-            if reservations.length > 0
-                each reservation in reservations
+            - if (upcomingReservations.length > 0)
+                each reservation in upcomingReservations
                     tr
-                        td #{reservation.name}
+                        td #{reservation.name || 'N/A'}
                         td #{new Date(reservation.Date).toLocaleDateString()}
                         td #{reservation.StartTime}
                         td #{reservation.Number_of_guests}
-                        td #{reservation.Allergies}
-            else
+                        td #{reservation.Allergies || 'None'}
+            - else
                 tr
-                    td(colspan="6") No reservations found.
+                    td(colspan="5") No upcoming reservations.
+
+    h2(class="pastres") Past Reservations
+    table(id="pastres" class="menu-table", border="0")
+        thead
+            tr
+                th Name
+                th Date
+                th Start Time
+                th Guests
+                th Allergies
+        tbody
+            - if (pastReservations.length > 0)
+                each reservation in pastReservations
+                    tr
+                        td #{reservation.name || 'N/A'}
+                        td #{new Date(reservation.Date).toLocaleDateString()}
+                        td #{reservation.StartTime}
+                        td #{reservation.Number_of_guests}
+                        td #{reservation.Allergies || 'None'}
+            - else
+                tr
+                    td(colspan="5") No past reservations.
