@@ -535,45 +535,67 @@ app.get("/reservation-form", (req, res) => {
 
 
 app.post('/reserve', async (req, res) => {
-    const { name, email, phone, Allergies, guests } = req.body; // Form data
-    const { tableId, tableNumber,date,time } = req.query; // Query params from URL
+  // Extract form data from the request body
+  const { name, email, phone, Allergies, guests } = req.body;
+  // Extract table and reservation details from the query parameters
+  const { tableId, tableNumber, date, time } = req.query;
 
-    // Debug: Log incoming data
-    console.log('Form Data:', req.body);
-    console.log('Query Params:', req.query);
+  // Log incoming form data and query parameters for debugging purposes
+  console.log('Form Data:', req.body);
+  console.log('Query Params:', req.query);
 
+  // Validate required fields - if any are missing, return a 400 error
+  if (!name || !email || !phone || !guests || !tableId || !tableNumber || !date || !time) {
+      console.error('Missing data: ', { name, email, phone, Allergies, guests, tableId, tableNumber, date, time });
+      return res.status(400).send('Please fill out all required fields.');
+  }
 
-    if (!name || !email || !phone || !Allergies || !guests || !tableId || !tableNumber|| !date || !time) {
-        console.error('Missing data: ', { name, email, phone,Allergies, guests, tableId, tableNumber,date,time });
-        return res.status(400).send('All fields are required.');
-    }
-    
-    try {
-        // Insert the reservation into the reservations table
-        
-        const isoDate = date.split('/').reverse().join('-');
-        const insertQuery = `
-            INSERT INTO Reservation (name, email, phone_number, number_of_guests, TableID,Allergies,UserID,Date,StartTime)
-            VALUES (?, ?, ?, ?, ?,?,?,?,?)
-        `;
-        const insertValues = [name, email, phone, guests, tableId,Allergies,2,isoDate,time];
-        await db.query(insertQuery, insertValues);
+  try {
+      // Convert the date from DD/MM/YYYY to ISO format (YYYY-MM-DD) for database compatibility
+      const isoDate = date.split('/').reverse().join('-');
 
-        // Update the table status to 'reserved'
-        const updateQuery = `
-            UPDATE RestaurantTable
-            SET table_status = 'reserved'
-            WHERE TableID = ?
-        `;
-        await db.query(updateQuery, [tableId]);
+      // Check if a reservation already exists for the same table, date, and time
+      const existingReservation = await db.query(`
+          SELECT * FROM Reservation WHERE TableID = ? AND Date = ? AND StartTime = ?
+      `, [tableId, isoDate, time]);
 
-        // Redirect to confirmation page or Cart page 
-        res.redirect(`/Menuorder?tableId=${tableId}&tableNumber=${tableNumber}`);
-    } catch (error) {
-        console.error('Error processing reservation:', error);
-        res.status(500).send('Error processing reservation.');
-    }
+      // If a reservation exists, return a 400 error to prevent double booking
+      if (existingReservation.length > 0) {
+          return res.status(400).send('This table is already reserved for the selected time.');
+      }
+
+      // Prepare the SQL query to insert a new reservation into the database
+      const insertQuery = `
+          INSERT INTO Reservation (name, email, phone_number, number_of_guests, TableID, Allergies, UserID, Date, StartTime)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `;
+      // Set a default value for allergies if none is provided
+      const allergiesValue = Allergies || 'None';
+      // Values to be inserted into the Reservation table
+      const insertValues = [name, email, phone, guests, tableId, allergiesValue, req.session.userId, isoDate, time];
+      
+      // Execute the insert query to save the reservation
+      await db.query(insertQuery, insertValues);
+
+      // Update the table status to 'reserved' to prevent further bookings
+      const updateQuery = `
+          UPDATE RestaurantTable
+          SET table_status = 'reserved'
+          WHERE TableID = ?
+      `;
+      // Execute the update query for the specified table
+      await db.query(updateQuery, [tableId]);
+
+      // Redirect to the Menuorder page with a success message in the URL
+      res.redirect(`/Menuorder?tableId=${tableId}&tableNumber=${tableNumber}&success=Reservation confirmed`);
+  } catch (error) {
+      // Log any errors that occur during the reservation process
+      console.error('Error processing reservation:', error);
+      // Return a 500 error if the reservation fails
+      res.status(500).send('There was an error processing your reservation. Please try again.');
+  }
 });
+
 
 
 // here
