@@ -42,6 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
             document.cookie = `cartItems=${JSON.stringify(cartItems)}; path=/;`;
             window.location.href = "/cart"; // Redirect to cart page
         }
+
+        if (event.target.classList.contains("skip-to-cart")) {
+            // Skip button: No cookie, just redirect to cart
+            window.location.href = "/cart";
+        }
     });
 });
 
