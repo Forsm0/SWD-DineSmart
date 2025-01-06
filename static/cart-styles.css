@@ -1,0 +1,91 @@
+.cart-container .reservation-table {
+    width: 100%;
+    max-width: 70%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #f8f7f2;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.cart-container .reservation-table th,
+.cart-container .reservation-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.cart-container .reservation-table th {
+    background-color: #697665;
+    color: white;
+    font-size: 18px;
+}
+
+.cart-container .reservation-table td {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+.cart-container .reservation-table tr:hover {
+    background-color: #e8f3e5;
+}
+
+/* Column Widths for Uniformity */
+.cart-container .reservation-table th:nth-child(1),
+.cart-container .reservation-table td:nth-child(1) {
+    width: 120px;
+}
+
+.cart-container .reservation-table th:nth-child(2),
+.cart-container .reservation-table td:nth-child(2) {
+    width: 200px;
+}
+
+.decrement-button {
+    margin-right: 10px;
+    color: #ffffff;
+    background-color: #697665;
+    
+}
+
+.decrement-button:hover{
+    background-color: #3f4f40; /* Darker green for hover */
+    transform: scale(1.08); /* Slightly larger zoom for hover feedback */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+.increment-button {
+    margin-left: 10px;
+    color: #ffffff;
+    background-color: #697665;
+}
+
+.increment-button:hover{
+    background-color: #3f4f40; /* Darker green for hover */
+    transform: scale(1.08); /* Slightly larger zoom for hover feedback */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+}
+
+.payment-wrapper.center {
+    display: flex;
+    justify-content: center; /* Center the button */
+    margin: 20px 0; /* Space above and below the button */
+  }
+  
+  .payment-button {
+    font-size: 1.5em; /* Large button text */
+    padding: 12px 24px;
+    background-color: #697665; /* Green color */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .payment-button:hover {
+    background-color: #3f4f40; /* Darker green on hover */
+    transform: scale(1.05);
+  }
