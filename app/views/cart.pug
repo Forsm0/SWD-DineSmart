@@ -4,6 +4,7 @@ block content
     .cart-container
         p(class="intro-text") Your Reservation Details:
 
+        // Reservation details table (date, time, table number)
         table(class="reservation-table", border="0")
             thead
                 tr
@@ -29,6 +30,7 @@ block content
                     th Quantity
                     th Total Price
             tbody
+                // Loop through each item in 'data' to render cart items dynamically
                 each item in data
                     tr
                         td
@@ -47,6 +49,7 @@ block content
                 tr
                     td(colspan="4") Total Sum
                     td(id="total-sum", colspan="1") £0.00
-
+                    
+        // Section for final confirmation
         .payment-wrapper.center
             button(type="button" id="proceed-to-payment" class="payment-button" data-date = globalReservation.date,data-time = globalReservation.time,data-tableNumber = globalReservation.tableNumber) Send Confirmation
