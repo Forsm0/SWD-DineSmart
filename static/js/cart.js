@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             if (response.ok) {
-                alert("Cart details sent successfully!");
+                window.location.href = "/my-orders";
             } else {
                 alert("Failed to send cart details. Please try again.");
             }

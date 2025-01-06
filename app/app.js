@@ -144,7 +144,10 @@ app.post('/send-cart-details', async (req, res) => {
           html: emailBody,
       });
 
-      res.send('Email sent successfully');
+      
+      // redirect to my orders
+      res.redirect("/my-orders");
+      return;
   } catch (error) {
       console.error('Error sending email:', error);
       res.status(500).send(`Error sending email: ${error.message}`);
