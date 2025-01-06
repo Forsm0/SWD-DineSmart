@@ -292,29 +292,6 @@ button, input, textarea, select {
   transform: scale(1.05); /* Slight zoom effect */
 }
 
-.payment-wrapper.center {
-  display: flex;
-  justify-content: center; /* Center the button */
-  margin: 20px 0; /* Space above and below the button */
-}
-
-.payment-button {
-  font-size: 1.5em; /* Large button text */
-  padding: 12px 24px;
-  background-color: #28a745; /* Green color */
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.payment-button:hover {
-  background-color: #218838; /* Darker green on hover */
-  transform: scale(1.05);
-}
-
 /* Adjust button placement in the table */
 .menu-table td:last-child {
   text-align: center; /* Center align buttons in the Action column */
