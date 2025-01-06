@@ -396,120 +396,188 @@ app.post("/authenticate", async function (req, res) {
 
 // Table reservation routes (add isAuthenticated) HERE
 app.get('/book-time', (req, res) => {
+  const timeslotError = req.query.timeslot_error 
+      ? req.query.timeslot_error.replace('timeslot_', '') 
+      : null;
+
   const sql = `
-    SELECT available_date, available_time, table_number, Capacity
-    FROM RestaurantTable
-    WHERE table_status = 'Available'
-    AND available_date >= CURDATE()  -- Only future dates
-    ORDER BY available_date ASC, available_time ASC
-    LIMIT 15  -- Show first 5 available days
-`;
-
-  
-    db.query(sql).then(results => {
-        const resultsArray = Array.isArray(results) ? results : [results];
-        console.log("All Rows from DB:", resultsArray)
-        const timeSlots = [];           
-        resultsArray.forEach(row => {
-            const date = row.available_date.toISOString().split('T')[0].split('-').reverse().join('/'); // Format date as DD.MM.YYYY
-            console.log(date)
-            const existingSlot = timeSlots.find(slot => slot.date === date);
-
-            if (existingSlot) {
-                // Add the time if the date already exists
-                if (!existingSlot.times.includes(row.available_time)) {
-                    existingSlot.times.push(row.available_time);
-                }
-            } else {
-                // Add a new date with its first time
-                timeSlots.push({
-                    date,
-                    times: [row.available_time]
-                });
-            }
-        });
-        console.log("Formatted TimeSlots:", timeSlots);
-        res.render('table_reservations', { timeSlots });
-    });
-
-  });
-  
-
-  app.get('/timeslots', async (req, res) => {
-    const { guests, date, time } = req.query;
-
-    // Basic Validation
-    if (!guests || !date || !time) {
-        return res.status(400).send('All filter fields are required.');
-    }
-
-    // Format the date as YYYY-MM-DD
-    const formattedDate = date.split('/').reverse().join('-'); // Converts to YYYY-MM-DD
-    // Format time as HH:MM:SS (adding :00 if necessary)
-    const formattedTime = time.includes(':') && time.split(':').length === 2 ? `${time}:00` : time;
-
-    console.log("Formatted Time:", formattedTime);  // Debugging
-    console.log("Formatted Date:", formattedDate);  // Debugging
-
-    // SQL Query with placeholders
-    const query = `
-      SELECT DISTINCT available_date, available_time
+      SELECT available_date, available_time, table_number, Capacity
       FROM RestaurantTable
-      WHERE capacity >= ? 
-      AND available_date = ?
-      AND available_time = ?
-      ORDER BY available_time
-`;
+      WHERE table_status = 'Available'
+      AND available_date >= CURDATE()
+      ORDER BY available_date ASC, available_time ASC
+      LIMIT 15
+  `;
 
+  db.query(sql).then(results => {
+      const resultsArray = Array.isArray(results) ? results : [results];
+      const timeSlots = [];
 
+      resultsArray.forEach(row => {
+          const date = row.available_date.toISOString().split('T')[0].split('-').reverse().join('/');
+          const existingSlot = timeSlots.find(slot => slot.date === date);
 
-    try {
-        // Execute Query using await
-        const values = [guests, formattedDate, formattedTime];
-        const results = await db.query(query, values);
+          if (existingSlot) {
+              if (!existingSlot.times.includes(row.available_time)) {
+                  existingSlot.times.push(row.available_time);
+              }
+          } else {
+              timeSlots.push({
+                  date,
+                  times: [row.available_time],
+              });
+          }
+      });
 
-        console.log("Query Results:", results); // Debugging query results
-
-        if (results.length === 0) {
-            console.log("No available tables found.");
-            return res.status(404).send('No available tables found.');
-        }
-
-        // Ensure results is always an array
-        const formattedResults = Array.isArray(results) ? results : [results];
-
-        // Convert BinaryRow to a plain JavaScript object and group by available_date
-        const formattedData = [];
-
-        formattedResults.forEach(row => {
-            const availableDate = row.available_date.toISOString().split('T')[0]; // Format to 'YYYY-MM-DD'
-            const availableTime = row.available_time;
-
-            // Find the existing entry for the date
-            const existingDateSlot = formattedData.find(slot => slot.date === availableDate);
-
-            if (existingDateSlot) {
-                // If the date exists, push the available_time into the `times` array
-                existingDateSlot.times.push(availableTime);
-            } else {
-                // If the date doesn't exist, create a new entry
-                formattedData.push({
-                    date: availableDate,
-                    times: [availableTime]
-                });
-            }
-        });
-
-        console.log("Formatted Data for Pug:", formattedData); // Debugging
-
-        // Pass the formattedData to your Pug template for rendering
-        res.render('table_reservations', { timeSlots: formattedData });
-
-    } catch (err) {
-        console.error("Error retrieving time slots:", err);
-        res.status(500).send('Error retrieving time slots.');
-    }
+      res.render('table_reservations', {
+          timeSlots,
+          timeslotError,  // Pass the error to the template
+      });
+  }).catch(err => {
+      console.error("Error fetching available slots:", err);
+      res.status(500).send('Failed to load available time slots.');
+  });
 });
+
+
+// timeslots
+app.get('/timeslots', async (req, res) => {
+  const { guests, date, time } = req.query;
+
+  if (!guests || !date || !time) {
+      const errorMessage = encodeURIComponent('timeslot_All fields are required.');
+      return res.redirect(`/book-time?timeslot_error=${errorMessage}`);
+  }
+
+  const formattedDate = date.split('/').reverse().join('-');
+  const formattedTime = time.includes(':') ? `${time}:00` : time;
+
+  try {
+      // 1. Exact match query - look for the exact date and time
+      const exactMatchQuery = `
+          SELECT available_date, available_time
+          FROM RestaurantTable
+          WHERE capacity >= ?
+          AND available_date = ?
+          AND available_time = ?
+          AND table_status = 'Available'
+      `;
+
+      const exactValues = [guests, formattedDate, formattedTime];
+
+      // 2. Time-based fallback - find closest times on the same date
+      const timeQuery = `
+        (
+          SELECT available_date, available_time
+          FROM RestaurantTable
+          WHERE capacity >= ?
+          AND available_date = ?
+          AND available_time > ?
+          AND table_status = 'Available'
+          ORDER BY available_time ASC
+          LIMIT 1
+        )
+        UNION
+        (
+          SELECT available_date, available_time
+          FROM RestaurantTable
+          WHERE capacity >= ?
+          AND available_date = ?
+          AND available_time < ?
+          AND table_status = 'Available'
+          ORDER BY available_time DESC
+          LIMIT 1
+        )
+      `;
+
+      // 3. Date-based fallback - search closest dates if no slots are available on the selected day
+      const dateQuery = `
+        (
+          SELECT available_date, available_time
+          FROM RestaurantTable
+          WHERE capacity >= ?
+          AND available_date < ?
+          AND table_status = 'Available'
+          ORDER BY available_date DESC, available_time DESC
+          LIMIT 1
+        )
+        UNION
+        (
+          SELECT available_date, available_time
+          FROM RestaurantTable
+          WHERE capacity >= ?
+          AND available_date > ?
+          AND table_status = 'Available'
+          ORDER BY available_date ASC, available_time ASC
+          LIMIT 1
+        )
+      `;
+
+      // Execute exact match query first
+      const exactResults = await db.query(exactMatchQuery, exactValues);
+      let results;
+      let message;
+
+      if (exactResults.length > 0) {
+          // Exact match found
+          results = exactResults;
+          message = 'Here is your requested slot:';
+      } else {
+          // If no exact match, execute time-based fallback query
+          const timeValues = [guests, formattedDate, formattedTime, guests, formattedDate, formattedTime];
+          const timeResults = await db.query(timeQuery, timeValues);
+
+          if (timeResults.length > 0) {
+              results = timeResults;
+              message = 'Closest available times on the selected date:';
+          } else {
+              // If no times are available on the selected date, perform date-based fallback
+              const dateValues = [guests, formattedDate, guests, formattedDate];
+              const dateResults = await db.query(dateQuery, dateValues);
+
+              if (dateResults.length > 0) {
+                  results = dateResults;
+                  message = 'No slots on the selected date. Here are the closest alternatives:';
+              } else {
+                  message = 'No available time slots on nearby dates.';
+                  results = [];
+              }
+          }
+      }
+
+      // Format results for Pug template rendering
+      const formattedData = results.reduce((acc, row) => {
+          const date = row.available_date.toISOString().split('T')[0];
+          const existingSlot = acc.find(slot => slot.date === date);
+
+          if (existingSlot) {
+              existingSlot.times.push(row.available_time);
+          } else {
+              acc.push({
+                  date,
+                  times: [row.available_time],
+              });
+          }
+          return acc;
+      }, []);
+
+      res.render('table_reservations', {
+          timeSlots: formattedData,
+          timeslotMessage: message,
+      });
+
+  } catch (err) {
+      console.error("Error retrieving time slots:", err);
+      res.status(500).send('An error occurred while retrieving time slots.');
+  }
+});
+
+
+
+
+
+
+
 
 
 app.get('/getTableId', async (req, res) => {

@@ -50,7 +50,7 @@ button.booktime {
 /* Timeslot container - align buttons in one row */
 .time-slots {
   display: flex;
-  flex-wrap: wrap;  /* Allow wrapping if too many buttons */
+  flex-wrap: nowrap; 
   justify-content: center; /* Center-align under the date */
 }
 
@@ -204,3 +204,11 @@ button.booktime {
   background-color: #393a34;
 }
 
+.error-message {
+  color: #d9534f;
+
+}
+.info-message {
+  text-align: left;
+
+}
