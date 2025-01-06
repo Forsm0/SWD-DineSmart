@@ -417,7 +417,9 @@ app.get('/book-time', (req, res) => {
 
             if (existingSlot) {
                 // Add the time if the date already exists
-                existingSlot.times.push(row.available_time);
+                if (!existingSlot.times.includes(row.available_time)) {
+                    existingSlot.times.push(row.available_time);
+                }
             } else {
                 // Add a new date with its first time
                 timeSlots.push({
