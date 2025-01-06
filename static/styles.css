@@ -259,7 +259,8 @@ button, input, textarea, select {
 .go-to-cart {
   font-size: 1.5em; /* Increase font size */
   padding: 12px 24px; /* Larger padding */
-  background-color: #007bff; /* Blue background */
+  margin: 10px;
+  background-color: #697665; /* Blue background */
   color: white; /* White text */
   border: none; /* Remove border */
   border-radius: 8px; /* Rounded corners */
@@ -269,7 +270,25 @@ button, input, textarea, select {
 }
 
 .go-to-cart:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #393a34; /* Darker blue on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.skip-to-cart {
+  font-size: 1.5em; /* Increase font size */
+  padding: 12px 24px; /* Larger padding */
+  margin: 10px;
+  background-color: #393a34c2;
+  color: white; /* White text */
+  border: none; /* Remove border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Add shadow */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effects */
+}
+
+.skip-to-cart:hover {
+  background-color: #393a34; /* Darker on hover */
   transform: scale(1.05); /* Slight zoom effect */
 }
 
