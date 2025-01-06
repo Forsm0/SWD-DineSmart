@@ -13,6 +13,7 @@ block content
                 th Start Time
                 th Guests
                 th Allergies
+                th 
         tbody
             - if (upcomingReservations.length > 0)
                 each reservation in upcomingReservations
@@ -22,9 +23,14 @@ block content
                         td #{reservation.StartTime}
                         td #{reservation.Number_of_guests}
                         td #{reservation.Allergies || 'None'}
+                        td
+                            form(method="POST" action="/cancel-reservation")
+                                input(type="hidden" name="reservation_id" value=reservation.reservation_id)
+                                button(type="submit" class="cancel-btn") Cancel
             - else
                 tr
-                    td(colspan="5") No upcoming reservations.
+                    td(colspan="6") No upcoming reservations.
+
 
     h2(class="pastres") Past Reservations
     table(id="pastres" class="menu-table", border="0")

@@ -70,3 +70,18 @@
     max-width: 70%;
     margin: 0 auto;
   }
+
+  .cancel-btn {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #c9302c;
+}
