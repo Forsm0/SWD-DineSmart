@@ -18,7 +18,7 @@ block content
                 each reservation in upcomingReservations
                     tr
                         td #{reservation.name || 'N/A'}
-                        td #{new Date(reservation.Date).toLocaleDateString()}
+                        td #{new Date(reservation.Date).toLocaleDateString('en-GB')}
                         td #{reservation.StartTime}
                         td #{reservation.Number_of_guests}
                         td #{reservation.Allergies || 'None'}
