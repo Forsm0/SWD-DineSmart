@@ -1,42 +1,52 @@
 extends navBar
 
 block content
-    p(class="intro-text") Your Reservation Details:
-    ul
-        li Date: #{globalReservation.date}
-        li Time: #{globalReservation.time}
-        li Table Number: #{globalReservation.tableNumber}
+    .cart-container
+        p(class="intro-text") Your Reservation Details:
 
-    p(class="intro-text") Here are the Cart Items
-
-    table(class="menu-table", border="0")
-        thead
-            tr
-                th 
-                th Name
-                th Price
-                th Add
-                th Quantity
-                th Total Price
-        tbody
-            each item in data
+        table(class="reservation-table", border="0")
+            thead
                 tr
-                    td
-                        if item.imagePath
-                            img(src=item.imagePath, alt=item.Name, width="100", height="100") 
-                        else
-                            p No image available
-                    td #{item.name}
-                    td £#{item.price}
-                    td
-                        button(type="button" class="increment-button" data-id=item.id data-name=item.name data-price=item.price) +
-                        button(type="button" class="decrement-button" data-id=item.id data-name=item.name data-price=item.price) -
-                    td(id=`quantity-${item.id}`) 0
-                    td(id=`total-${item.id}`) £0.00
-        tfoot
-            tr
-                td(colspan="5") Total Sum
-                td(id="total-sum", colspan="2") £0.00
+                    th Date
+                    th Time
+                    th Table Number
+            tbody
+                tr
+                    td #{globalReservation.date || 'Not Selected'}
+                
+                    td #{globalReservation.time || 'Not Selected'}
+                
+                    td #{globalReservation.tableNumber || 'Not Assigned'}
 
-    .payment-wrapper.center
-        button(type="button" id="proceed-to-payment" class="payment-button" data-date = globalReservation.date,data-time = globalReservation.time,data-tableNumber = globalReservation.tableNumber) Mail Cart Details
+        p(class="intro-text") Here are the Cart Items
+
+        table(class="menu-table", border="0")
+            thead
+                tr
+                    th 
+                    th Name
+                    th Price
+                    th Quantity
+                    th Total Price
+            tbody
+                each item in data
+                    tr
+                        td
+                            if item.imagePath
+                                img(src=item.imagePath, alt=item.Name, width="100", height="100") 
+                            else
+                                p No image available
+                        td #{item.name}
+                        td £#{item.price}
+                        td
+                            button(type="button" class="decrement-button" data-id=item.id data-name=item.name data-price=item.price) -
+                            span(id=`quantity-${item.id}`) 0
+                            button(type="button" class="increment-button" data-id=item.id data-name=item.name data-price=item.price) +
+                        td(id=`total-${item.id}`) £0.00
+            tfoot
+                tr
+                    td(colspan="4") Total Sum
+                    td(id="total-sum", colspan="1") £0.00
+
+        .payment-wrapper.center
+            button(type="button" id="proceed-to-payment" class="payment-button" data-date = globalReservation.date,data-time = globalReservation.time,data-tableNumber = globalReservation.tableNumber) Mail Cart Details
