@@ -12,10 +12,32 @@
   
   .menu-table th, .menu-table td {
     padding: 12px;
-    text-align: left;
+    text-align: center;
     border: 1px solid #ddd;
   }
   
+/* Fixed width for specific columns */
+.menu-table th:nth-child(2),
+.menu-table td:nth-child(2) {
+    width: 110px;  /* Date column */
+}
+
+.menu-table th:nth-child(3),
+.menu-table td:nth-child(3) {
+    width: 120px;  /* Start Time column */
+}
+
+.menu-table th:nth-child(4),
+.menu-table td:nth-child(4) {
+    width: 70px;  /* Guests column */
+}
+
+.menu-table th:nth-child(5),
+.menu-table td:nth-child(5) {
+    width: 200px;  /* Allergies column */
+}
+
+
   .menu-table th {
     background-color: #697665;
     color: white;
