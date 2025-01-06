@@ -146,8 +146,8 @@ app.post('/send-cart-details', async (req, res) => {
 
       
       // redirect to my orders
-      res.redirect("/my-orders");
-      return;
+      /// res.redirect("/my-orders");
+      // return;
   } catch (error) {
       console.error('Error sending email:', error);
       res.status(500).send(`Error sending email: ${error.message}`);
@@ -157,7 +157,7 @@ app.post('/send-cart-details', async (req, res) => {
 
 
 // Route for the cart page
-app.get("/cart", (req, res) => {
+app.get("/cart", isAuthenticated, (req, res) => {
     // Retrieve cartItems from cookies
     const storedCartItems = req.cookies.cartItems ? JSON.parse(req.cookies.cartItems) : []; 
     console.log("Global Reservation Data:", globalReservation);
@@ -210,7 +210,7 @@ app.get("/Menu", function (req, res) {
 });
 
 // Menu ordering page (table selection logic can be added later)
-app.get("/menuorder", function (req, res) {
+app.get("/menuorder", isAuthenticated, function (req, res) {
   const sortBy = req.query.sort || "Name"; // Default sorting
   const categoryFilter = req.query.category || "All"; // Default category filter
 
@@ -327,30 +327,6 @@ app.get("/", function(req, res) {
 	res.end();
 });
 
-// app.post("/authenticate", async function (req, res) {
-//   params = req.body;
-//   var user = new User(params.email);
-//   try {
-//     uId = await user.getIdFromEmail();
-//     if (uId) {
-//       match = await user.authenticate(params.password);
-//       if (match) {
-//         req.session.uid = uId;
-//         req.session.loggedIn = true;
-//         console.log(req.session.id);
-//         res.redirect("/restaurants/" + uId);
-//       } else {
-//         // TODO improve the user journey here
-//         res.send("invalid password");
-//       }
-//     } else {
-//       res.send("invalid email");
-//     }
-//   } catch (err) {
-//     console.error(`Error while comparing `, err.message);
-//   }
-// });
-
 
 // Route to handle login submission
 app.post("/authenticate", async function (req, res) {
@@ -397,7 +373,7 @@ app.post("/authenticate", async function (req, res) {
 
 
 // Table reservation routes (add isAuthenticated) HERE
-app.get('/book-time', (req, res) => {
+app.get('/book-time', isAuthenticated, (req, res) => {
   const timeslotError = req.query.timeslot_error 
       ? req.query.timeslot_error.replace('timeslot_', '') 
       : null;
@@ -614,7 +590,7 @@ app.get('/getTableId', async (req, res) => {
     }
 });
 
-app.get("/reservation-form", (req, res) => {
+app.get("/reservation-form", isAuthenticated, (req, res) => {
     const { tableId, tableNumber,date,time } = req.query;
     console.log("Received Table Info:", tableId, tableNumber,date,time); // Debugging
     globalReservation.time = time;
@@ -783,33 +759,6 @@ app.post('/cancel-reservation', async (req, res) => {
 });
 
 
-
-
-
-
-
-
-
-
-
-//  app.get("/menuorder", async (req, res) => {
-//     if (!req.session.selectedTable) {
-//         return res.redirect("/select-table"); // Ensure a table is selected
-//     }
-//     const sql = "SELECT * FROM Menu"; // Fetch all menu items
-//     try {
-//         const menuItems = await db.query(sql);
-//         const loggedIn = req.session?.loggedIn || false; // Check login status
-//         res.render("menuorder", {
-//             data: menuItems,
-//             loggedIn,
-//             selectedTable: req.session.selectedTable,
-//         });
-//     } catch (error) {
-//         console.error("Error fetching menu items:", error);
-//         res.status(500).send("Error loading menu");
-//     }
-// });
 
 // Create a route for testing the db
 app.get("/db_test", function (req, res) {
