@@ -451,14 +451,19 @@ app.get('/book-time', (req, res) => {
 
     // SQL Query with placeholders
     const query = `
-        SELECT * FROM RestaurantTable
-        WHERE capacity >= ? 
-        AND available_time = ?
-    `;
+      SELECT DISTINCT available_date, available_time
+      FROM RestaurantTable
+      WHERE capacity >= ? 
+      AND available_date = ?
+      AND available_time = ?
+      ORDER BY available_time
+`;
+
+
 
     try {
         // Execute Query using await
-        const values = [guests, formattedTime];
+        const values = [guests, formattedDate, formattedTime];
         const results = await db.query(query, values);
 
         console.log("Query Results:", results); // Debugging query results
