@@ -4,6 +4,7 @@ block content
     
     p(class="intro-text") Here are your current and past reservations.
 
+    //- Section for Upcoming Reservations
     h2(class="upcomingres") Upcoming Reservations
     table(id="comingres" class="menu-table", border="0")
         thead
@@ -31,7 +32,7 @@ block content
                 tr
                     td(colspan="6") No upcoming reservations.
 
-
+    //- Section for Past Reservations
     h2(class="pastres") Past Reservations
     table(id="pastres" class="menu-table", border="0")
         thead
@@ -50,6 +51,8 @@ block content
                         td #{reservation.StartTime}
                         td #{reservation.Number_of_guests}
                         td #{reservation.Allergies || 'None'}
+            
+            //- If no past reservations, display a message
             - else
                 tr
                     td(colspan="5") No past reservations.
