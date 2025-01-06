@@ -88,9 +88,7 @@ app.use(cookieParser());
 app.post('/send-cart-details', async (req, res) => {
   const { cartDetails, totalSum, customerEmail,reservationDate,reservationTime,reservationTableNumber} = req.body;
   
-  if (!customerEmail) {
-      return res.status(400).send('Customer email is required.');
-  }
+
 
   try {
       const transporter = nodemailer.createTransport({
@@ -138,10 +136,10 @@ app.post('/send-cart-details', async (req, res) => {
 
         <p><strong>Total Sum:</strong> £${totalSum}</p>
       `;
-
+      console.log('add user email is:', req.session.userEmail)
       await transporter.sendMail({
           from: 'ammadmanandubizzle@gmail.com',
-          to: customerEmail,
+          to: req.session.userEmail,
           subject: 'Your Cart Details',
           html: emailBody,
       });
@@ -374,6 +372,7 @@ app.post("/authenticate", async function (req, res) {
         if (passmatch) {
           // Create session for logged-in user
           req.session.userId = uId;
+          req.session.userEmail = req.body.email;
           req.session.loggedIn = true;
           console.log("Session ID:", req.session.id);
           

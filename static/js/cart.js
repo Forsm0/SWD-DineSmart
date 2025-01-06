@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const emailPayload = {
                 cartDetails,
                 totalSum,
-                customerEmail: prompt("Enter your email address to receive the details:"),reservationDate,reservationTime,reservationTableNumber,
+                customerEmail: '',reservationDate,reservationTime,reservationTableNumber,
             };
 
             const response = await fetch("/send-cart-details", {
