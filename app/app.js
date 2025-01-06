@@ -625,7 +625,7 @@ app.post('/reserve', async (req, res) => {
 
 
 
-// here
+// View past and upcoming reservations
 const filterReservations = require("./services/filterReservations");
 
 app.get("/my-orders", isAuthenticated, async (req, res) => {
@@ -667,6 +667,49 @@ app.get("/my-orders", isAuthenticated, async (req, res) => {
         console.error("Error fetching reservations:", err);
         res.status(500).send("Error fetching reservations.");
     }
+});
+
+// cancel reservation
+app.post('/cancel-reservation', async (req, res) => {
+  const { reservation_id } = req.body;
+  const userId = req.session.userId;
+
+  if (!reservation_id || !userId) {
+      return res.status(400).send('Invalid request.');
+  }
+
+  try {
+      // Fetch the table ID from the reservation before deleting
+      const [reservation] = await db.query(`
+          SELECT TableID FROM Reservation 
+          WHERE ReservationID = ? AND UserID = ?
+      `, [reservation_id, userId]);
+
+      if (!reservation) {
+          return res.status(404).send('Reservation not found.');
+      }
+
+      const tableId = reservation.TableID;
+
+      // Delete the reservation
+      await db.query(`
+          DELETE FROM Reservation 
+          WHERE ReservationID = ? AND UserID = ?
+      `, [reservation_id, userId]);
+
+      // Update the table status to 'Available'
+      await db.query(`
+          UPDATE RestaurantTable
+          SET table_status = 'Available'
+          WHERE TableID = ?
+      `, [tableId]);
+
+      console.log(`Reservation ${reservation_id} cancelled, Table ${tableId} marked as available.`);
+      res.redirect('/my-orders?success=Reservation cancelled');
+  } catch (error) {
+      console.error('Error cancelling reservation:', error);
+      res.status(500).send('Failed to cancel the reservation. Please try again.');
+  }
 });
 
 
