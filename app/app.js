@@ -401,7 +401,7 @@ app.get('/book-time', (req, res) => {
     FROM RestaurantTable
     WHERE table_status = 'Available'
     AND available_date >= CURDATE()  -- Only future dates
-    ORDER BY available_date ASC
+    ORDER BY available_date ASC, available_time ASC
     LIMIT 15  -- Show first 5 available days
 `;
 
