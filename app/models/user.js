@@ -1,6 +1,6 @@
 // Get the functions in the db.js file to use
 const { match } = require("assert");
-const db = require("../services/db");
+const db = require("../controllers/db");
 const bcrypt = require('bcryptjs'); // or use bcryptjs
 const saltRounds = 10; // Defines the complexity of the salt
 
