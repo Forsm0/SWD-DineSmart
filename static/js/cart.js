@@ -153,11 +153,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (response.ok) {
                 window.location.href = "/my-orders";
+                
             } else {
                 alert("Failed to send cart details. Please try again.");
             }
         } catch (error) {
             console.error("Error:", error);
+            console.log('Full error:', error.stack);
             alert("An error occurred while sending the email.");
         }
     });
