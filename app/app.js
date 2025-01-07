@@ -85,74 +85,70 @@ app.get("/", function (req, res) {
 app.use(cookieParser());
 
 
-app.post('/send-cart-details', async (req, res) => {
-  const { cartDetails, totalSum, customerEmail,reservationDate,reservationTime,reservationTableNumber} = req.body;
-  
+app.post('/send-cart-details', (req, res) => {
+  const { cartDetails, totalSum, customerEmail, reservationDate, reservationTime, reservationTableNumber } = req.body;
 
+  // Immediate redirect
+  res.redirect("/my-orders");
 
-  try {
-      const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-              user: 'ammadmanandubizzle@gmail.com',
-              pass: 'wvkt qvnc gxnp qczy',
-          },
-      });
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'ammadmanandubizzle@gmail.com',
+      pass: 'wvkt qvnc gxnp qczy',
+    },
+  });
 
-      const cartDetailsHtml = cartDetails
-        .map(
-          item => `
-            <tr>
-              <td>${item.name}</td>
-              <td>£${item.price}</td>
-              <td>${item.quantity}</td>
-              <td>£${item.total}</td>
-            </tr>
-          `
-        )
-        .join('');
+  const cartDetailsHtml = cartDetails
+    .map(
+      item => `
+        <tr>
+          <td>${item.name}</td>
+          <td>£${item.price}</td>
+          <td>${item.quantity}</td>
+          <td>£${item.total}</td>
+        </tr>
+      `
+    )
+    .join('');
 
-      const emailBody = `
-        <h2>Your Cart Details</h2>
-        <p><strong>Your Reservation Details:</strong></p>
-        <ul>
-          <li>Date: ${reservationDate || 'Not selected'}</li>
-          <li>Time: ${reservationTime || 'Not selected'}</li>
-        </ul>
+  const emailBody = `
+    <h2>Your Cart Details</h2>
+    <p><strong>Your Reservation Details:</strong></p>
+    <ul>
+      <li>Date: ${reservationDate || 'Not selected'}</li>
+      <li>Time: ${reservationTime || 'Not selected'}</li>
+    </ul>
+    <table border="1" cellpadding="5" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${cartDetailsHtml}
+      </tbody>
+    </table>
+    <p><strong>Total Sum:</strong> £${totalSum}</p>
+  `;
 
-        <table border="1" cellpadding="5" cellspacing="0">
-          <thead>
-            <tr>
-              <th>Item Name</th>
-              <th>Price</th>
-              <th>Quantity</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${cartDetailsHtml}
-          </tbody>
-        </table>
-
-        <p><strong>Total Sum:</strong> £${totalSum}</p>
-      `;
-      console.log('add user email is:', req.session.userEmail)
-      await transporter.sendMail({
-          from: 'ammadmanandubizzle@gmail.com',
-          to: req.session.userEmail,
-          subject: 'Your Cart Details',
-          html: emailBody,
-      });
-
-      
-      // redirect to my orders
-      /// res.redirect("/my-orders");
-      // return;
-  } catch (error) {
-      console.error('Error sending email:', error);
-      res.status(500).send(`Error sending email: ${error.message}`);
-  }
+  // Send the email asynchronously without blocking the response
+  transporter.sendMail({
+    from: 'ammadmanandubizzle@gmail.com',
+    to: req.session.userEmail,
+    subject: 'Your Cart Details',
+    html: emailBody,
+  }).then(() => {
+    console.log('Email sent successfully');
+  }).catch((error) => {
+    console.error('Error sending email:', error);
+    console.log('Full error:', error.stack);
+  });
 });
+
 
 
 
